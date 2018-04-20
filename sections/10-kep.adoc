@@ -91,9 +91,9 @@ B2: Generate a random number stem:[r_B in \[1,N - 1\]];
 
 B3: Compute the element stem:[R_B = \[r_B\]Q_A] over stem:[G_1];
 
-B4: Verify stem:[R_A in G_1] as specified in Clause 4.5 of <<GMT-0044.1‒2016>>. If not, the protocol fails. Otherwise, compute over stem:[G_T]: stem:[g_1 = e(R_A, de_B)], stem:[g_2 = e(P_( pub - e),P_2)^(r_B)], stem:[g_3 = g_1^(r_B)]. Convert the data type of stem:[g_1], stem:[g_2], stem:[g_3] to bit string as specified in Clauses6.2.8 and 6.2.5 of <<GMT-0044.1‒2016>>.
+B4: Verify stem:[R_A in G_1] as specified in Clause 4.5 of <<GMT-0044.1-2016>>. If not, the protocol fails. Otherwise, compute over stem:[G_T]: stem:[g_1 = e(R_A, de_B)], stem:[g_2 = e(P_( pub - e),P_2)^(r_B)], stem:[g_3 = g_1^(r_B)]. Convert the data type of stem:[g_1], stem:[g_2], stem:[g_3] to bit string as specified in Clauses6.2.8 and 6.2.5 of <<GMT-0044.1-2016>>.
 
-B5: Convert the data type of stem:[R_A] and stem:[R_B] to bit string as specified in Clauses 6.2.6 and 6.2.5 of <<GMT-0044.1‒2016>>, and compute stem:[SK_B = KDF(ID_A ∥ ID_B ∥ R_A ∥ R_B ∥ g_1 ∥ g_2 ∥ g_3, klen )].
+B5: Convert the data type of stem:[R_A] and stem:[R_B] to bit string as specified in Clauses 6.2.6 and 6.2.5 of <<GMT-0044.1-2016>>, and compute stem:[SK_B = KDF(ID_A ∥ ID_B ∥ R_A ∥ R_B ∥ g_1 ∥ g_2 ∥ g_3, klen )].
 
 B6: (Optional) Compute stem:[S_B = H_v(0x82 ∥ g_1 ∥ H_v(g_2 ∥ g_3 ∥ ID_A ∥ ID_B ∥ R_A ∥ R_B))].
 
@@ -101,9 +101,9 @@ B7: Send stem:[R_B] and (optionally) stem:[S_B] to A.
 
 ==== Completion: User A
 
-A5: Verify stem:[R_B in G_1] as specified in Clause 4.5 of <<GMT-0044.1‒2016>>. If not, the protocol fails. Otherwise, compute over stem:[G_T]: stem:[g_1^' = e(P_( pub - e),P_2)^(r_A)], stem:[g_2^' = e(R_B, de_A)], stem:[g_3^' = (g_2^')^(r_A)]. Convert the data type of stem:[g_1^'], stem:[g_2^'], stem:[g_3^'] to bit string as specified in Clauses6.2.6 and 6.2.5 of <<GMT-0044.1‒2016>>.
+A5: Verify stem:[R_B in G_1] as specified in Clause 4.5 of <<GMT-0044.1-2016>>. If not, the protocol fails. Otherwise, compute over stem:[G_T]: stem:[g_1^' = e(P_( pub - e),P_2)^(r_A)], stem:[g_2^' = e(R_B, de_A)], stem:[g_3^' = (g_2^')^(r_A)]. Convert the data type of stem:[g_1^'], stem:[g_2^'], stem:[g_3^'] to bit string as specified in Clauses6.2.6 and 6.2.5 of <<GMT-0044.1-2016>>.
 
-A6: Convert the data type of stem:[R_A] and stem:[R_B] to bit string as specified in Clauses 6.2.8 and 6.2.5 of <<GMT-0044.1‒2016>>, and (optionally) compute stem:[S_1 = H_v(0x82 ∥ g_1^' ∥ H_v(g_2^' ∥ g_3^' ∥ ID_A ∥ ID_B ∥ R_A ∥ R_B))], and verify if stem:[S_1 = S_B], if not, the key confirmation from B to A fails.
+A6: Convert the data type of stem:[R_A] and stem:[R_B] to bit string as specified in Clauses 6.2.8 and 6.2.5 of <<GMT-0044.1-2016>>, and (optionally) compute stem:[S_1 = H_v(0x82 ∥ g_1^' ∥ H_v(g_2^' ∥ g_3^' ∥ ID_A ∥ ID_B ∥ R_A ∥ R_B))], and verify if stem:[S_1 = S_B], if not, the key confirmation from B to A fails.
 
 A7: Compute stem:[SK_A = KDF(ID_A ∥ ID_B ∥ R_A ∥ R_B ∥ g_1^' ∥ g_2^' ∥ g_3^', klen )].
 

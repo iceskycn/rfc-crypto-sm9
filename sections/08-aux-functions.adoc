@@ -45,7 +45,7 @@ Step 3.2: stem:[ct]++;
 
 Step 4: If stem:[hlen // v]is an integer, set stem:[(Ha ! )_( |~ hlen // v ~| ) = Ha_( |~ hlen // v ~| )]. Otherwise, set stem:[H(a ! )_( |~ hlen // v ~| )] to be the leftmost stem:[( hlen - (v xx | __hlen // v__ | ))] bits of stem:[Ha_( |~ hlen // v ~| )].
 
-Step 5: Set stem:[Ha = Ha_1 vv |Ha_2| vv cdots vv Ha_( |~ hlen // v ~| - 1) vv H(a ! )_( |~ hlen // v ~| )]. Convert the data type of stem:[Ha] to integer as specified in Clauses 6.2.4 and 6.2.3 of <<GMT-0044.1‒2016>>.
+Step 5: Set stem:[Ha = Ha_1 vv |Ha_2| vv cdots vv Ha_( |~ hlen // v ~| - 1) vv H(a ! )_( |~ hlen // v ~| )]. Convert the data type of stem:[Ha] to integer as specified in Clauses 6.2.4 and 6.2.3 of <<GMT-0044.1-2016>>.
 
 Step 6: Compute stem:[h_1 = (Ha mod (n - 1)) + 1].
 
@@ -72,7 +72,7 @@ Step 3.2: stem:[ct]++;
 
 Step 4: If stem:[hlen // v] is an integer, set stem:[H(a ! )_( |~ hlen // v ~| ) = Ha_( |~ hlen // v ~| )]. Otherwise, set stem:[H(a ! )_( |~ hlen // v ~| )] to be the leftmost stem:[( hlen - (v xx | __hlen // v__ | ))] bits of stem:[Ha_( |~ hlen // v ~| )].
 
-Step 5: Set stem:[Ha = Ha_1 vv |Ha_2| vv cdots vv] stem:[Ha_( |~ hlen // v ~| - 1)] stem:[vv H(a ! )_( |~ hlen // v ~| )] . Convert the data type of stem:[Ha] to integer as specified in Clauses 6.2.4 and 6.2.3 of <<GMT-0044.1‒2016>>.
+Step 5: Set stem:[Ha = Ha_1 vv |Ha_2| vv cdots vv] stem:[Ha_( |~ hlen // v ~| - 1)] stem:[vv H(a ! )_( |~ hlen // v ~| )] . Convert the data type of stem:[Ha] to integer as specified in Clauses 6.2.4 and 6.2.3 of <<GMT-0044.1-2016>>.
 
 Step 6: Compute stem:[h_2 = (Ha mod (n - 1)) + 1].
 

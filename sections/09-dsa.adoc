@@ -80,7 +80,7 @@ A1: Compute the element stem:[g = e(P_1,P_( pub - s))] in the group stem:[G_T];
 
 A2: Generate a random integer stem:[r in \[1,N - 1\]];
 
-A3: Compute the element stem:[w = g^r] in the group stem:[G_T], and convert the data type of stem:[w] to a bit string as specified in Clauses 6.2.6 and 6.2.5 of <<GMT-0044.1‒2016>>.
+A3: Compute the element stem:[w = g^r] in the group stem:[G_T], and convert the data type of stem:[w] to a bit string as specified in Clauses 6.2.6 and 6.2.5 of <<GMT-0044.1-2016>>.
 
 A4: Compute the integer stem:[h = H_2(M vv w,N)];
 
@@ -88,7 +88,7 @@ A5: Compute the integer stem:[l = (r - h) mod N]; if stem:[l = 0], go to Step A2
 
 A6: Compute the element stem:[S = \[l\]ds_A] in the group stem:[G_1];
 
-A7: Convert the data type of stem:[h] to a byte string as specified in Clause 6.2.2 of <<GMT-0044.1‒2016>>, convert the data type of stem:[S] to a byte string as specified in Clause 6.2.8 in <<GMT-0044.1‒2016>>.Output stem:[(h,S)] as the signature of message stem:[M].
+A7: Convert the data type of stem:[h] to a byte string as specified in Clause 6.2.2 of <<GMT-0044.1-2016>>, convert the data type of stem:[S] to a byte string as specified in Clause 6.2.8 in <<GMT-0044.1-2016>>.Output stem:[(h,S)] as the signature of message stem:[M].
 
 ==== Process Diagram
 
@@ -100,9 +100,9 @@ Figure 1: Digital signature generation process
 
 To verify the received message stem:[M^'] and its digital signature stem:[(h^',S^')], user stem:[B] performs the following operations as receiver:
 
-B1: Convert the data type of stem:[h^']to an integer as specified in Clause 6.2.3 of <<GMT-0044.1‒2016>>.Check whether stem:[h^' in \[1,N - 1\]] holds true. If it does not, the verification fails;
+B1: Convert the data type of stem:[h^']to an integer as specified in Clause 6.2.3 of <<GMT-0044.1-2016>>.Check whether stem:[h^' in \[1,N - 1\]] holds true. If it does not, the verification fails;
 
-B2: Convert the data type of stem:[S^']to a point on the elliptic curve as specified in Clause 6.2.9 of <<GMT-0044.1‒2016>>, then check whether stem:[S^' in G_1]holds true as specified in Section 4.5 of <<GMT-0044.1‒2016>>. If it does not hold, the verification fails;
+B2: Convert the data type of stem:[S^']to a point on the elliptic curve as specified in Clause 6.2.9 of <<GMT-0044.1-2016>>, then check whether stem:[S^' in G_1]holds true as specified in Section 4.5 of <<GMT-0044.1-2016>>. If it does not hold, the verification fails;
 
 B3: Compute the element stem:[g = e(P_1,P_( pub - s))] in the group stem:[G_T];
 
@@ -114,7 +114,7 @@ B6: Compute the element stem:[P = \[h_1\]P_2 + P_( pub - s)] in the group stem:[
 
 B7: Compute the element stem:[u = e(S^',P)] in the group stem:[G_T] ;
 
-B8: Compute the element stem:[w^' = u * t] in the group stem:[G_T].Convert the data type of stem:[w^'] to a bit string as specified in Clauses 6.2.6 and 6.2.5 of <<GMT-0044.1‒2016>>;
+B8: Compute the element stem:[w^' = u * t] in the group stem:[G_T].Convert the data type of stem:[w^'] to a bit string as specified in Clauses 6.2.6 and 6.2.5 of <<GMT-0044.1-2016>>;
 
 B9: Compute an integer stem:[h_2 = H_2(M^' vv w^',N)] and check whether stem:[h_2 = h^'].If so, the signature is valid.Otherwise, the validation fails.
 
