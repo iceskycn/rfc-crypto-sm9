@@ -1,0 +1,241 @@
+== Data Types And Their Conversions
+
+=== Data Types
+
+Data types used in the SM9 algorithms include:
+
+* bit string,
+* byte string,
+* field element,
+* elliptic curve point, and
+* integer.
+
+=== Encoding Of An Elliptic Curve Point
+
+An elliptic curve point can be encoded as a byte string in many forms. A byte `PC` is used to indicate which form is used. The byte string representation of the point at infinity stem:[O] is a unique zero byte stem:[PC = 00].
+
+A nonzero point stem:[P = (x_P,y_P)] can be represented as one of the following three byte string forms:
+
+. Compressed form, stem:[PC = 02] or stem:[03];
+. Uncompressed form, stem:[PC = 04];
+. Hybrid form, stem:[PC = 06] or stem:[07].
+
+NOTE: The hybrid form contains both the compressed and uncompressed forms. In implementation, the hybrid form can be converted into the compressed or uncompressed forms. Implementation of the compressed and hybrid forms are optional in this standard. Please refer to Annex A.4 for the details of the compressed form.
+
+
+=== Conversions Between Data Types
+
+==== Relationships Amongst Data types
+
+// TODO: add diagram
+
+Figure 1 indicates the conversion relations between the data types. The subclauses for the corresponding conversion methods are given by the marks along the lines.
+
+==== Conversion of an integer to a byte string
+
+*Input*: a non-negative integer stem:[x], and the target length of the byte string stem:[l] (where stem:[l] satisfies stem:[2^(8l) > x]).
+
+*Output*: a byte string stem:[M] of stem:[l] bytes long.
+
+. Let stem:[M_(l - 1),M_(l - 2), ... ,M_0] be the individual bytes of stem:[M] from left to right.
+. The bytes of stem:[M] satisfy: stem:[x = sum_(i = 0)^(l - 1)2^(8i)M_i .]
+
+==== Conversion of a byte string to an integer
+
+*Input*: a byte string stem:[M] of stem:[l] bytes long.
+
+*Output*: an integer stem:[x].
+
+. Let stem:[M_(l - 1),M_(l - 2), ... ,M_0] be the individual bytes of stem:[M] from left to right.
+
+. Convert stem:[M] to the integer stem:[x]:
+
+stem:[x = sum_(i = 0)^(l - 1)2^(8i)M_i .]
+
+==== Conversion of a bit string to a byte string
+
+*Input*: a bit string stem:[s] of stem:[n] bits long.
+
+*Output*: a byte string stem:[M] of stem:[l] bytes long, where stem:[l = |~ n // 8 ~|].
+
+
+. Let stem:[s_(n - 1),s_(n - 2), ... ,s_0] be the individual bits of stem:[s] from left to right.
+
+. Let stem:[M_(l - 1),M_(l - 2), ... ,M_0] be the individual bytes of stem:[M] from left to right, then
+
+stem:[M_i = s_(8i + 7)s_(8i + 6) ... s_(8i + 1)s_(8i),where0 <= i < l,and when8i + j >= nand0 < j <= 7,s_(8i + j) = 0.]
+
+==== Conversion of a byte string to a bit string
+
+*Input*: a byte string stem:[M] of stem:[l] bytes long.
+
+*Output*: a bit string stem:[s] of stem:[n] bits long, where stem:[n = 8l].
+
+
+. Let stem:[M_(l - 1),M_(l - 2), ... ,M_0] be the individual bytes of stem:[M] from left to right.
+
+. Let stem:[s_(n - 1),s_(n - 2), ... ,s_0] be the individual bits of stem:[s] from left to right, then stem:[s_i] ==
+is the stem:[(i - 8j + 1)] == th
+ bit of stem:[M_j] ==
+from the right, where stem:[j = | __i // 8__ |].
+
+==== Conversion of a field element to a byte string
+
+*Input*: an element stem:[\alpha = ( \alpha_(m - 1), \alpha_(m - 2), ... , \alpha_1, \alpha_0)] in stem:[F_(q^m)(m >= 1),] and stem:[q = p].
+
+*Output*: a byte string stem:[s] of length stem:[l], where stem:[l = |~ log_2q // 8 ~| xx m].
+
+. If stem:[m = 1], then stem:[\alpha = \alpha_0(q = p)], stem:[\alpha] is an integer in stem:[\[0,q - 1\]], convert stem:[\alpha] to a byte string stem:[S] of stem:[l] bytes long as specified in 6.2.2.
+
+. If stem:[m > 1], then stem:[\alpha = ( \alpha_(m - 1), \alpha_(m - 2), ... , \alpha_1, \alpha_0)(q = p)], where stem:[\alpha_i in F_q,i = 0,1, ... ,m - 1].
+
+ 1) Let stem:[r = |~ log_2q // 8 ~|].
+
+.. For stem:[i] from stem:[m - 1] to 0:
+
+.. Convert stem:[\alpha_i(q = p)]to a byte string stem:[s_i] of stem:[r] bytes long as specified in 6.2.2.
+
+.. stem:[S = s_(m - 1) vv s_(m - 2) vv ... vv s_0] == .
+
+==== Conversion of a byte string to a field element
+
+===== Case 1: Convert to element in the base field
+
+*Input*: a field stem:[F_q], stem:[q = p], and a byte string stem:[S] of stem:[l] bytes long, where stem:[l = |~ lo g_2q // 8 ~|].
+
+*Output*: an element stem:[\alpha] in stem:[F_q].
+
+If stem:[q = p], convert stem:[S] to an integer stem:[\alpha] as specified in 6.2.3. If stem:[\alpha] is not in the range stem:[\[0,q - 1\]], report an error.
+
+===== Case 2: Convert to element in extension field
+
+*Input*: a field stem:[F_(q^m)] ( stem:[m >= 2]), stem:[q = p], and a byte string stem:[S] of stem:[l] bytes long, where stem:[l = |~ lo g_2q // 8 ~| xx m].
+
+*Output*: an element stem:[\alpha] in stem:[F_(q^m)].
+
+. Equally divide the byte string stem:[S] into stem:[m] parts, where the length of each part is stem:[l // m] bytes long, denote it as stem:[S = (S_(m - 1),S_(m - 2), ... ,S_1,S_0)].
+
+. For stem:[i] from stem:[m - 1] to 0:
+
+.. Convert stem:[S_i] to an integer stem:[\alpha_i] as specified in 6.2.3, and if stem:[\alpha] is not in stem:[\[0,q - 1\]], report an error.
+
+
+. If stem:[q = p], output stem:[a = (a_(m - 1),a_(m - 2), ... ,a_1,a_0)].
+
+==== Conversion of a point to a byte string
+
+There are two cases in the conversion of a point to a byte string.
+
+The first case is that in the computation process, convert the elliptic curve point to a byte string before setting it as the input of some function (e.g., a hash function). In this case, we only need to convert the point to byte string.
+
+The second case is when transmitting or storing elliptic curve points, in order to reduce the transmission quantity or storage space, we can use the compressed or the hybrid compressed form of the points. In such case, we need to add an identifier stem:[PC] to indicate the encoding form of the point.
+
+The details of the two cases of conversion are as follows.
+
+===== Case 1: Direct conversion
+
+*Input*: a point stem:[P = (x_P,y_P)] on the elliptic curve stem:[E(F_(q^m))], where stem:[P != O].
+
+*Output*: a byte string stem:[X_1 vv Y_1] of stem:[2l] bytes long. (If stem:[m = 1], stem:[l = |~ log_2q // 8 ~|]; if stem:[m > 1], stem:[l = |~ log_2q // 8 ~| xx m].)
+
+
+. Convert the field element stem:[x_P] to the byte string stem:[X_1] of stem:[l] bytes long as specified in 6.2.6;
+
+. Convert the field element stem:[y_P] to the byte string stem:[Y_1] of stem:[l] bytes long as specified in 6.2.6;
+
+. Output the byte string stem:[X_1 vv Y_1].
+
+===== Case 2: Conversion by adding a byte string identifier `PC`
+
+*Input*: a point stem:[P = (x_P,y_P)] on the elliptic curve stem:[E(F_(q^m))], where stem:[P != O].
+
+*Output*: a byte string stem:[PO]. If the uncompressed form or the hybrid form is used, output a byte string of length stem:[2l + 1]; if the compressed form is used, output a byte string of stem:[l + 1] bytes long. (If stem:[m = 1], stem:[l = |~ log_2q // 8 ~|]; if stem:[m > 1], stem:[l = |~ log_2q // 8 ~| xx m].)
+
+
+. Convert the field element stem:[x_P] to the byte string stem:[X_1] of stem:[l] bytes long as specified in 6.2.6;
+
+. If the compressed form is used, then
+
+.. Compute the bit stem:[overset(tilde)(y)_P]. (See Annex A.4.)
+
+.. If stem:[overset(tilde)(y)_P = 0], then let stem:[PC = 02]; if stem:[overset(tilde)(y)_P]=1, stem:[PC = 03];
+
+.. Output the byte string stem:[PO = PC vv X_1].
+
+
+. If the uncompressed form is used, then
+
+.. Convert the field element stem:[y_P] to the byte string stem:[Y_1] of stem:[l] bytes long as specified in 6.2.6;
+
+.. Let stem:[PC = 04];
+
+.. Output the byte string stem:[PO = PC vv X_1 vv Y_1].
+
+
+. If the hybrid form is used, then
+
+.. Convert the field element stem:[y_P] to the byte string stem:[Y_1] of stem:[l] bytes long as specified in 6.2.6;
+
+.. Compute the bit stem:[overset(tilde)(y)_P]; (See Annex A.4.)
+
+.. If stem:[overset(tilde)(y)_P = 0], then let stem:[PC = 06]; if stem:[overset(tilde)(y)_P = 1], stem:[PC = 07];
+
+.. Output the byte string stem:[PO = PC vv X_1 vv Y_1].
+
+
+==== Conversion of a byte string to a point
+
+The conversion of a byte string to a point is the inverse process of 6.2.8. The conversion is explained in the following two cases.
+
+===== Case 1: Direct conversion
+
+*Input*: field elements stem:[a] and stem:[b] which define an elliptic curve over stem:[F_(q^m)] ( stem:[m >= 1]), and the byte string stem:[X_1 vv Y_1] of length stem:[2l] bytes long. The lengths of both stem:[X_1] and stem:[Y_1] are stem:[l] bytes. (If stem:[m = 1], stem:[l = |~ log_2q // 8 ~|]; if stem:[m > 1], stem:[l = |~ log_2q // 8 ~| xx m].).
+
+*Output*: a point stem:[P = (x_P,y_P)] of the elliptic curve, where stem:[P != O].
+
+
+. Convert the byte string stem:[X_1] to a field element stem:[x_P] as specified in 6.2.7;
+
+. Convert the byte string stem:[Y_1] to a field element stem:[y_P] as specified in 6.2.7;
+
+===== Case 2: Conversion of a byte string containing the byte identifier `PC`
+
+*Input:* field elements stem:[a] and stem:[b] which define an elliptic curve over stem:[F_(q^m)] ( stem:[m >= 1]), and the byte string stem:[PO]. If the uncompressed or hybrid forms are used, the length of stem:[PO] is stem:[2l + 1] bytes long. If the compressed form is used, the length of stem:[PO] is stem:[l + 1] bytes long. (If stem:[m = 1], then stem:[l = |~ log_2q // 8 ~|]; if stem:[m > 1], then stem:[l = |~ log_2q // 8 ~| xx m].)
+
+*Output*: a point stem:[P = (x_P,y_P)] of the elliptic curve, where stem:[P != O].
+
+
+. If the compressed form is used, then stem:[PO = PC vv X_1]; if the uncompressed or hybrid forms are used, stem:[PO = PC vv X_1 vv Y_1], where stem:[PC] is a single byte, and both stem:[X_1] and stem:[Y_1] are byte strings of stem:[l] bytes long;
+
+. Convert the byte string stem:[X_1] to a field element stem:[x_P] as specified in 6.2.7;
+
+. If the compressed form is used, then
+
+.. Check whether stem:[PC = 02] or stem:[PC = 03]; if not, report an error;
+
+.. If stem:[PC = 02], then let stem:[overset(tilde)(y)_P = 0]; if stem:[PC = 03], let stem:[overset(tilde)(y)_P = 1];
+
+.. Convert stem:[(x_P,overset(tilde)(y)_P)] to a point stem:[(x_P,y_P)] on the elliptic curve; (See Annex A.4.)
+
+
+. If the uncompressed form is used, then
+
+.. Check whether _PC_ = 04; if not, report error;
+
+.. Convert the byte string stem:[Y_1] to a field element stem:[y_P] as specified in 6.2.7;
+
+
+. If the hybrid form is used, then
+
+.. Check whether stem:[PC = 06] or stem:[PC = 07]; if not, report an error;
+
+.. Perform e.2.1) or e.2.2):
+
+.. Convert the byte string stem:[Y_1] to a field element stem:[y_P] as specified in 6.2.7;
+
+.. If stem:[PC = 06], then let stem:[overset(tilde)(y)_P = 0], otherwise let stem:[overset(tilde)(y)_P = 1]; convert stem:[(x_P,overset(tilde)(y)_P)] to a point stem:[(x_P,y_P)] on the elliptic curve; (See Annex A.4.)
+
+. Check whether stem:[(x_P,y_P)] satisfies the equation of the curve; if not, report an error;
+
+. stem:[P = (x_P,y_P)].
+

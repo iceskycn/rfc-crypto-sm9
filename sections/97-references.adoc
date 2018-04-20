@@ -1,0 +1,146 @@
+
+[bibliography]
+== Normative References
+
+//bibliography::norm[]
+++++
+include::../references/normative/*[]
+++++
+
+[bibliography]
+== Informative References
+
+//bibliography::info[]
+++++
+include::../references/informative/*.xml[]
+++++
+
+////
+[1] Abdalla M, Lange T, Eds. 2012. Pairing-Based Cryptography - Pairing 2012. Proceedings (2012), vol. 7708 of Lecture Notes in Computer Science, Springer-Verlag
+
+[2] Atkin A, Morain F. 1993. Elliptic Curves and Primality Proving, Mathematics of Computation 61(203): 29-68
+
+[3] Barbulescu R, Gaudry P, Joux A, Thome E. 2014. A Heuristic Quasi-polynomial Algorithm for Discrete Logarithm in Finite Fields of Small Characteristic. In P. Q. Nguyen and E. Oswald, editors, Advances in Cryptology: Proceedings of EUROCRYPT '14, volume 8441 of LNCS, Springer-Verlag, 1-16
+
+[4] Barreto P, Galbraith S, et al. 2004. Efficient Pairing Computation on Supersingular Abelian Varieties. Cryptology ePrint Archive, Report 2004/375
+
+[5] Barreto P, Kim H, Lynn B, et al.2002. Efficient Algorithms for Pairing-based Cryptosystems, Proceedings of CRYPTO 2002, LNCS 2442. Springer-Verlag, 354-369
+
+[6] Barreto P, Lynn B, Scott M. 2002. Constructing Elliptic Curves with Prescribed Embedding Degrees. In: Security in Communication Networks - SCN'2002, LNCS 2576. Springer-Verlag, 263-273
+
+[7] Barreto P, Lynn B, Scott M. 2003. On the Selection of Pairing-friendly Groups. In: Selected Areas in Cryptography - SAC'2003, LNCS 3006. Ottawa, Canada: Springer-Verlag, 17-25
+
+[8] Barreto P, Naehrig M. 2005. Pairing-friendly Elliptic Curves of Prime Order. Cryptology ePrint Archive, Report 2005/133
+
+[9] Boneh D, Franklin M. 2001. Identity Based Encryption from the Weil-pairing, Proceedings of CRYPTO 2001, LNCS 2139. Springer-Verlag, 213-229
+
+[10] Brezing F, Weng A. 2005. Elliptic Curves Sutable for Pairing Based Cryptography, Designs, Codes and Cryptography, 37: 133-141
+
+[11] Brickell E, Gordon D, Mccurley K, et al. 1993. Fast Exponentiation with Precomputation. In: Advances in Cryptology - EUROCRYPT'92, LNCS 658. Berlin: Springer-Verlag, 200-207
+
+[12] Cao Zhenfu, Zhang Fanggou, Eds. 2013. Pairing-Based Cryptography - Pairing 2013. Proceedings (2013), vol. 8365 of Lecture Notes in Computer Science, Springer-Verlag.
+
+[13] Cha J C, Cheon J H. 2002. An Identity-based Signature from Gap Diffie-Hellman Groups, Proceedings of PKC 2002, LNCS 2567. Springer-Verlag, 18-30
+
+[14] Cheng Qi, Wan Daqing and Zhuang Jincheng. 2014. Traps to the BGJT-Algorithm for Discrete Logarithms. ePrint 2014.
+
+[15] Cheon, J. H. 2006. Security Analysis of the Strong Diffie-hellman Problem. In EUROCRYPT (2006), S. Vaudenay, Ed., vol. 4004 of Lecture Notes in Computer Science, Springer-Verlag, 1-11
+
+[16] Duan P, Cui S, Wah Chan C. 2005. Special Polynomial Families for Generating More Suitable Elliptic Curves for Pairing-based Cryptosystems. Cryptology ePrint Archive, Report 2005/342
+
+[17] Dupont R, Enge A, Morain F. 2005. Building Curves with Arbitrary Small MOV Degree over Finite Prime Fields, Journal of Cryptology, 18(2): 79-89
+
+[18] Eisentrager K, Lauter K, Montgomery P. 2003. Fast Elliptic Curve Arithmetic and Improved Weil-pairing Evaluation. In: Topics in Cryptology, CT-RSA03, LNCS 2612. Springer-Verlag, 343-354
+
+[19] Freeman D. 2006. Constructing Pairing-friendly Elliptic Curves with Embedding Degree 10. In: Algorithmic Number Theory Symposium - ANTS-VII, LNCS 4076. Springer-Verlag, 452-465
+
+[20] Freeman D, Scott M, Teske E. 2006. A Taxonomy of Pairing-friendly Elliptic Curves, Cryptology ePrint Archive Report 2006/372
+
+[21] Frey G, Müller M, Rück H. 1999. The Tate-pairing and the Discrete Logarithm Applied to Elliptic Curve Cryptosystems, IEEE Transactions on Information Theory, 45(5): 1717-1719
+
+[22] Galbraith S. 2001. Supersingular Curves in Cryptography, Proceedings of Asiacrypt 2001, LNCS 2248. Springer-Verlag, 495-513
+
+[23] Galbraith S, Harrison K, Soldera D. 2002. Implementing the Tate-pairing, Proceedings of ANTSV, LNCS 2369. Springer-Verlag, 324-337
+
+[24] Galbraith S , Paterson K, Eds. 2008. Pairing-Based Cryptography - Pairing 2008. Proceedings (2008), vol. 5209 of Lecture Notes in Computer Science, Springer-Verlag.
+
+[25] Googlu F, Granger R, McGuire G, and Zumbrael J. 2013. On the Function Field Sieve and the Impact of Higher Splitting Probabilities: Application to discrete logarithms in F21971. Cryptology ePrint Archive, Report 2013/074.
+
+[26] Hess F, Smart N, Vercauteren F. 2006. The Eta-pairing Revisited. Cryptology ePrint Archive, Report 2006/110
+
+[27] IEEE P1363: 2000 Standard for Public Key Cryptography
+
+[28] ISO/IEC 15946-1: 2002 Information Technology—Security Techniques—Cryptographic Techniques Based on Elliptic Curves — Part 1: General
+
+[29] ISO/IEC 15946-2: 2002 Information Technology—Security Techniques—Cryptographic Techniques Based on Elliptic Curves — Part 2: Digital Signatures
+
+[30] ISO/IEC 15946-3: 2002 Information Technology—Security Techniques—Cryptographic Techniques Based on Elliptic Curves — Part 3: Key Establishment
+
+[31] ISO/IEC 15946-4: 2003 Information Technology—Security Techniques—Cryptographic Techniques Based on Elliptic Curves — Part 4: Digital Signatures Giving Message Recovery
+
+[32] ISO/IEC 14888-3: 2004 Information Technology—Security Techniques—Digital Signatures with Appendix  Part 3: Discrete Logarithm Based Mechanisms
+
+[33] ITU-T Recommendation X.680 Information Technology—Abstract Syntax Notation One (ASN.1): Specification of Basic Notation (eqv ISO/IEC 8824-1)
+
+[34] ITU-T Recommendation X.681 Information Technology—Abstract Syntax Notation One (ASN.1): Information Object Specification (eqv ISO/IEC 8824-2)
+
+[35] ITU-T Recommendation X.682 Information Technology—Abstract Syntax Notation One (ASN.1): Constraint Specification (eqv ISO/IEC 8824-3)
+
+[36] ITU-T Recommendation X.683 Information Technology—Abstract Syntax Notation One (ASN.1): Parametrization of ASN.1 Specifications (eqv ISO/IEC 8824-4)
+
+[37] ITU-T Recommendation X.690 Information Technology—ASN.1 Encoding Rules: Specification of Basic Encoding Rules (BER), Canonical Encoding Rules (CER) and Distinguished Encoding Rules (DER) (eqv ISO/IEC 8825-1)
+
+[38] ITU-T Recommendation X.691 Information Technology—ASN.1 Encoding Rules: Specification of Packed Encoding Rules (PER) (eqv ISO/IEC 8825-2)
+
+[39] Joux A. 2013. Faster Index Calculus for the Medium Prime Case Application to 1175-bit and 1425-bit Finite Fields. In Advances in Cryptology EUROCRYPT 2013. Springer-Verlag, 177-193
+
+[40] Joux A. 2013. A New Index Calculus Algorithm with Complexity L(1/4 + o(1))in Very Small characteristic. In Selected Areas in Cryptography-SAC 2013, volume 8282 of Lecture Notes in Computer Science, Springer-Verlag, 355-382
+
+[41] Joye M, Miyaji A, Otsuka A, Eds. 2010. Pairing-Based Cryptography - Pairing 2010. Proceedings (2010), vol. 6487 of Lecture Notes in Computer Science, Springer-Verlag.
+
+[42] Knuth D. 1981. The Art of Computer Programming(Vol 2). 2nd ed. Reading(MA): Addison-Wesley
+
+[43] Kobayashi T, Aoki K, Imai H. 2006. Efficient Algorithms for Tate-pairing. IEICE Trans. Fundamentals, E89-A
+
+[44] Koblitz N. 1987. Elliptic Curve Cryptosystems. Mathematics of Computation, 48:203-209
+
+[45] Lauter K, Montgomery P, Naehrig M. 2010. An Analysis of Affine Coordinates for Pairing Computation. Pairing-Based Cryptography - Pairing 2010. Proceedings (2010), vol. 6487 of Lecture Notes in Computer Science, Springer-Verlag.
+
+[46] Lay G, Zimmer H. 1994. Constructing Elliptic Curves with Given Group Order over Large Finite Fields, In: Algorithmic Number Theory Symposium-ANTS-1, LNCS 877. Springer-Verlag, 250-263 Menezes A. 1993. Elliptic Curve Public Key Cryptosystems. Boston: Kluwer Academic Publishers
+
+[47] Lidl R, Niederreiter H. 1983. Finite Fields. Reading(MA): Addison-Wesley Menezes A, Okamoto T, Vanstone S. 1993. Reducing Elliptic Curve Logarithms to Logarithms in a Finite Field. IEEE Transactions on Information Theory, 39: 1639-1646
+
+[48] Miller V. 2004. The Weil-pairing and its Efficient Calculation, Journal of Cryptology, 17:235-261
+
+[49] Milne J. 2006. Complex Multiplication, http://www.jmilne.org/math
+
+[50] Miyaji A, Nakabayashi M, Takano S. 2001. New Explicit Conditions of Elliptic Curve Traces for FR-reduction, IEICE Transactions on Fundamentals, E84-A(5): 1234-1243
+
+[51] Müller V. 1995. Counting the Number of Points on Elliptic Curves over Finite Fields of Characteristic Greater than Three: [Doctorate Dissertation]. Saarlandes: University of Saarlandes
+
+[52] Pollard J. 1978. Monte Carlo Methods for Index Computation mod p. Mathematics of Computation, 32: 918-924
+
+[53] Schoof R. 1985. Elliptic Curves over Finite Fields and the Computation of Square Roots mod p.Mathematics of Computation, 44(170): 483-494
+
+[54] Scott M. 2005. Computing the Tate-pairing. In: CT-RSA, LNCS 3376. Springer-Verlag, 293- 304
+
+[55] Scott M. 2006, Implementing Cryptographic Pairings, ECC 2006
+
+[56] Scott M, Barreto P. 2004. Compressed Pairings. In: Advances in Cryptology Crypto' 2004, LNCS 3152. Springer-Verlag, 140-156
+
+[57] Scott M, Barreto P. 2006. Generating More MNT Elliptic Curves, Designs, Codes and Cryptography, 38: 209-217
+
+[58] Shacham H, Waters B, Eds. 2009. Pairing-Based Cryptography - Pairing 2009. Proceedings (2009), vol. 5671 of Lecture Notes in Computer Science, Springer-Verlag
+
+[59] Silverman J. 1986. The Arithmetic of Elliptic Curves. Berlin: Springer-Verlag, GTM 106
+
+[60] Smart N. 1999. The Discrete Logarithm Problem on Elliptic Curves of Trace One. Journal of Cryptology, 12(3): 193-196
+
+[61] Takagi T, Okamoto T, Okamoto E, and Okamoto T, Eds. 2007. Pairing-Based Cryptography - Pairing 2007. Proceedings (2007), vol. 4575 of Lecture Notes in Computer Science, Springer-Verlag
+
+[62] Thuen Ø. 2006. Constructing Elliptic Curves over Finite Fields Using Complex Multiplication, Master of Science in Physics and Mathematics
+
+[63] ANSI X9.63-2001 Public Key Cryptography for the Financial Services Industry: Key Agreement and Key Transport Using Elliptic Curve Cryptography. American National Standards Institute
+
+[64] ANSI X9.62-1999 Public Key Cryptography for the Financial Services Industry: The Elliptic Curve Digital Signature Algorithm (ECDSA). American National Standards Institute
+////

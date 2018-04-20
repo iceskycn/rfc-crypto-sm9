@@ -1,0 +1,360 @@
+[appendix]
+== Number-theoretic algorithm
+
+This appendix corresponds to <<GMT-0044.1-2016,Appendix C>>.
+
+=== Calculation over finite fields
+
+==== Exponentiation operation in finite fields
+
+Let stem:[a] be a positive integer, stem:[g] be an element of field stem:[F_q], then the exponentiation is the process of computing stem:[g^a]. By the binary method described below, exponentiation can be performed efficiently.
+
+*Input:* a positive integer stem:[a], a field stem:[F_q] and a field element stem:[g].
+
+*Output*: stem:[g^a].
+
+
+. Set stem:[e = a mod (q - 1)], if stem:[e = 0], then output 1;
+
+. The binary representation of stem:[e] is stem:[e_re_(r - 1) ... e_1e_0], and the most significant bit stem:[e_r] is 1;
+
+. Set stem:[x = g];
+
+. For stem:[i = r - 1] to stem:[0]:
+
+.. Set stem:[x = x^2];
+
+.. If stem:[e_i = 1], set stem:[x = g * x];
+
+
+. Output stem:[x].
+
+For other accelerated algorithms, please refer to (Brickell et al. 1993), (Knuth 1981).
+
+==== Inverse operation in finite fields
+
+Let stem:[g] be a nonzero element in the field stem:[F_q], then the inverse element stem:[g^( - 1)] is the field element stem:[c] satisfying stem:[g * c = 1]. Since stem:[c = g^(q - 2)], the inverse operation can be implemented using the exponentiation operation. Note that if stem:[q] is prime and stem:[g] is an integer satisfying stem:[1 <= g <= q - 1], then stem:[g^( - 1)] ==
+is the integer stem:[c], stem:[1 <= c <= q - 1], and stem:[g * c -= 1( mod q)].
+
+*Input*: a field stem:[F_q] and a nonzero field element stem:[g]in stem:[F_q].
+
+*Output*: the inverse element stem:[g^( - 1)].
+
+
+. Compute stem:[c = g^(q - 2)] (see C.1.1);
+
+. Output stem:[c].
+
+A more efficient method is the extended Euclidean algorithm; please refer to (Knuth D. 1981).
+
+==== Generation of Lucas sequences
+
+Let stem:[X] and stem:[Y] be two nonzero integers, then the Lucas sequences stem:[U_k] and stem:[V_k] of stem:[X] and stem:[Y] are defined as follows:
+
+stem:[U_0 = 0] _,_ stem:[U_1 = 1]_,_ if stem:[k >= 2]_,_ stem:[U_k = X * U_(k - 1) – Y * U_(k - 2)];
+
+stem:[V_0 = 2] _,_ stem:[V_1 = X]_,_ if stem:[k >= 2]_,_ stem:[V_k = X * V_(k - 1) – Y * V_(k - 2)].
+
+The recurrences above are suitable for calculating the stem:[U_k] and stem:[V_k] for small stem:[k]'s. For large integers stem:[k], the following algorithm is efficient in the calculation of stem:[U_k mod q] and stem:[V_k mod q].
+
+*Input:* an odd prime stem:[p], integers stem:[X] and stem:[Y], a positive integer stem:[k].
+
+*Output:* stem:[U_k mod q] and stem:[V_k mod q].
+
+
+. Set stem:[\Delta = X^2 – 4Y];
+
+. The binary representation of stem:[k] is stem:[k_rk_(r - 1) ... k_1k_0], and the most significant bit stem:[k_r] is 1;
+
+. Set stem:[U = 1]_,_ stem:[V = X];
+
+. For stem:[i = r - 1] to 0:
+
+.. Set stem:[\[\[(U * V) mod p\],\[(U,V) = \]\]]_,_ stem:[(V^2 + \Delta * U^2) // 2 mod p];
+
+.. If stem:[k_i = 1], set stem:[(U,V) = (((U * X + V) // 2) mod p,(X * V + \Delta * U) // 2) mod p];
+
+
+. Output stem:[U] and stem:[V].
+
+==== Solving square root
+
+===== Solving square root on stem:[F_q]
+
+Let stem:[q] be an odd prime, stem:[g] be an integer satisfying stem:[0 <= g < q], then the square root (mod stem:[q]) of stem:[g] is the integer stem:[y], where stem:[0 <= y < q], such that stem:[y^2 = g( mod q)].
+
+If stem:[g = 0], then there is only one square root, stem:[y = 0]; if stem:[g != 0], then there are zero or two square roots (_mod_ stem:[q]), and if stem:[y] is one root, then the other root is stem:[q - y].
+
+The following algorithm can determine whether the square roots of stem:[g] exist. If it exists, then the algorithm will compute one root.
+
+*Input*: an odd prime stem:[q], an integer stem:[g], stem:[0 < g < q].
+
+*Output*: if the square roots exist, output a square root mod stem:[q]; otherwise output "no square root".
+
+*Algorithm 1*: For stem:[q = 3( mod 4)], there is a positive integer stem:[u] satisfying stem:[q = 4u + 3].
+
+
+. Compute stem:[y = g^(u + 1) mod q] (see C.1.1);
+
+. Compute stem:[z = y^2 mod q];
+
+. If stem:[z = g], then output stem:[y]; otherwise output "no square root".
+
+*Algorithm 2:* For stem:[q = 5( mod 8)], there is a positive integer stem:[u] satisfying stem:[q = 8u + 5].
+
+
+. Compute stem:[z = g^(2u + 1) mod q] (see C.1.1);
+
+. If stem:[z = 1( mod q)], compute stem:[y = g^(u + 1) mod q], output stem:[y] and stop the algorithm;
+
+. If stem:[z = - 1( mod q)], compute stem:[y = (2g * (4g)^u) mod q], output stem:[y] and stop the algorithm;
+. d)Output "no square root".
+
+*Algorithm 3*: For stem:[q = 1( mod 8)], there is a positive integer stem:[u] satisfying stem:[q = 8u + 1].
+
+
+. Set stem:[Y = g];
+
+. Generate the random value stem:[X]_,_ stem:[0 < X < q];
+
+. Compute the Lucas sequences (see B.1.3): stem:[U = U_(4u + 1) mod q]and stem:[V = V_(4u + 1) mod q];
+
+. If stem:[V^2 = 4Y( mod q)], then output stem:[y = (V // 2) mod q] and stop the algorithm;
+
+. If stem:[U mod q != 1] and stem:[U mod q != q - 1], output "no square root"and stop the algorithm;
+. f)Go to b).
+
+===== Solving square root on stem:[F_(q^2)]
+
+Let stem:[q] be an odd prime, for a quadratic field extension stem:[F_(q^2)], let the reduced polynomial be stem:[f(x) = x^2 - n,n in F_q], then element stem:[\beta] of stem:[F_(q^2)] can be represented as stem:[a + bx]_,_ stem:[a,b in F_q], then the square root of stem:[\beta] is:
+
+stem:[sqrt( \beta ) = sqrt(a + bx ) = +- (sqrt((a + sqrt(a^2 - nb^2))/(2)) + ( xb )/(2sqrt(((a + sqrt(a^2 - nb^2))/(2)))))] , or stem:[+- (sqrt((a - sqrt(a^2 - nb^2))/(2)) + ( xb )/(2sqrt(((a - sqrt(a^2 - nb^2))/(2)))))].
+
+The algorithm below can determine if stem:[\beta] has square roots, if yes, calculate one of the roots.
+
+*Input*: stem:[\beta = a + bx in F_(q^2)], stem:[\beta != 0], an odd prime number stem:[q].
+
+*Output:* if square roots of stem:[\beta]exists, output one square root stem:[z], otherwise output "The square root does not exist".
+
+. Compute stem:[U = a^2 - nb^2];
+
+. Compute the square root of stem:[U mod q] (see C.1.4.1), if the square root of stem:[U mod q] exists, denoted by stem:[w_i], the equality stem:[w_i^2 = U mod q,i = 1,2] holds, go to c); otherwise output "no square root" and stop.
+
+. For stem:[i = 1]to 2:
+
+.. Compute _V=(a+_ stem:[w_i]_)/2_;
+
+.. Compute the square root of stem:[U mod q] (see C.1.4.1). If they exist, choose one square root stem:[y] randomly, then the equality stem:[y^2 = Umodq] holds, go to d); if the square roots of stem:[U mod q] do not exist and stem:[i = 2], output "no square root", then stop.
+
+. Compute stem:[z_1 = b // 2y(modq)], let stem:[z_0 = y];
+
+. Output stem:[z = z_0 + z_1x].
+
+===== Solving square root on stem:[F_(q^m)]
+
+====== Checking square elements on stem:[F_(q^m)]
+
+Let stem:[q] be an odd prime number, stem:[m > 2], stem:[g] a nonzero element on stem:[F_(q^m)], the algorithm below can be used to check if stem:[g] is a square element.
+
+*Input:* an element stem:[g] of the field.
+
+*Output:* if stem:[g] is a square element then output "square", else output "no square".
+
+. Compute stem:[B = g^((q^m - 1) // 2)] (see C.1.1);
+
+. If stem:[B = 1], output "square";
+
+stem:[c] ) If stem:[B = - 1], output "no square".
+
+====== Solving square root on stem:[F_(q^m)]
+
+Let stem:[q] be an odd prime number, stem:[m >= 2].
+
+*Input:* an element stem:[g] of the field.
+
+*Output:* if stem:[g] is a square element, output its square root stem:[B]; otherwise, output "no square root"
+
+
+. Randomly choose a non-square element stem:[Y];
+
+. Compute stem:[q^m - 1 = 2^u xx k], stem:[k] is an odd integer.
+
+. Compute stem:[Y = Y^k].
+
+. Compute stem:[C = g^k].
+
+. Compute stem:[B = g^((k + 1) // 2)].
+
+. If stem:[C^(2^(u - 1)) != 1,] then output "no square root" and stop.
+
+. As long as stem:[C != 1]:
+
+.. Let stem:[I] is the smallest positive integer such that stem:[C^(2^i) = 1];
+
+.. Compute stem:[C = C xx Y^(2^(u - i))];
+
+.. Compute stem:[B = B xx Y^(2^(u - i - 1))];
+
+. Output stem:[B].
+
+
+
+=== Probabilistic primality testing
+
+Let stem:[u] be a large positive integer, the following probabilistic algorithm (Miller-Rabin test) can decide whether stem:[u] is a prime or a composite.
+
+*Input*: a large odd stem:[u] and a large positive integer stem:[T].
+
+*Output*: "probably prime" or "composite".
+
+
+. Compute stem:[v] and the odd stem:[w] satisfying stem:[u - 1 = 2^v * w];
+
+. For stem:[j = 1] to stem:[T]:
+
+.. Select a random value stem:[a] in the range stem:[\[2,u - 1\]];
+
+.. Set stem:[b = a^wmodu];
+
+.. If stem:[b = 1] or stem:[u - 1], go to b.6);
+
+.. For stem:[i = 1] to stem:[v - 1]:
+
+... Set stem:[b = b^2 mod u];
+
+... If stem:[b = u - 1], go to b.6);
+
+... If stem:[b = 1], output "composite" and stop the algorithm;
+
+... The next stem:[i];
+
+.. Output "composite" and stop the algorithm;
+
+.. The next stem:[j];
+
+.. Output "probably prime".
+
+If the algorithm outputs "composite", then stem:[u] is a composite. If the algorithm outputs "probably prime", then the probability of a composite stem:[u] is less than stem:[2^( - 2T)]. Thus, by selecting a stem:[T] large enough, then the probability is negligible.
+
+
+
+=== Polynomials over finite fields
+
+==== Greatest common divisor
+
+If stem:[f(x) != 0] and stem:[g(x) != 0] are two polynomials whose coefficients are in the field stem:[F_q], there is only one monic polynomial stem:[d(x)] (its coefficients are also in the field stem:[F_q]) with the largest degree, and it divides stem:[f(x)] and stem:[g(x)] simultaneously. The polynomial stem:[d(x)] is called the greatest common divisor of stem:[f(x)] and stem:[g(x)], which is denoted by stem:[gcd(f(x),g(x))]. The following algorithm (the Euclidean algorithm) is used to compute the greatest common divisor of two polynomials.
+
+*Input*: a finite field stem:[F_q], and two nonzero polynomials stem:[f(x) != 0] and stem:[g(x) != 0] in stem:[F_q].
+
+*Output*: stem:[d(x) = gcd(f(x),g(x))].
+
+
+. Set stem:[a(x) = f(x)]_,_ stem:[b(x) = g(x)];
+
+. When stem:[b(t) != 0], execute the loop:
+
+.. Set stem:[c(x) = a(x)modb(x)];
+
+.. Set stem:[a(x) = b(x)];
+
+.. Set stem:[b(x) = c(x)];
+
+
+. Let stem:[\alpha] be the coefficient of the first term in stem:[a(x)] and output stem:[\alpha^( - 1)a(x)].
+
+==== Checking irreducibility of polynomial over stem:[F_q]
+
+Let stem:[f(x)]be the polynomial on stem:[F_q], the following algorithm can be used to check the irreducibility of stem:[f(x)] efficiently.
+
+*Input:* the monic polynomial stem:[f(x)] and a prime stem:[q].
+
+*Output:* if stem:[f(x)]is irreducible over stem:[F_q], output "yes"; otherwise output "no".
+
+
+. Set stem:[u(x) = x], stem:[m = deg(f(x))];
+
+. For stem:[i = 1] _to_ stem:[| __m // 2__ |]:
+
+.. Set stem:[u(x) = u(x)^qmodf(x)];
+
+.. Set stem:[d(x) = gcd(f(x),u(x) - x];
+
+.. If stem:[d(x) != 1], output "no" and stop the algorithm;
+
+. c)Output "yes".
+
+=== Elliptic curve algorithms
+
+==== Finding points on elliptic curves
+
+Given an elliptic curve over finite field, the following algorithm can be used to find a point which is not the zero point on the elliptic curve efficiently.
+
+===== Finding points on stem:[E(F_p)] .
+
+*Input*: a prime stem:[p], the parameters stem:[a] and stem:[b] of an elliptic curve stem:[E] over stem:[F_p].
+
+*Output*: a nonzero point on stem:[E].
+
+
+. Select a random integer stem:[x], stem:[0 <= x <= p];
+
+. Set stem:[\alpha = (x^3 + ax + b)modp];
+
+. If stem:[\alpha = 0], then output stem:[(x,0)] and stop the algorithm;
+
+. Compute the square root of stem:[\alpha modp] (see C.1.4.1);
+. e)If d) outputs "no square root", then go to a);
+
+. Output stem:[(x,y)].
+
+===== Finding points on stem:[E(F_(q^m))(m >= 2)]
+
+Input: finite field stem:[F_(q^m)] ( stem:[q] is an odd prime), the parameters stem:[a] and stem:[b]of an elliptic curve stem:[E] over stem:[F_(q^m)]
+
+Output: a nonzero point on stem:[E].
+
+. Select a random element stem:[x] in stem:[F_(q^m)].
+
+. Compute stem:[\alpha = (x^3 + ax + b)] over stem:[F_(q^m)].
+
+. If stem:[\alpha = 0], then output stem:[(x,0)] and stop the algorithm.
+
+. Compute the square root of stem:[\alpha] over stem:[F_(q^m)], denoted by stem:[y] (see C.1.4.3);
+. e)If the output of d) is "no square root", then go to a);
+
+. Output stem:[(x,y)].
+
+==== Finding stem:[l] -order points on elliptic curves
+
+This algorithm can be used to compute the generator of stem:[l]-torsion subgroup of elliptic curves.
+
+*Input:* the parameters stem:[a] and stem:[b] of an elliptic curve stem:[E] over stem:[F_q], the order of the curve stem:[E(F_q) = lr], where stem:[l] is a prime number.
+
+*Output:* an stem:[l]-order point on stem:[E(F_q)].
+
+
+. Use the method of C.3.1 to select a point stem:[Q] on the curve randomly.
+
+. Compute stem:[P = \[r\]Q];
+
+. If stem:[P = O] then go to a);
+
+. Output stem:[P].
+
+==== Finding stem:[l] -torsion points on twisted elliptic curves
+
+Let stem:[y^2 = x^3 + ax + b] be the function of the elliptic curve stem:[E] over stem:[F_(q^m)], the order stem:[E(F_(q^m)) = q^m + 1 - t]. Let the equation of its twisted curve stem:[E'] is stem:[y^2 = x^3 + \beta^2 ax + \beta^3b], stem:[\beta] is a non-square element of stem:[F_(q^m)]_,_ stem:[E'(F_(q^m)) = q^m + 1 + t].
+
+*Input:* the parameters stem:[a,b, \beta] of the twisted curve stem:[E'(F_(q^m))] of an elliptic curve stem:[E(F_(q^m))], the order stem:[E(F_(q^m)) = n^' = l * r], where stem:[l] is prime.
+
+*Output:* an stem:[l]-order point on stem:[E'(F_(q^m))].
+
+
+. Use the method of C.3.1 to select a point stem:[Q]on stem:[E'(F_(q^m))] randomly.
+
+. Compute stem:[P = \[r\]Q];
+
+. If stem:[P = Q] then go to a); else stem:[P] is an stem:[l]-torsion point.
+
+. Output stem:[P].
+

@@ -1,0 +1,133 @@
+
+=== Finite field
+
+==== Overview
+
+A field consists of a non-empty set stem:[F] with two operations:
+
+* the addition (denoted by "stem:[+]"); and
+* the multiplication (denoted by "stem:[*]").
+
+It satisfies following properties:
+
+. stem:[\[\[F, + \],\[\]\]] is an additive abelian group, in which 0 denotes the identity element.
+. stem:[\[\[\],\[(F { 0 } , * )\]\]] is a multiplicative abelian group, in which 1 denotes the identity element.
+. Distributive law: stem:[(a + b)c = ac + bc] for all stem:[a,b,c in F].
+
+If stem:[F] is a finite set, then the field is called a finite field. The number of elements in the finite field is called the order of the finite field.
+
+==== Prime field stem:[F_p]
+
+When the order of a finite field is prime, we call the field a prime field.
+
+Let stem:[p] be a prime number, then the residue of integers modulo stem:[p], stem:[{ 0,1, ... p - 1 }], with respect to the addition modulo stem:[p] and the multiplication modulo stem:[p] can construct a prime field of order stem:[p], denoted by stem:[F_p].
+
+stem:[F_p] has the following properties:
+
+. the additive identity element is 0.
+. the multiplicative identity element is 1.
+. the addition of field elements is that of integers modulo stem:[p], namely, if stem:[a,b in F_p], then stem:[a + b = (a + b) mod p].
+. the multiplication of field elements is that of integers modulo stem:[p], namely, if stem:[a,b in F_p], then stem:[a * b = (a * b) mod p].
+
+==== Finite field stem:[F_(q^m)]
+
+Let stem:[q] be a prime or a prime power, stem:[f(x)] be an stem:[m]-degree ( stem:[m > 1]) irreducible polynomial (reduced polynomial or field polynomial) in the polynomial ring stem:[F_q\[x\]], quotient ring stem:[F_q\[x\] // (f(x))] be a finite field with stem:[q^m] elements (denoted by stem:[F_(q^m)] ), then stem:[F_(q^m)] is the extension field of stem:[F_q], stem:[F_q] is the subfield of stem:[F_(q^m)], and stem:[m] is the extension degree. stem:[F_(q^m)] can be seen as the stem:[m]-dimensional vector space of stem:[F_q] and its elements can be uniquely represented by stem:[a_0 \beta_0 + a_1 \beta_1 + ... a_(m - 1) \beta_(m - 1), where a_i in F_q], stem:[\beta_0, ... , \beta_(m - 1)] is a base of stem:[F_(q^m)] over stem:[F_q] == .
+
+The elements of stem:[F_(q^m)] can be represented via polynomial basis or normal basis. In this standard, unless otherwise specified, all elements of stem:[F_(q^m)] are represented by polynomial basis.
+
+Choose a monic irreducible polynomial stem:[f(x) = x^m + f_(m - 1)x_(m - 1) + ... + f_2x^2 + f_1x + f_0(f_i in F_q,i = 0,1, ... ,m - 1)], then stem:[F_(q^m)] is composed of all polynomials in the polynomial ring stem:[F_q\[x\]] of degree less than stem:[m]. The set of polynomials stem:[{ x^(m - 1),x^(m - 2), ... ,x,1 }] is a base for stem:[F_(q^m)] over stem:[F_q], which is called a polynomial basis. For any element stem:[a(x) = a_(m - 1)x^(m - 1) + a_(m - 2)x^(m - 2) + ... + a_1x + a_0] in stem:[F_(q^m)], its coefficients over stem:[F_q] constitute an stem:[m]-dimensional vector, denoted by stem:[a = (a_(m - 1),a_(m - 2), ... ,a_1,a_0)], where stem:[a_i in F_q,i = 0,1, ... ,m - 1].
+
+stem:[F_(q^m)] has the following properties:
+
+. The zero element 0 is represented by an stem:[m]-dimensional vector stem:[(0,0, ... 0,0,0)].
+
+. The multiplicative identity element is represented by an stem:[m]-dimensional vector stem:[(0,0, ... 0,0,1)].
+
+. The addition of two field elements is the addition of vectors, and each vector component adopts addition of field stem:[F_q].
+
+. The multiplication of elements stem:[a] and stem:[b] is defined like this: let stem:[a] and stem:[b] correspond to the polynomials stem:[a(x)] and stem:[b(x)] over stem:[F_q] respectively; then, stem:[a * b] is defined as the corresponding vector of the polynomial stem:[(a(x) * b(x)) mod f(x)].
+
+. The inverse element: suppose stem:[a(x)] is the corresponding polynomial of stem:[a] over stem:[F_q], stem:[a^( - 1)(x)] is the corresponding polynomial of stem:[a^( - 1)] over stem:[F_q], such that stem:[a(x) * a^( - 1)(x) = 1 mod f(x)].
+
+See Annex A.1 for more details about stem:[F_(q^m)].
+
+==== Elliptic curves over finite field
+
+The elliptic curve over finite field stem:[F_(q^m)] ( stem:[m >= 1]) is a set of points. A point stem:[P] (except the point stem:[O]) on the elliptic curve can be represented by the coordinates stem:[P = (x_P,y_P)], where stem:[x_P] and stem:[y_P] are field elements satisfying a certain equation, and are called the stem:[x]-coordinate and stem:[y]-coordinate, respectively.
+
+This part describes elliptic curves whose characteristic is a large prime stem:[p].
+
+In this part, the points on an elliptic curve are represented by affine coordinates, unless otherwise specified.
+
+The equation of elliptic curves defined over stem:[F_(q^m)] is:
+
+[stem]
+++++
+y^2 = x^3 + ax + b,a,b in F_(p^m), ^^ 4a^3 + 27b^2 != 0
+++++
+
+The elliptic curve stem:[E(F_(q^m))] is defined as:
+
+stem:[E(F_(q^m)) = {(x,y) | (x,y in F)_(q^m)], satisfying the equation stem:[(1) uu {O}], where stem:[O] is the point at stem:[oo].
+
+The number of points on the elliptic curve stem:[E(F_(q^m))] is represented by stem:[E(F_(q^m))], which is also called the order of stem:[E(F_(q^m))].
+
+This standard requires the prime stem:[p > 2^(191)].
+
+Let stem:[E] and stem:[E'] be elliptic curves defined over stem:[F_q]. If there exists an isomorphic map stem:[\varphi_d : E'(F_(q^d)) -> E(F_(q^d))], where stem:[d] is the smallest integer which makes the map exist, then stem:[E'] is called the degree stem:[d] twisted curve of stem:[E]. There are three cases of the value of stem:[d] when stem:[p >= 5]:
+
+. If stem:[a = 0,b != 0], then stem:[d = 6], and stem:[E^' : y^2 = x^3 + \betab], stem:[\varphi_6 : E^' -> E : (x,y) |-> ( \beta^( - 1 // 3)x, \beta^( - 1 // 2)y)].
+
+. If stem:[b = 0,a != 0], then stem:[d = 4], and stem:[E^' : y^2 = x^3 + \betaax], stem:[\varphi_4 : E^' -> E : (x,y) |-> ( \beta^( - 1 // 2)x, \beta^( - 3 // 4)y)].
+
+. If stem:[a != 0,b != 0], then stem:[d = 2], and stem:[E^' : y^2 = x^3 + \beta^2 ax + \beta^3b], stem:[\varphi_2 : E^' -> E : (x,y) |-> ( \beta^( - 1)x, \beta^( - 3 // 2)y)].
+
+==== Elliptic curve group
+
+The points on elliptic curve stem:[E(F_(q^m))], where stem:[(m >= 1)], constitute an abelian group based on the following addition operation rules:
+
+. stem:[O + O = O].
+
+. stem:[\[\[\],\[AAP = (x,y) in E(F_(q^m)) { O } \]\]], stem:[P + O = O + P = P].
+
+. stem:[\[\[\],\[AAP = (x,y) in E(F_(q^m)) { O } \]\]], the inverse element of stem:[P] is stem:[– P = (x, - y)], and stem:[P + ( - P) = O].
+
+. The addition rules for two different points (wherein these points are not the inverse of each other):
+Let stem:[\[\[\],\[P_1 = (x_1,y_1) in E(F_(q^m)) { O } \]\]]_,_ stem:[\[\[\],\[P_2 = (x_2,y_2) in E(F_(q^m)) { O } \]\]], and stem:[x_1 != x_2].
+
+Let stem:[P_3 = (x_3,y_3) = P_1 + P_2], then
+
+stem:[{\[\[x_3 = \lambda^2 - x_1 - x_2,\],\[y_3 = \lambda (x_1 - x_3) - y_1,\]\]]
+
+where
+
+stem:[\lambda = (y_2 - y_1)/(x_2 - x_1) .]
+
+. Point doubling:
+
+Let stem:[\[\[\],\[P_1 = (x_1,y_1) in E(F_(q^m)) { O } \]\]], and stem:[y_1 != 0]_,_ stem:[P_3 = (x_3,y_3) = P_1 + P_1], then
+
+stem:[{\[\[x_3 = \lambda^2 - 2x_1,\],\[y_3 = \lambda (x_1 - x_3) - y_1,\]\]]
+
+where
+
+stem:[\lambda = (3x_1^2 + a)/(2y_1)].
+
+==== Scalar multiplication on elliptic curve
+
+The repeated addition of the same point is called the scalar multiplication of the point. Let stem:[u] be a positive integer, stem:[P] be a point on the elliptic curve, then the stem:[u] multiple of the point stem:[P] is denoted by stem:[Q = \[u\]P = underset(uP's)(ubrace (P + P + ... + P))].
+
+Scalar multiplication can be extended to 0-multiple and negative-multiple operations: stem:[\[0\]P = O], stem:[\[- u\]P = \[u\]( - P)].
+
+Scalar multiplication can be calculated efficiently using certain techniques; please refer to Annex A.2 for them.
+
+==== Verification of points in a subgroup of an elliptic curve
+
+*Input*: The parameters stem:[a] and stem:[b] which define the elliptic curve equation over stem:[F_(q^m)], where stem:[q] is an odd prime and stem:[m >= 1], the order stem:[N] of the subgroup stem:[G] of the elliptic curve stem:[E(F_(q^m))], a pair of elements in stem:[F_(q^m)] stem:[(x,y)].
+
+*Output*: If stem:[(x,y)] is an element of the group stem:[G], then output "valid", otherwise output "invalid".
+
+. Check if stem:[(x,y)] satisfies the equation of the elliptic curve stem:[y^2 = x^3 + ax + b].
+. Let stem:[Q = (x,y)], check if stem:[\[N\]Q = O].
+
+If any of these above verification fail, output "invalid", otherwise output "valid".

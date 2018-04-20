@@ -1,0 +1,60 @@
+=== Bilinear pairings and secure curves
+
+
+==== Bilinear pairings
+
+Let stem:[\[\[G\],\[\],\[\],\[\]\]], stem:[\[\[G\],\[\],\[\],\[\]\]] and stem:[\[\[G\],\[(T, * )\],\[\]\]] be three cyclic groups. The order of stem:[G_1], stem:[G_2] and stem:[G_T] is a prime stem:[N], stem:[P_1] is a generator of stem:[G_1], stem:[P_2] is a generator of stem:[G_2], and there exists a homomorphism stem:[\psi] from stem:[G_2] to stem:[G_1] such that stem:[\psi (P_2) = P_1].
+
+Bilinear pairing stem:[e] is a map of stem:[G_1 xx G_2 -> G_T] satisfying the following conditions:
+
+. Bilinearity: for any stem:[P in G_1], stem:[Q in G_2], stem:[(a,b in Z)_N], stem:[e(\[a\]P,\[b\]Q) = e(P,Q)^( ab )].
+
+. Non-degeneracy: stem:[e(P_1,P_2) != 1_(G_T)].
+
+. Computability: for any stem:[P in G_1], stem:[Q in G_2], there exists an efficient algorithm to compute stem:[e(P,Q)].
+
+Bilinear pairings used in this part are defined on elliptic curve groups, such as the Weil pairing, the Tate pairing, the Ate pairing and the R-ate pairing.
+
+
+==== Security
+
+The security of bilinear pairings is based on the following hard problems:
+
+Problem 1 (Bilinear Inverse Diffie-Hellman Problem, BIDH)::
+For stem:[a,b in \[1,N - 1\]], given stem:[\[a\]P_1,\[b\]P_2],
+it is hard to compute stem:[e(P_1,P_2)^(b // a)].
+
+Problem 2 (Decisional Bilinear Inverse Diffie-Hellman Problem, DBIDH)::
+For stem:[a,b,r in \[1,N - 1\]], it is hard to distinguish
+stem:[(P_1,P_2,\[a\]P_1,\[b\]P_2,e(P_1,P_2)^(b // a))]
+from stem:[(P_1,P_2,\[a\]P_1,\[b\]P_2,e(P_1,P_2)^r)].
+
+Problem 3 (stem:[\tau]-Bilinear Inverse Diffie-Hellman Problem, stem:[\tau]-BDHI)::
+For integer stem:[\tau] and stem:[x in \[1,N - 1\]],
+given stem:[(P_1,\[x\]P_1,P_2,\[x\]P_2,\[x^2\]P_2, ... ,\[x^( \tau )\]P_2)],
+it is hard to compute stem:[e(P_1,P_2)^(1 // x)].
+
+Problem 4 (stem:[\tau]*-Gap-Bilinear Inverse Diffie-Hellman Problem, stem:[\tau]*-Gap-BDHI)::
+For integer stem:[\tau] and stem:[x in \[1,N - 1\]],
+given stem:[(P_1,\[x\]P_1,P_2,\[x\]P_2,\[x^2\]P_2, ... ,\[x^( \tau )\]P_2)]
+and the DBIDH algorithm, it is hard to compute stem:[e(P_1,P_2)^(1 // x)].
+
+The security of the SM9 identity-based cryptographic algorithms is founded on the computational intractability of the above problems. The hardness of these problems implies that the discrete logarithm problems over stem:[G_1], stem:[G_2], and stem:[G_T] are also intractable; and when selecting an elliptic curve the primary consideration is to ensure the discrete logarithm problems remain intractable on the selected curve.
+
+==== Embedding degrees and secure curves
+
+Let stem:[G] be an stem:[N]-order subgroup of the elliptic curve stem:[E(F_q)]. The smallest positive integer stem:[k] such that stem:[N vv q^k - 1] is called the embedding degree of stem:[G] relative to stem:[N], also known as the embedding degree of stem:[E(F_q)] relative to stem:[N].
+
+Let stem:[G_1] be an stem:[N]-order subgroup of stem:[E(F_(q^(d_1)))], where stem:[d_1 vv k], and stem:[G_2] be an stem:[N]-order subgroup of stem:[E(F_(q^(d_2)))], where stem:[d_2 vv k], then the range stem:[G_T] of the bilinear pairings based on the elliptic curves is a subgroup of stem:[F_(q^k)^()]. Thus, the bilinear pairings based on the elliptic curves can convert the elliptic curve discrete logarithm problem to the discrete logarithm problem over the finite field stem:[F_(q^k)^()]. The security of the curve improves as the size of the extension field increases (if no faster discrete logarithm algorithm exists in the field), yet it becomes harder to compute the bilinear pairings. Hence it is necessary to adopt an elliptic curve with an appropriate embedding degree while achieving the desired security level. This standard specifies that stem:[q^k > 2^(1536)].
+
+This standard specifies the use of the following curves:
+
+. Ordinary curves whose base field is stem:[F_q], where stem:[q] is a prime greater than stem:[2^(191)], and the embedding degree stem:[k = 2^i3^j], where stem:[i > 0] and stem:[j >= 0].
+
+. Supersingular curves whose base field is stem:[F_q], where stem:[q] is a prime greater than stem:[2^(768)], and the embedding degree stem:[k = 2].
+
+For stem:[N] less than stem:[2^(360)], it is recommended that:
+
+. stem:[N - 1] has a prime factor greater than stem:[2^(190)]
+. stem:[N + 1] has a prime factor greater than stem:[2^(120)]
+

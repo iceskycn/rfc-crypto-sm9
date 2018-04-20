@@ -1,0 +1,8 @@
+
+[[scope]]
+== Scope
+
+The SM9 algorithm applies to the elliptic curves over the finite field
+stem:[F_p], where stem:[p] is a prime number that satisfies
+stem:[p > 2^(191)].
+

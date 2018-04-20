@@ -1,0 +1,19 @@
+
+[[security]]
+== Security Considerations
+
+* Products and services that utilize cryptography in China are
+  regulated by the SCA <<SCA>>: they must be explicitly approved or
+  certified by the SCA before being allowed to be sold or used in
+  China.
+
+* SM9 <<GMT-0044-2016>> is a set of cryptographic algorithms published
+  by the SCA <<SCA>>. No formal proof of security is provided. The
+  security properties of SM9 are under public study. There are no known
+  feasible attacks against the SM9 algorithm at the time this document
+  is published.
+
+* SM9 is a set of identity-based cryptographic algorithms which depend
+  on a centralized key-generation center (KGC). In use cases where
+  confidentiality is paramount or trust to a central authority is
+  not desired, this fact *SHOULD* be carefully considered.

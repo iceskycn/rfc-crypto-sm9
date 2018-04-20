@@ -1,0 +1,343 @@
+
+[appendix]
+== Elliptic curve basics
+
+This appendix corresponds to <<GMT-0044.1-2016,Appendix A>>.
+
+=== Finite field
+
+
+==== Prime field stem:[F_p]
+
+Suppose stem:[p] is prime, then in the set of remainders stem:[{ 0,1,2,...,p - 1 }] modulo stem:[p], the addition and multiplication in terms of the arithmetic of integers modulo stem:[p] form a stem:[p]-order prime field, which is symbolized by stem:[F_p]. The additive identity is 0, while the multiplicative identity is 1. The elements of stem:[F_p] have the following operation rules:
+
+Addition: if stem:[a,b in F_p], then stem:[a + b = r], where stem:[r = (a + b) mod p], stem:[r in \[0,p - 1\]].
+
+Multiplication: if stem:[a,b in F_p], then stem:[a * b = s], where stem:[s = ( a*b ) mod p], stem:[s in \[0,p - 1\]].
+
+Let stem:[F_p^()] be the multiplicative group composed of all nonzero elements of stem:[F_p]. Since stem:[F_p^()] is a multiplicative group, there is at least one element stem:[g] in stem:[F_p], satisfying that any nonzero element in stem:[F_p] can be represented by the power of stem:[g]. We call stem:[g] the generator (primitive element) of stem:[F_p^()], and stem:[F_p^() = {g^i|0 <= i <= p - 2 }]. Let stem:[a = g^i in F_p^()], and stem:[0 <= i <= p - 2], then the multiplicative inverse of stem:[a] is: stem:[a^( - 1) = g^(p - 1 - i)].
+
+*Example 1:* the prime field stem:[F_(19) = { 0,1,2, ... ,18 }].
+
+Example of addition in stem:[F_(19)]: stem:[10,14 in F_(19)], stem:[10 + 14 = 24], stem:[24 mod 19 = 5], then stem:[10 + 14 = 5].
+
+Example of multiplication in stem:[F_(19)]: stem:[7,8 in F_(19)], stem:[7 xx 8 = 56], stem:[56 mod 19 = 18], then stem:[7 * 8 = 18].
+
+13 is a generator of stem:[F_(19)^()], then the elements of stem:[F_(19)^()] can be represented by the powers of 13:
+
+stem:[13^0 = 1], stem:[13^1 = 13], stem:[13^2 = 17], stem:[13^3 = 12], stem:[13^4 = 4], stem:[13^5 = 14], stem:[13^6 = 11], stem:[13^7 = 10], stem:[13^8 = 16], stem:[13^9 = 18], stem:[13^(10) = 6], stem:[13^(11) = 2], stem:[13^(12) = 7], stem:[13^(13) = 15], stem:[13^(14) = 5], stem:[13^(15) = 8], stem:[13^(16) = 9], stem:[13^(17) = 3], stem:[13^(18) = 1].
+
+==== Finite field stem:[F_(q^m)]
+
+Suppose stem:[q] is a prime or a prime power, stem:[f(x)] be an stem:[m]-degree ( stem:[m > 1]) irreducible polynomial (which is called the reduced polynomial or the field polynomial) in the polynomial ring stem:[F_q\[x\]], the quotient ring stem:[F_q\[x\] // (f(x))] be a finite field composed of stem:[q^m]elements, then stem:[F_(q^m)]is an extension field of stem:[F_q], stem:[F_q]is a subfield of stem:[F_(q^m)], stem:[m] is the extension degree. stem:[F_(q^m)]can be seen as the stem:[m]-dimensional vector space of stem:[F_q], that is to say there exist stem:[m] elements stem:[\alpha_0, \alpha_1, ... , \alpha_(m - 1)] in stem:[F_(q^m)], such that stem:[AA \alpha in F_(q^m)], stem:[\alpha] can be uniquely represented by stem:[( \alpha = a_(m - 1) \alpha_(m - 1)( + cdots + a)_0 \alpha )_0 + a_1 \alpha_1] ( stem:[a_i in F_q]), then stem:[{ \alpha_0, \alpha_1, cdots , \alpha_(m - 1) }] is called a basis of stem:[F_(q^m)] over stem:[F_q]. Given such a basis, then we can use the vector stem:[(a_0,a_1, ... ,a_(m - 1))] to represent the field element stem:[\alpha].
+
+There are many possible choices for the selection of a basis, such as the polynomial basis and the normal basis.
+
+Suppose the irreducible polynomial stem:[f(x)] is a monic polynomial stem:[f(x) = x^m + f_(m - 1)x^(m - 1) + ... + f_2x^2 + f_1x + f_0] ( stem:[f_i in F_q], stem:[i = 0,1, ... ,m - 1]), and the elements of stem:[F_(q^m)] can be represented by all polynomials with degree less than stem:[m] in the polynomial ring stem:[F_q\[x\]], that is, stem:[F_(q^m) = {a_(m - 1)x^(m - 1) + a_(m - 2)x^(m - 2) + * * * + a_1x + a_0|a_i in F_q,i = 0,1,...,m - 1 }]. The set of polynomials stem:[{ x^(m - 1),x^(m - 2), ... ,x,1 }] is a basis of stem:[F_(q^m)] as a vector space over stem:[F_q], which is called a polynomial basis. When stem:[m] has a divisor stem:[d] ( stem:[1 < d < m]), stem:[F_(q^d)] could be extended to stem:[F_(q^m)]. If a suitable stem:[m // d]-degree irreducible polynomial is selected from stem:[F_(q^d)\[x\]] to act as stem:[F_(q^m)]'s reduced polynomial on stem:[F_(q^d)], then stem:[F_(q^m)]could be generated according to the towering method. This extension's basic forms are still vectors composed of the elements of stem:[F_q]. For example, when stem:[m = 6], stem:[F_q] ==
+could be extended three times to the extension field stem:[F_(q^3)], and stem:[F_(q^3)] could be further extended twice to the extension field stem:[F_(q^6)]. stem:[F_q] ==
+could be extended twice to the extension field stem:[F_(q^2)], and stem:[F_(q^2)]could be further extended three times to the extension field stem:[F_(q^6)].
+
+The basis of the form stem:[{ \beta , \beta^q, \beta^(q^2),..., \beta^(q^(m - 1)) }] of stem:[F_(q^m)] over stem:[F_q] are called normal basis, where stem:[( \beta in F)_(q^m)]_._ stem:[AAa in F_(q^m)], stem:[a] could berepresented as stem:[a = a_0 \beta + a_1 \beta^q + * * * + a_(m - 1) \beta^(q^(m - 1))], where stem:[a_i in F_q]_,_ stem:[i = 0,1,...,m - 1]. For any finite field stem:[F_q] and its extension field stem:[F_(q^m)], such basis always exist.
+
+Unless otherwise specified, all elements in stem:[F_(q^m)] are represented by the polynomial basis.
+
+The field element stem:[a_(m - 1)x^(m - 1) + a_(m - 2)x^(m - 2) + * * * + a_1x + a_0] could be represented by the vector stem:[(a_(m - 1),(a_(m - 2), ... ,a_1,a)_0)] in terms of the polynomial basis, so stem:[F_(q^m) = {(a_(m - 1),(a_(m - 2), ... ,a_1,a)_0)|a_i in F_q,i = 0,1, ... ,m - 1 }].
+
+The multiplicative identity is represented by stem:[(0, ... ,0,1)], and the zero element is represented by stem:[(0, ... ,0,0)]. The addition and multiplication of the field elements are defined as follows.
+
+*Addition.* stem:[AA(a_(m - 1),(a_(m - 2), ... ,a_1,a)_0),(b_(m - 1),(b_(m - 2), ... ,b_1,b)_0) in F_(q^m)], then stem:[(a_(m - 1),(a_(m - 2), ... ,a_1,a)_0) + (b_(m - 1),(b_(m - 2), ... ,b_1,b)_0) = (c_(m - 1),(c_(m - 2), ... ,c_1,c)_0)], where stem:[c_i = a_i + b_i], stem:[i = 0,1, ... ,m - 1]. That is, addition is implemented by component-wise addition in stem:[F_q].
+
+*Multiplication.* stem:[AA(a_(m - 1),(a_(m - 2), ... ,a_1,a)_0),(b_(m - 1),(b_(m - 2), ... ,b_1,b)_0) in F_(q^m)], then stem:[(a_(m - 1),(a_(m - 2), ... ,a_1,a)_0) * (b_(m - 1),(b_(m - 2), ... ,b_1,b)_0) = (r_(m - 1),(r_(m - 2), ... ,r_1,r)_0)], where the polynomial stem:[r_(m - 1)x^(m - 1) + r_(m - 2)x^(m - 2) + * * * + r_1x + r_0] is the remainder of stem:[(a_(m - 1)x^(m - 1) + a_(m - 2)x^(m - 2) + * * * + a_1x + a_0) * (b_(m - 1)x^(m - 1) + b_(m - 2)x^(m - 2) + * * * + b_1x + b_0)] modulo stem:[f(x)] in stem:[F_q\[x\]].
+
+stem:[F_(q^m)]
+ contains stem:[q^m] elements. Let stem:[F_(q^m)^()] be the multiplicative group composed of all nonzero elements in stem:[F_(q^m)]. Since stem:[F_(q^m)] is a multiplicative group, there exists at least one element stem:[g] in stem:[F_(q^m)] such that any nonzero element of stem:[F_(q^m)] can be represented by the powers of stem:[g]. stem:[g] is called the generator (or primitive element) of stem:[F_(q^m)^()], and stem:[F_(q^m)^() = {g^i|0 <= i <= q^m - 2 }]. Let stem:[a = g^i in F_(q^m)^()], where stem:[0 <= i <= q^m - 2], then the multiplicative inverse of stem:[a] is stem:[a^( - 1) = g^(q^m - 1 - i)].
+
+*Example 2:* the polynomial basis representation of stem:[F_(3^2)].
+
+Let stem:[f(x) = x^2 + 1] be an irreducible polynomial over stem:[F_3], then the elements of stem:[F_(3^2)] are:
+
+* stem:[(0,0),(0,1),(0,2),(1,0),(1,1),(1,2),(2,0),(2,1),(2,2)]
+
+Addition: stem:[(2,1) + (2,0) = (1,1)]
+
+Multiplication: stem:[(2,1) * (2,0) = (2,2)]
+
+* stem:[(2x + 1) * 2x = 4x^2 + 2x] stem:[x^2 + 2x] stem:[2x + 2( mod f(x))]
+
+That is, stem:[2x + 2] is the reminder of stem:[(2x + 1) * 2x] modulo stem:[f(x)].
+
+The multiplicative identity is stem:[(0,1)], and stem:[\alpha = x + 1] is a generator of stem:[F_(3^2)^()], then the powers of stem:[\alpha] are:
+
+* stem:[\alpha^0 = (0,1)], stem:[\alpha^1 = (1,1)], stem:[\alpha^2 = (2,0)], stem:[\alpha^3 = (2,1)], stem:[\alpha^4 = (0,2)], stem:[\alpha^5 = (2,2)], stem:[\alpha^6 = (1,0)], stem:[\alpha^7 = (1,2)], stem:[\alpha^8 = (0,1)].
+
+==== Elliptic curves over finite fields
+
+===== Overview
+
+There are two common representations for the elliptic curves over finite fields: an affine coordinate and a projective coordinate.
+
+===== Affine coordinate
+
+Suppose stem:[p] is a prime greater than 3, the elliptic curve equation over stem:[F_(p^m)] in the affine coordinate system can be simplified as stem:[y^2 = x^3 + ax + b], where stem:[a,b in F_p], satisfying stem:[(4a^3 + 27b^2) mod p != 0]. The set of points on the elliptic curve is denoted by stem:[E(F_(p^m)) = {(x,y)|x,y in F_(p^m), satisfying the equation y^2 = x^3 + ax + b } uu { O }], where stem:[O] in the point at infinity, also called the zero point.
+
+The points on stem:[E(F_(p^m))] form an abelian group according to the following addition operation rules:
+
+. stem:[O + O = O];
+. stem:[\[\[\],\[AAP = (x,y) in E(F_(p^m))\]\]], stem:[P + O = O + P = P];
+. stem:[\[\[\],\[AAP = (x,y) in E(F_(p^m))\]\]], the inverse element of stem:[P] is stem:[– P = (x, - y),P + ( - P) = O];
+. stem:[\[\[\],\[P_1 = (x_1,y_1) in E(F_(p^m))\]\]], stem:[\[\[\],\[P_2 = (x_2,y_2) in E(F_(p^m)) { O } \]\]], and stem:[P_3 = (x_3,y_3) = P_1 + P_2 != O], then
+
+stem:[{\[\[x_3 = \lambda^2 - x_1 - x_2,\],\[y_3 = \lambda (x_1 - x_3) - y_1,\]\]]
+
+where
+
+stem:[\lambda = {\[\[(y_2 - y_1)/(x_2 - x_1), if x_1 != x_2,\],\[(3x_1^2 + a)/(2y_1), if x_1 = x_2, ^^ P_2 != - P_1.\]\]]
+
+*Example 3: an elliptic curve over* stem:[F_(19)]
+
+The equation over stem:[F_(19)]: stem:[y^2 = x^3 + x + 1], where stem:[a = 1], stem:[b = 1]. The points on the curve are:
+
+stem:[(0,1)] , stem:[(0,18)], stem:[(2,7)], stem:[(2,12)], stem:[(5,6)], stem:[(5,13)], stem:[(7,3)], stem:[(7,16)], stem:[(9,6)], stem:[(9,13)], stem:[(10,2)], stem:[(10,17)], stem:[(13,8)], stem:[(13,11)], stem:[(14,2)], stem:[(14,17)], stem:[(15,3)], stem:[(15,16)], stem:[(16,3)], stem:[(16,16)].
+
+There are 21 points (including stem:[O]) on stem:[E(F_(19))].
+
+. Let stem:[P_1 = (10,2)], stem:[P_2 = (9,6)], then compute stem:[P_3 = P_1 + P_2]:
+
+stem:[\lambda = (y_2 - y_1)/(x_2 - x_1) = (6 - 2)/(9 - 10) = (4)/( - 1) = - 4 -= 15( mod 19),] stem:[x_3 = 152 - 10 - 9 = 225 - 10 - 9 = 16 - 10 - 9 = - 3 -= 16( mod 19),] stem:[y_3 = 15 xx (10 – 16) – 2 = 15 xx ( – 6) – 2 -= 3( mod 19),]
+
+thus, stem:[P_3 = (16,3)].
+
+
+. Let stem:[P_1 = (10,2)], then compute stem:[\[2\]P_1]:
+
+stem:[\lambda = (3x_1^2 + a)/(2y_1) = (3 xx 10^2 + 1)/(2 xx 2) = (3 xx 5 + 1)/(4) = (16)/(4) = 4( mod 19),] stem:[x_3 = 42 - 10 - 10 = - 4 -= 15( mod 19),] stem:[y_3 = 4 xx (10 – 15) – 2 = – 22 -= 16( mod 19),]
+
+thus, stem:[\[2\]P_1 = (15,16)].
+
+===== Projective coordinate
+
+====== Standard projective coordinate system
+
+The elliptic curve equation over stem:[F_(p^m)] in the standard projective coordinate system can be simplified as stem:[y^2z = x^3 + ax z^2 + bz^3], where stem:[a,b in F_(p^m)], satisfying stem:[4a^3 + 27b^2 != 0]. The set of points on the elliptic curve is denoted by stem:[E(F_(p^m)) = {(x,y,z)|x,y,z in F_(p^m), satisfying the equation y^2z = x^3 + ax z^2 + bz^3 }]. For stem:[(x_1,y_1,z_1)] and stem:[(x_2,y_2,z_2)], if there is a stem:[u in F_(p^m)] ( stem:[u != 0]) such that stem:[x_1 = ux_2], stem:[y_1 = uy_2], and stem:[z_1 = uz_2], then these two triples are equivalent, and they represent the same point.
+
+If stem:[z != 0], let stem:[X = x // z], stem:[Y = y // z], then the standard projective coordinates can be converted to the affine coordinates: stem:[Y^2 = X^3 + aX + b].
+
+If stem:[z = 0], then the point stem:[(0,1,0)] corresponds to the point at infinity stem:[O] of the affine coordinate system.
+
+In the standard projective coordinate system, the addition of the points on stem:[E(F_(p^m))] is defined as follows:
+
+. stem:[O + O = O];
+. stem:[\[\[\],\[AAP = (x,y,z) in E(F_(p^m))\]\]], stem:[P + O = O + P = P];
+. stem:[\[\[\],\[AAP = (x,y,z) in E(F_(p^m))\]\]], the inverse element of stem:[P] is stem:[– P = ( ux , - uy , uz ),u in F_(p^m)(u != 0),and P + ( - P) = O];
+. Let stem:[\[\[\],\[P_1 = (x_1,y_1,z_1) in E(F_(p^m))\]\]], stem:[\[\[\],\[P_2 = (x_2,y_2,z_2) in E(F_(p^m))\]\]], and stem:[P_3 = P_1 + P_2 = (x_3,y_3,z_3) != O].
+
+If stem:[P_1 != P_2], then
+
+* stem:[\lambda_1 = x_1z_2], stem:[\lambda_2 = x_2z_1], stem:[\lambda_3 = \lambda_1 - \lambda_2], stem:[\lambda_4 = y_1z_2], stem:[\lambda_5 = y_2z_1], stem:[\lambda_6 = \lambda_4 - \lambda_5], stem:[\lambda_7 = \lambda_1 + \lambda_2], stem:[\lambda_8 = z_1z_2], stem:[\lambda_9 = \lambda_3^2], stem:[\lambda_(10) = \lambda_3 \lambda_9], stem:[\lambda_(11) = \lambda_8 \lambda_6^2 - \lambda_7 \lambda_9], stem:[x_3 = \lambda_3 \lambda_(11)], stem:[y_3 = \lambda_6( \lambda_9 \lambda_1 - \lambda_(11)) - \lambda_4 \lambda_(10)], stem:[z_3 = \lambda_(10) \lambda_8].
+
+If stem:[P_1 = P_2], then
+
+* stem:[\lambda_1 = 3x_1^2 + az_1^2], stem:[\lambda_2 = 2y_1z_1], stem:[\lambda_3 = y_1^2], stem:[\lambda_4 = \lambda_3x_1z_1], stem:[\lambda_5 = \lambda_2^2], stem:[\lambda_6 = \lambda_1^2 - 8 \lambda_4], stem:[x_3 = \lambda_2 \lambda_6], stem:[y_3 = \lambda_1(4 \lambda_4 - \lambda_6) - 2 \lambda_5 \lambda_3], stem:[z_3 = \lambda_2 \lambda_5].
+
+====== Jacobian projective coordinate system
+
+The elliptic curve equation over stem:[F_(p^m)] in the Jacobian projective coordinate system can be simplified as stem:[y^2 = x^3 + ax z^4 + bz^6], where stem:[a,b in F_(p^m)], satisfying stem:[4a^3 + 27b^2 != 0]. The set of points on the elliptic curve is denoted by stem:[E(F_(p^m)) = {(x,y,z)|x,y,z in F_(p^m)], satisfying the equation stem:[y^2 = x^3 + ax z^4 + bz^6 }]. For stem:[(x_1,y_1,z_1)] and stem:[(x_2,y_2,z_2)], if there is a stem:[u in F_(p^m)] ( stem:[u != 0]) such that stem:[x_1 = u^2x_2], stem:[y_1 = u^3y_2], and stem:[z_1 = uz_2], then these two triples are equivalent, and they represent the same point.
+
+If stem:[z != 0], let stem:[X = x // z^2], stem:[Y = y // z^3], then the Jacobian projective coordinates can be converted to the affine coordinates: stem:[Y^2 = X^3 + aX + b].
+
+If stem:[z = 0], then the point stem:[(1,1,0)] corresponds to the point at infinity stem:[O] of the affine coordinate system.
+
+In the Jacobian projective coordinate system, the addition of the points on stem:[E(F_(p^m))] is defined as follows:
+
+. stem:[O + O = O];
+. stem:[\[\[\],\[AAP = (x,y,z) in E(F_(p^m))\]\]], stem:[P + O = O + P = P];
+. stem:[\[\[\],\[AAP = (x,y,z) in E(F_(p^m))\]\]], the inverse element of stem:[P] is stem:[– P = (u^2x, - u^3y, uz ),u in F_(p^m)(u != 0),and P + ( - P) = O];
+. Let stem:[\[\[\],\[P_1 = (x_1,y_1,z_1) in E(F_(p^m))\]\]], stem:[\[\[\],\[P_2 = (x_2,y_2,z_2) in E(F_(p^m))\]\]], and stem:[P_3 = P_1 + P_2 = (x_3,y_3,z_3) != O].
+
+If stem:[P_1 != P_2], then
+
+* stem:[\lambda_1 = x_1z_2^2], stem:[\lambda_2 = x_2z_1^2], stem:[\lambda_3 = \lambda_1 - \lambda_2], stem:[\lambda_4 = y_1z_2^3], stem:[\lambda_5 = y_2z_1^3], stem:[\lambda_6 = \lambda_4 - \lambda_5], stem:[\lambda_7 = \lambda_1 + \lambda_2], stem:[\lambda_8 = \lambda_4 + \lambda_5], stem:[\lambda_9 = \lambda_7 \lambda_3^2], stem:[x_3 = \lambda_6^2 - \lambda_9], stem:[\lambda_(10) = \lambda_9^2 - 2x_3], stem:[\[\[\lambda \],\[(10 \lambda_6 - \lambda_8 \lambda_3^3) // 2\],\[y_3 = \]\]], stem:[z_3 = (z_1z_2 \lambda )_3].
+
+If stem:[P_1 = P_2], then
+
+* stem:[\lambda_1 = 3x_1^2 + az_1^4], stem:[\lambda_2 = 4x_1y_1^2], stem:[\lambda_3 = 8y_1^4], stem:[x_3 = \lambda_1^2 - 2 \lambda_2], stem:[y_3 = \lambda_1( \lambda_2 - x_3) - \lambda_3], stem:[z_3 = 2y_1z_1].
+
+==== Order of elliptic curves over finite field
+
+The order of an elliptic curve over finite field stem:[F_(q^m)] is the number of elements in the set stem:[E(F_(q^m))], denoted by stem:[E(F_(q^m))]. According to the Hasse theorem, we have stem:[q^m + 1 - 2q^(m // 2) <= E(F_(q^m)) <= q^m + 1 + 2q^(m // 2)], that is to say, stem:[E(F_(q^m)) = q^m + 1 - t], where stem:[t] is called the Frobenius trace, satisfying stem:[t vv <= 2q^(m // 2)].
+
+If the Frobenius trace stem:[t] is divisible by the characteristic of stem:[F_(q^m)], this curve is supersingular; otherwise, it is non-supersingular.
+
+Suppose stem:[E(F_(q^m))] is an elliptic curve over stem:[F_(q^m)], the integer stem:[r] and stem:[q^m] are coprime, then the stem:[r]-order twisted subgroup of stem:[E(F_(q^m))] is stem:[E(F_(q^m))\[r\] = {P in E(F_(q^m))|\[r\]P = O }] and any stem:[P in E(F_(q^m))\[r\]] is an stem:[r]-fulcrum.
+
+=== Elliptic curve scalar multiplication
+
+The operation of adding a point along an elliptic curve to itself repeatedly is called the scalar multiplication of the point. Let stem:[u] be a positive integer, stem:[P] be a point on an elliptic curve, then the stem:[u] multiple of the point stem:[P] is denoted as stem:[Q = \[u\]P = underset(uP's)(ubrace (P + P + ... + P))].
+
+Scalar multiplication can be extended to 0-scalar and negative-scalar: stem:[\[0\]P = 0], stem:[\[- u\]P = \[u\]( - P)].
+
+There are many ways to implement elliptic curve scalar multiplication, and the most fundamental three methods are noted here, where stem:[1 <= u < N].
+
+*Algorithm 1: Binary expansion method*
+
+*Input:* a point stem:[P], an stem:[l]-bit long integer stem:[u = sum_(j = 0)^(l - 1)u_j2^j], stem:[u_j in { 0,1 }].
+
+*Output*: stem:[Q = \[u\]P].
+
+. Set stem:[Q = O];
+
+. For stem:[j = l - 1] to 0:
+
+.. stem:[Q = \[2\]Q];
+
+.. If stem:[u_j = 1], then stem:[Q = Q + P];
+
+. Output stem:[Q].
+
+*Algorithm 2: Addition and subtraction method*
+
+*Input:* a point stem:[P], an stem:[l]-bit long integer stem:[u = sum_(j = 0)^(l - 1)u_j2^j], stem:[u_j in { 0,1 }].
+
+*Output*: stem:[Q = \[u\]P].
+
+
+. Suppose the binary representation of stem:[3u] is stem:[h_rh_(r - 1) ... h_1h_0], and the most significant bit stem:[h_r] is 1. Obviously stem:[r = l] or stem:[r = l + 1];
+
+. The binary representation of stem:[u] is stem:[u_ru_(r - 1) ... u_1u_0];
+
+. Set stem:[Q = P];
+
+. For stem:[i = r - 1] to 1:
+
+
+.. stem:[Q = \[2\]Q] ;
+;
+
+.. If stem:[h_i = 1] and stem:[u_i = 0], then stem:[Q = Q + P];
+
+.. If stem:[h_i = 0] and stem:[u_i = 1], then stem:[Q = Q - P];
+
+
+. Output stem:[Q].
+
+NOTE: Subtracting the point stem:[(x,y)] is equivalent to adding the point stem:[(x, - y)]. There are many different methods to accelerate this operation.
+
+*Algorithm 3:**Sliding window method*
+
+*Input:* a point stem:[P], an stem:[l]-bit long integer stem:[u = sum_(j = 0)^(l - 1)u_j2^j], stem:[u_j in { 0,1 }].
+
+*Output*: stem:[Q = \[u\]P].
+
+Let the window length stem:[r > 1].
+
+Pre-computation:
+
+. stem:[P_1 = P] , stem:[P_2 = \[2\]P];, stem:[P_2 = \[2\]P];
+
+. For stem:[i = 1] to stem:[2^(r - 1) - 1], compute stem:[P_(2i + 1) = P_(2i - 1) + P_2];
+
+. Set stem:[j = l - 1], stem:[Q = 0].
+
+Main loop:
+
+
+. When stem:[j >= 0]:
+
+.. if stem:[u_j = 0], then stem:[Q = \[2\]Q], stem:[j = j - 1];
+
+.. Otherwise
+
+... let stem:[t] be the smallest integer satisfying stem:[j - t + 1 <= r] and stem:[u_t = 1];
+
+... stem:[h_j = sum_(i = 0)^(j - t)u_(t + i)2^i] ;
+
+... stem:[Q = \[2^(j - t + 1)\]Q + P_(h_j)] ;
+
+... set stem:[j = t - 1];
+
+. Output stem:[Q].
+
+=== Discrete logarithm problem
+
+==== Methods to solve the field discrete logarithm problem
+
+Let stem:[F_q^()] be the multiplicative group composed of all nonzero elements in the finite field stem:[F_q]. We call stem:[g] the generator of stem:[F_q^()], and stem:[F_q^() = {g_i|0 <= i <= q - 2 }]. The order of stem:[a in F_q] is the smallest positive integer stem:[t] satisfying stem:[a^t = 1]. The order of the multiplicative group stem:[F_q^()] is stem:[q - 1], so stem:[t vv q - 1].
+
+Suppose the generator of the multiplicative group stem:[F_q^()] is stem:[g] and stem:[y in F_q^()], the finite field discrete logarithm problem is to determine the integer stem:[x in \[0,q - 2\]] such that stem:[y = g^x mod q].
+
+The existing attacks on the finite field discrete logarithm problem are:
+
+
+. Pohlig-Hellman method: let stem:[l] be the largest prime divisor of stem:[q - 1], then the time complexity is stem:[O(l^(1 // 2))];
+
+. BSGS method: the time and space complexity are both stem:[( \piq // 2)^(1 // 2)];
+
+. Pollard's method: the time complexity is stem:[( \piq // 2)^(1 // 2)];
+
+. Parallel Pollard's method: let stem:[s] be the number of parallel processors, the time complexity reduces to stem:[( \piq // 2)^(1 // 2) // s];
+
+. Linear sieve method (for the prime fields stem:[F_q]): the time complexity is stem:[exp (1 + o(1)( log q)^(1 // 2)( log log q)^(1 // 2))];
+
+. Gauss integer method (for the prime fields stem:[F_q]): the time complexity is stem:[exp (1 + o(1)( log q)^(1 // 2)( log log q)^(1 // 2))];
+
+. Remainder listing sieve method (for prime fields stem:[F_q]): the time complexity is stem:[exp (1 + o(1)( log q)^(1 // 2)( log log q)^(1 // 2))];
+
+. Number field sieve method (for prime fields stem:[F_q]): the time complexity is stem:[exp (((64 // 9)^(1 // 3) + o(1))( log q( log log q)^2)^(1 // 3))];
+
+. Function field sieve method (for fields of small characteristics): the time complexity is stem:[exp (c( log q( log log q)^2)^(1 // 4 + o(1)))] and quasi-polynomial time.
+
+From the above enumerated methods for the finite field discrete logarithm problems and their time complexity, we know that: for discrete logarithm problems over fields of large characteristics, there are attack methods with sub-exponential complexity; for discrete logarithm problems over fields of small characteristics, there are quasi-polynomial time attack methods.
+
+==== Methods to solve the elliptic curve discrete logarithm problem
+
+For an elliptic curve stem:[E(F_q)], the point stem:[P in E(F_q)] with order stem:[n] and stem:[Q in (: P :)], the elliptic curve discrete logarithm problem is to determine the integer stem:[u in \[0,n - 1\]] such that stem:[Q = \[u\]P].
+
+The existing attacks on ECDLP are:
+
+
+. Pohlig-Hellman method: let stem:[l] be the largest prime divisor of stem:[n], then the time complexity is stem:[O(l^(1 // 2))];
+
+. BSGS method: the time and space complexity are both stem:[( \pin // 2)^(1 // 2)];
+
+. Pollard's method: the time complexity is stem:[( \pin // 2)^(1 // 2)];
+
+. Parallel Pollard's method: let stem:[r] be the numbers of parallel processors, the time complexity reduces to stem:[( \pin // 2)^(1 // 2) // r];
+
+. MOV method: Reduces the ECDLP over supersingular curves and similar curves to DLP over stem:[F_q]'s small extension fields (This is a method of sub-exponential complexity);
+
+. Anomalous method: efficient attack methods for the anomalous curves (curves of stem:[E(F_q) = q]) (This is a method of polynomial complexity);
+. GHS method: use Weil descent technique to solve the ECDLP of curves over binary extension field (the extension degree is a composite number), and convert the ECDLP to hyper-elliptic curve discrete logarithm problem, and there is the algorithm with sub-exponential complexity to this problem.
+. DGS-points decomposing method: use to compute the indexes used by elliptic curve discrete logarithm over low-degree extension fields. In some special cases, its complexity is lower than the square-root time method.
+
+From the above description and analysis of ECDLP solutions and their time complexity, we can know that: for the discrete logarithm problem of general curves, the current solutions have exponential complexity, and no efficient attack method with sub-exponential complexity has been found; and for the discrete logarithm problem of some special curves, there are attack algorithms with polynomial complexity or sub-exponential complexity.
+
+===Compression of points on elliptic curve
+
+==== Overview
+
+For any nonzero point stem:[P = (x_P,y_P)] on stem:[E(F_q)], this point can be represented simply by the stem:[x]-coordinate and a specific bit derived from stem:[y_P]. This is the compression representation of points.
+
+==== Compression and decompression methods for points on elliptic curves over stem:[F_p]
+
+Let stem:[P = (x_P,y_P)] be a point on stem:[E(F_p) : y^2 = x^3 + ax + b], and stem:[overset(tilde)(y)_P] be the rightmost bit of stem:[y_P], then stem:[P] can be represented by stem:[x_P] and the bit stem:[overset(tilde)(y)_P].
+
+The method of recovering stem:[y_P] from stem:[x_P] and stem:[overset(tilde)(y)_P] is as follows:
+
+. Compute the field element stem:[\alpha = x_P^3 + ax_P + b] in stem:[F_p];
+
+. Compute the square root stem:[\beta] of stem:[\alpha] in stem:[F_p] (referring to Annex C.1.4). If no square root exists, then report an error;
+
+. If the rightmost bit of stem:[\beta] is equal to stem:[overset(tilde)(y)_P], then set stem:[y_P = \beta]; otherwise set stem:[y_P = p - \beta].
+
+==== Compression and decompression methods for points on elliptic curve over stem:[F_(q^m)] (where stem:[q] is an odd prime number and stem:[m >= 2] )
+
+Let stem:[P = (x_P,y_P)] be a point on stem:[E(F_(q^m)) : y^2 = x^3 + ax + b], then stem:[y_P] can be represented as stem:[(y_(m - 1),y_(m - 2), ... ,y_1,y_0)]; let stem:[overset(tilde)(y)_P] be the rightmost bit of stem:[y_P], then stem:[P] can be represented by stem:[x_P] and the bit stem:[overset(tilde)(y)_P].
+
+The method of recovering stem:[y_P] from stem:[x_P] and stem:[overset(tilde)(y)_P] is as follows:
+
+. Compute the field element stem:[\alpha = x_P^3 + ax_P + b] in stem:[F_(q^m)] ;
+
+. Compute the square root stem:[\beta] of stem:[\alpha] in stem:[F_(q^m)] (referring to Annex C.1.4). If no square root exists, then report an error;
+
+If in the representation stem:[( \beta_(m - 1), \beta_(m - 2), ... , \beta_1, \beta_0)] of stem:[\beta], the rightmost bit of stem:[\beta_0] is equal to stem:[overset(tilde)(y)_P], then set stem:[y_P = \beta]; otherwise set stem:[y_P = ( \beta_(m - 1)^', \beta_(m - 2)^', ... , \beta_1^', \beta_0^')], where stem:[\beta_i^' = (q - \beta_i) in F_q], stem:[i = 0,1, ... ,m - 1].
+

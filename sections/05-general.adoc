@@ -1,0 +1,12 @@
+== Fundamental Knowledge And Cryptographic Techniques
+
+This section describes fundamental mathematical knowledge and cryptographic techniques necessary for implementing cryptographic mechanisms provided in this document.
+
+This section corresponds to the content of <<GMT-0044.1-2016>>.
+
+//== Finite field and elliptic curve
+
+include::general/finite-field.adoc[]
+include::general/problems.adoc[]
+include::general/bilinear-pairings.adoc[]
+

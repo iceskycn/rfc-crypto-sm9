@@ -1,0 +1,18 @@
+
+[appendix]
+[#appendix-a]
+== Example Calculations
+
+* the SM3 hash function is used as stem:[H_v()], where its input is a bit string of length less than stem:[2^(64)], and its output is a hash value of length 256 bits; this algorithm is denoted as stem:[H_(256)()] in examples;
+
+* the SM4 blockcipher is used for encryption whenever a blockcipher is necessary (only in <<example-pke>>), the block size is 128 bits, and the padding method is in accordance with PKCS#7, the mode of operation is CBC with the IV set to `00000000 00000000 00000000 00000000`;
+
+* all numbers are represented in hexadecimal representation in big-endian format (the leftmost bit is the most significant bit, and the rightmost bit is the least significant bit);
+
+* all messages provided in examples here utilize ASCII encoding.
+
+include::examples/ex-dsa.adoc[]
+include::examples/ex-kep.adoc[]
+include::examples/ex-kencap.adoc[]
+include::examples/ex-pke.adoc[]
+

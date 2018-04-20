@@ -1,0 +1,97 @@
+= The SM9 Identity-Based Cryptographic Algorithms
+:doctype: internet-draft
+:name: draft-sca-cfrg-sm9-00
+:abbrev: SM9 Cryptographic Algorithms
+:status: info
+:ipr: trust200902
+:submission-type: IRTF
+:area: sec
+:intended-series: full-standard
+//:workgroup: Crypto Forum Research Group
+:revdate: 2018-04-19T00:00:00Z
+:rfc2629xslt: true
+:fullname: Ronald Henry Tse
+:lastname: Tse
+:forename_initials: R. H.
+:organization: Ribose
+:street: Suite 1111, 1 Pedder Street
+:city: Central
+:region: Hong Kong
+:country: People's Republic of China
+:uri: https://www.ribose.com
+:email: ronald.tse@ribose.com
+:fullname_2: Zhaohui Michael Cheng
+:lastname_2: Cheng
+:forename_initials_2: Z.
+:organization_2: Data Assurance and Communication Security Research Center, Chinese Academy of Sciences
+:organization_abbrev_2: DAS Center, Chinese Academy of Sciences
+:street_2: Building 4, 89 Minzhuang Street, Haidian District
+:city_2: Beijing
+:code_2: 100190
+:country_2: People's Republic of China
+:uri_2: http://dacas.cn/
+:email_2: zhaohui_cheng@hotmail.com
+:fullname_3: Paul Y. Yang
+:lastname_3: Yang
+:forename_initials_3: Y.
+:organization_3: BaishanCloud
+:street_3: Building 16-3, Baitasan Street
+:city_3: Shenyang
+:code_3: 110000
+:region_3: Liaoning
+:country_3: People's Republic of China
+:uri_3: https://www.baishancloud.com
+:email_3: yang.yang@baishancloud.com
+:fullname_4: Wai Kit Wong
+:lastname_4: Wong
+:forename_initials_4: W. K.
+:organization_4: Hang Seng Management College
+:street_4: Hang Shin Link, Siu Lek Yuen
+:city_4: Shatin
+:region_4: Hong Kong
+:country_4: People's Republic of China
+:uri_4: https://www.hsmc.edu.hk
+:email_4: wongwk@hsmc.edu.hk
+:fullname_5: Erick Borsboom
+:lastname_5: Borsboom
+:forename_initials_5: E.
+:organization_5: Ribose
+:street_5: Suite 1111, 1 Pedder Street
+:city_5: Central
+:country_5: Hong Kong
+:uri_5: https://www.ribose.com
+:email_5: erick.borsboom@ribose.com
+
+////
+backup info for Michael:
+
+:organization_2: OLYM
+:street_2: 4/F, 2108 Chuangye 1st Rd, Baoan District
+:city_2: Shenzhen
+:code_2: 518052
+:country_2: People's Republic of China
+:uri_2: https://www.myibc.net
+////
+
+include::sections/00-abstract.adoc[]
+include::sections/01-intro.adoc[]
+include::sections/02-conventions.adoc[]
+include::sections/03-symbols.adoc[]
+include::sections/04-scope.adoc[]
+include::sections/05-general.adoc[]
+include::sections/06-data-types.adoc[]
+include::sections/07-system-params.adoc[]
+include::sections/08-aux-functions.adoc[]
+include::sections/09-dsa.adoc[]
+include::sections/10-kep.adoc[]
+include::sections/11-pke.adoc[]
+include::sections/15-security.adoc[]
+include::sections/16-iana.adoc[]
+include::sections/80-sm9-params.adoc[]
+include::sections/90-curve-basics.adoc[]
+include::sections/91-compute-bilinear.adoc[]
+include::sections/92-number-theoretic.adoc[]
+
+include::sections/97-references.adoc[]
+include::sections/98-examples.adoc[]
+include::sections/99-acknowledgements.adoc[]

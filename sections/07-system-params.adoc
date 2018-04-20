@@ -1,0 +1,105 @@
+
+[[system-parameters]]
+== System Parameters
+
+=== System Parameter Elements
+
+The mandatory system parameters are:
+
+* the curve identifier stem:[cid];
+
+* the parameters of the base field stem:[F_q] of the elliptic curve (where stem:[q > 3]);
+** two elements stem:[a] and stem:[b] in stem:[F_q],
+   which define the equation of the elliptic curve stem:[E : y^2 = x^3 + ax + b];
+
+* the twisted curve parameter stem:[\beta] (if the least 4 significant bits of stem:[cid] is 2);
+
+* the prime factor stem:[N] of the order of the curve;
+
+* the cofactor stem:[cf] relative to stem:[N], where stem:[cf xx N = E(F_q)];
+
+* the embedding degree stem:[k] of the curve stem:[E(F_q)] relative to stem:[N] (the cyclic group with order stem:[(G_T, * ) sub F_(q^k)^()]);
+
+* a generator stem:[P_1 = (x_(P_1),y_(P_1))] of the cyclic group stem:[\[\[G_1, + \],\[\]\]], where stem:[P_1 != O];
+// the last complex line is actually just "(G_1, +)"
+
+* a generator stem:[P_2 = (x_(P_2),y_(P_2))] of the cyclic group stem:[\[\[G_2, + \],\[\]\]], where stem:[P_2 != O];
+
+* the bilinear pairing identifier stem:[eid] where stem:[e : G_1 xx G_2 -> G_T]
+
+
+Optional system parameters are:
+
+* the parameters stem:[d_1], stem:[d_2], both of which are factors of stem:[k];
+
+* the homomorphism stem:[\Psi] from stem:[G_2] to stem:[G_1] such that stem:[P_1 = \Psi (P_2)];
+
+* the characteristic of the base field of the BN curves, the order of curve stem:[r], and the trace of the Frobenius map which can be determined by the parameter stem:[t], where stem:[t] is at least 63 bits long.
+
+=== System Parameter Values
+
+==== Values for stem:[cid]
+
+stem:[cid] is denoted by one byte:
+
+* `0x10` represents an ordinary curve over (a non-supersingular curve) over stem:[F_p] (the prime number stem:[p > 2^(191)]),
+// This is from Part 3:???
+// This is from Part 1:
+//** `0x10` represents an ordinary curve over stem:[F_q] (where the prime number stem:[q > 3]),
+
+* `0x11` represents a supersingular curve over stem:[F_q], and
+* `0x12` represents an ordinary curve and the corresponding twisted curve over stem:[F_q];
+
+==== Values for stem:[N] and stem:[cf]
+
+<<GMT-0044.1-2016>> places the following requirements:
+
+* stem:[N > 2^(191)] and stem:[N] not divisible by stem:[cf]
+
+* If stem:[N < 2^(360)], it is recommended that stem:[N - 1] has prime factors greater than stem:[2^(190)] and stem:[N + 1] has prime factors greater than stem:[2^(120)].
+
+==== Values for the embedding degree stem:[k]
+
+<<GMT-0044.1-2016>> specifies that stem:[q^k > 2^(1536)].
+
+==== Values for the bilinear paring identifier stem:[eid]
+
+stem:[eid] is denoted by one byte identifier:
+
+* `0x01` represents the Tate pairing,
+* `0x02` represents the Weil pairing,
+* `0x03` represents the Ate pairing, and
+* `0x04` represents the R-ate pairing.
+
+
+=== Verification Of System Parameters
+
+The following conditions shall be verified by the generator of the system parameters. They can also be verified by the users of the system parameters.
+
+*Input*: the set of the system parameters.
+
+*Output*: if all parameters are valid, output "valid"; otherwise output "invalid".
+
+. Verify that stem:[q] is a prime greater than 3; (See Annex C.1.5.)
+
+. Verify that stem:[a,b] are integers in stem:[\[0,q - 1\]];
+
+. Verify that stem:[4a^3 + 27b^2 != 0] over stem:[F_q]; if the least 4 significant bits of stem:[cid] are 2, verify that stem:[\beta] is a non-square element; (See Annex C.1.4.3.1.)
+
+. Verify that stem:[N] is a prime greater than stem:[2^(191)] and stem:[cf] is not divisible by stem:[N]; if stem:[N < 2^(360)], verify that stem:[N - 1] has prime factors greater than stem:[2^(190)] and stem:[N + 1] has prime factors greater than stem:[2^(120)];
+
+. Verify that stem:[q + 1 - cf xx N vv 2q^(1 // 2)];
+
+. Verify that stem:[q^k > 2^(1536)] and stem:[k] is the smallest positive integer stem:[m] such that stem:[N vv (q^m - 1)];
+
+. Verify that stem:[(x_(P_1),y_(P_1))] is an element of stem:[G_1];
+
+. Verify that stem:[(x_(P_2),y_(P_2))] is an element of stem:[G_2];
+
+. Verify stem:[\[\[\],\[e(P_1,P_2) in F_(q^k)^() { 1 } \]\]], and stem:[e(P_1,P_2)^N = 1];
+
+. (Optional) Verify stem:[d_1,d_2 vv k];
+
+. (Optional) Verify that stem:[P_1 = \Psi (P_2)];
+
+If any of the above verification fails, output "invalid"; otherwise output "valid".

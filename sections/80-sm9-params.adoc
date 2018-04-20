@@ -1,0 +1,113 @@
+
+[appendix]
+[[sm9-params]]
+== SM9 System Parameters
+
+This section specifies the curve parameters for use with the SM9 identity-based cryptographic algorithms.
+
+This part applies to the verification of correctness in stepwise operations for the implementation of SM9 identity-based cryptographic algorithms.
+
+This section corresponds to the content of <<GMT-0044.5-2017>>.
+
+=== Parameter Definition
+
+256-bit BN curves are used in this standard.
+
+The elliptic curve equation is stem:[y^2 = x^3 + b].
+
+The elliptic curve parameters:
+
+* stem:[t]: `60000000 0058F98A`
+
+* trace stem:[tr (t) = 6t^2 + 1]: `D8000000 019062ED 0000B98B 0CB27659`
+
+* the characteristic of the base field stem:[q(t) = 36t^4 + 36t^3 + 24t^2 + 6t + 1]:
+`B6400000 02A3A6F1 D603AB4F F58EC745 21F2934B 1A7AEEDB E56F9B27 E351457D`
+
+* the equation parameter stem:[b]: `05`
+
+* the order of the group stem:[N(t) = 36t^4 + 36t^3 + 18t^2 + 6t + 1]:
+`B6400000 02A3A6F1 D603AB4F F58EC744 49F2934B 18EA8BEE E56EE19C D69ECF25`
+
+* the cofactor stem:[cf]: `1`
+
+* the embedding degree stem:[k]: `12`
+
+* the twisted curve parameter stem:[\beta]: stem:[sqrt( - 2)]
+
+* factors of stem:[k]: stem:[d_1 = 1,d_2 = 2]
+
+* the curve identifier stem:[cid]: `0x12`
+
+* the generator stem:[P_1 = (x_(P_1),y_(P_1))]of stem:[G_1]:
+
+* the coordinate stem:[x_(P_1)]: `93DE051D 62BF718F F5ED0704 487D01D6 E1E40869 09DC3280 E8C4E481 7C66DDDD`
+
+* the coordinate stem:[y_(P_1)]: `21FE8DDA 4F21E607 63106512 5C395BBC 1C1C00CB FA602435 0C464CD7 0A3EA616`
+
+* the generator stem:[P_2 = (x_(P_2),y_(P_2))] of stem:[G_2]:
+
+* the coordinate stem:[x_(P_2)]: `(85AEF3D0 78640C98 597B6027 B441A01F F1DD2C19 0F5E93C4 54806C11 D8806141, 37227552 92130B08 D2AAB97F D34EC120 EE265948 D19C17AB F9B7213B AF82D65B)`
+
+* the coordinate stem:[y_(P_2)]: `(17509B09 2E845C12 66BA0D26 2CBEE6ED 0736A96F A347C8BD 856DC76B 84EBEB96, A7CF28D5 19BE3DA6 5F317015 3D278FF2 47EFBA98 A71A0811 6215BBA5 C999A7C7)`
+
+* the bilinear pairing identifier stem:[eid]: `0x04`
+
+
+=== Representation of the elements of extension fields
+
+The tower extension 1-2-4-12 of stem:[F_(q^(12))]:
+
+stem:[(1)F_(q^2)\[u\] = F_q\[u\] // (u^2 - \alpha ), \alpha = - 2] ;
+
+stem:[(2)F_(q^4)\[v\] = F_(q^2)\[v\] // (v^2 - \xi ), \xi = u] ;
+
+stem:[(3)F_(q^(12))\[w\] = F_(q^4)\[w\] // (w^3 - v),v^2 = \xi] ;
+
+where,
+
+* the reduce polynomial for the quadratic extension of (1) is stem:[x^2 - \alpha , \alpha = - 2];
+* the reduce polynomial for the quadratic extension of (2) is stem:[x^2 - u,u^2 = \alpha ,u = sqrt( - 2)];
+* the reduce polynomial for the cubic extension of (3) is stem:[x^3 - v,v^2 = u,v = sqrt(sqrt( - 2))];
+
+* stem:[u in F_(q^2)]
+ is represented as stem:[(1,0)], where the left is dimension 1 (the higher dimension) and the right is dimension 0 (the lower dimension).
+
+* stem:[v in F_(q^4)]
+ is represented as stem:[(0,1,0,0)], where stem:[(0,1)] in the left is dimension 1 and stem:[(0,0)] in the right is dimension 0.
+
+The elements in stem:[F_(q^(12))] has three representations:
+
+. The element stem:[A in F_(q^(12))] is represented via the elements in stem:[F_(q^4)]:
+stem:[A = aw^2 + bw + c = (a,b,c),] stem:[a,b,c] are represented via the elements in stem:[F_(q^2)]:
+
+.. stem:[a = a_1v + a_0 = (a_1,a_0)];  stem:[b = b_1v + b_0 = (b_1,b_0)];  stem:[c = c_1v + c_0 = (c_1,c_0)];
+where stem:[a_1,a_0,b_1,b_0,c_1,c_0 in F_(q^2)].
+
+. The element stem:[A in F_(q^(12))] is represented via the elements in stem:[F_(q^2)]:
+
+* stem:[A = (a_1,a_0,b_1,b_0,c_1,c_0)], stem:[a_1,a_0,b_1,b_0,c_1,c_0] are represented via the elements in stem:[F_q]:
+
+** stem:[a_0 = a_(0,1)u + a_(0,0) = (a_(0,1),a_(0,0))];
+** stem:[a_1 = a_(1,1)u + a_(1,0) = (a_(1,1),a_(1,0))];
+** stem:[b_0 = b_(0,1)u + b_(0,0) = (b_(0,1),b_(0,0))];
+** stem:[b_1 = b_(1,1)u + b_(1,0) = (b_(1,1),b_(1,0))];
+** stem:[c_0 = c_(0,1)u + c_(0,0) = (c_(0,1),c_(0,0))];
+** stem:[c_1 = c_(1,1)u + c_(1,0) = (c_(1,1),c_(1,0))];
+
+where stem:[a_(0,1),a_(0,0),a_(1,1),a_(1,0),b_(0,1),b_(0,0),b_(1,1),b_(1,0),c_(0,1),c_(0,0),c_(1,1),c_(1,0) in F_q].
+
+. The element stem:[A in F_(q^(12))] is represented via the elements in stem:[F_q]:
+** stem:[A = (a_(1,1),a_(1,0),a_(0,1),a_(0,0),b_(1,1),b_(1,0),b_(0,1),b_(0,0),c_(1,1),c_(1,0),c_(0,1),c_(0,0)),]
+
+where stem:[a_(0,1),a_(0,0),a_(1,1),a_(1,0),b_(0,1),b_(0,0),b_(1,1),b_(1,0),c_(0,1),c_(0,0),c_(1,1),c_(1,0) in F_q].
+
+The identity element of stem:[F_(q^2)] is stem:[(0,1)];
+
+The identity element of stem:[F_(q^4)] is stem:[(0,0,0,1)];
+
+The identity element of stem:[F_(q^(12))] is stem:[(0,0,0,0,0,0,0,0,0,0,0,1)];
+
+Components in expansion domains represent the high-dimension on the left and the low-dimension on the right.
+
+In the examples, elements of extension fields are all represented via elements of the base fields.
