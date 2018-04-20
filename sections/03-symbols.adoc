@@ -117,7 +117,7 @@ stem:[q]:: the number of elements in the finite field stem:[F_q]
 
 stem:[x_P]:: the stem:[x]-coordinate of point stem:[P]
 
-stem:[x vv y]:: the concatenation of stem:[x] and stem:[y], where stem:[x] and stem:[y] are bit strings or byte strings
+stem:[x || y]:: the concatenation of stem:[x] and stem:[y], where stem:[x] and stem:[y] are bit strings or byte strings
 
 stem:[x -= y( mod q)]:: stem:[x] and stem:[y] are congruent modulo stem:[q], that is stem:[x mod q = y mod q]
 

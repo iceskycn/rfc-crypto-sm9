@@ -93,7 +93,7 @@ stem:[q]:: the number of elements in the finite field stem:[F_q]
 
 stem:[x_P]:: the stem:[x]-coordinate of point stem:[P]
 
-stem:[x vv y]:: the concatenation of stem:[x] and stem:[y], where stem:[x] and stem:[y] are bit strings or byte strings
+stem:[x || y]:: the concatenation of stem:[x] and stem:[y], where stem:[x] and stem:[y] are bit strings or byte strings
 
 stem:[x -= y( mod q)]:: stem:[x] and stem:[y] are congruent modulo stem:[q], that is stem:[x mod q = y mod q]
 
@@ -244,9 +244,9 @@ Scalar multiplication can be calculated efficiently using certain techniques; pl
 
 === Verification of points in a subgroup of an elliptic curve
 
-*Input*: The parameters stem:[a] and stem:[b] which define the elliptic curve equation over stem:[F_(q^m)], where stem:[q] is an odd prime and stem:[m >= 1], the order stem:[N] of the subgroup stem:[G] of the elliptic curve stem:[E(F_(q^m))], a pair of elements in stem:[F_(q^m)] stem:[(x,y)].
+Input:: The parameters stem:[a] and stem:[b] which define the elliptic curve equation over stem:[F_(q^m)], where stem:[q] is an odd prime and stem:[m >= 1], the order stem:[N] of the subgroup stem:[G] of the elliptic curve stem:[E(F_(q^m))], a pair of elements in stem:[F_(q^m)] stem:[(x,y)].
 
-*Output*: If stem:[(x,y)] is an element of the group stem:[G], then output "valid", otherwise output "invalid".
+Output:: If stem:[(x,y)] is an element of the group stem:[G], then output "valid", otherwise output "invalid".
 
 . Check if stem:[(x,y)] satisfies the equation of the elliptic curve stem:[y^2 = x^3 + ax + b].
 . Let stem:[Q = (x,y)], check if stem:[\[N\]Q = O].
@@ -257,7 +257,7 @@ If any of these above verification fail, output "invalid", otherwise output "val
 
 ==== Discrete logarithm problem over finite field
 
-The set of all nonzero elements in stem:[F_(q^m)] ( stem:[q] is an odd prime, stem:[m >= 1]) forms a multiplicative cyclic group, denoted by stem:[F_(q^m)^()]. An element stem:[g in F_(q^m)^()] is called a generator if it satisfies stem:[F_(q^m)^() = {g^i vv 0 <= i <= q^m - 2}]. The minimal integer stem:[t] such that stem:[a^t = 1] is called the order of stem:[a] in stem:[F_(q^m)^()]. The order of stem:[F_(q^m)^()] is stem:[q^m - 1], so stem:[t vv q^m - 1].
+The set of all nonzero elements in stem:[F_(q^m)] ( stem:[q] is an odd prime, stem:[m >= 1]) forms a multiplicative cyclic group, denoted by stem:[F_(q^m)^()]. An element stem:[g in F_(q^m)^()] is called a generator if it satisfies stem:[F_(q^m)^() = {g^i || 0 <= i <= q^m - 2}]. The minimal integer stem:[t] such that stem:[a^t = 1] is called the order of stem:[a] in stem:[F_(q^m)^()]. The order of stem:[F_(q^m)^()] is stem:[q^m - 1], so stem:[t || q^m - 1].
 
 Suppose the generator of stem:[F_(q^m)^()] is stem:[g], stem:[y in F_(q^m)^()], the discrete logarithm problem over a finite field is to find the integer stem:[x in \[0,q^m - 1\]] such that stem:[y = g^x] in stem:[F_(q^m)^()].
 
@@ -309,9 +309,9 @@ The security of the SM9 identity-based cryptographic algorithms is founded on th
 
 === Embedding degrees and secure curves
 
-Let stem:[G] be an stem:[N]-order subgroup of the elliptic curve stem:[E(F_q)]. The smallest positive integer stem:[k] such that stem:[N vv q^k - 1] is called the embedding degree of stem:[G] relative to stem:[N], also known as the embedding degree of stem:[E(F_q)] relative to stem:[N].
+Let stem:[G] be an stem:[N]-order subgroup of the elliptic curve stem:[E(F_q)]. The smallest positive integer stem:[k] such that stem:[N || q^k - 1] is called the embedding degree of stem:[G] relative to stem:[N], also known as the embedding degree of stem:[E(F_q)] relative to stem:[N].
 
-Let stem:[G_1] be an stem:[N]-order subgroup of stem:[E(F_(q^(d_1)))], where stem:[d_1 vv k], and stem:[G_2] be an stem:[N]-order subgroup of stem:[E(F_(q^(d_2)))], where stem:[d_2 vv k], then the range stem:[G_T] of the bilinear pairings based on the elliptic curves is a subgroup of stem:[F_(q^k)^()]. Thus, the bilinear pairings based on the elliptic curves can convert the elliptic curve discrete logarithm problem to the discrete logarithm problem over the finite field stem:[F_(q^k)^()]. The security of the curve improves as the size of the extension field increases (if no faster discrete logarithm algorithm exists in the field), yet it becomes harder to compute the bilinear pairings. Hence it is necessary to adopt an elliptic curve with an appropriate embedding degree while achieving the desired security level. This standard specifies that stem:[q^k > 2^(1536)].
+Let stem:[G_1] be an stem:[N]-order subgroup of stem:[E(F_(q^(d_1)))], where stem:[d_1 || k], and stem:[G_2] be an stem:[N]-order subgroup of stem:[E(F_(q^(d_2)))], where stem:[d_2 || k], then the range stem:[G_T] of the bilinear pairings based on the elliptic curves is a subgroup of stem:[F_(q^k)^()]. Thus, the bilinear pairings based on the elliptic curves can convert the elliptic curve discrete logarithm problem to the discrete logarithm problem over the finite field stem:[F_(q^k)^()]. The security of the curve improves as the size of the extension field increases (if no faster discrete logarithm algorithm exists in the field), yet it becomes harder to compute the bilinear pairings. Hence it is necessary to adopt an elliptic curve with an appropriate embedding degree while achieving the desired security level. This standard specifies that stem:[q^k > 2^(1536)].
 
 This standard specifies the use of the following curves:
 . Ordinary curves whose base field is stem:[F_q], where stem:[q] is a prime greater than stem:[2^(191)], and the embedding degree stem:[k = 2^i3^j], where stem:[i > 0] and stem:[j >= 0].
@@ -359,18 +359,18 @@ Figure 1 indicates the conversion relations between the data types. The subclaus
 
 ==== Conversion of an integer to a byte string
 
-*Input*: a non-negative integer stem:[x], and the target length of the byte string stem:[l] (where stem:[l] satisfies stem:[2^(8l) > x]).
+Input:: a non-negative integer stem:[x], and the target length of the byte string stem:[l] (where stem:[l] satisfies stem:[2^(8l) > x]).
 
-*Output*: a byte string stem:[M] of stem:[l] bytes long.
+Output:: a byte string stem:[M] of stem:[l] bytes long.
 
 . Let stem:[M_(l - 1),M_(l - 2), ... ,M_0] be the individual bytes of stem:[M] from left to right.
 . The bytes of stem:[M] satisfy: stem:[x = sum_(i = 0)^(l - 1)2^(8i)M_i .]
 
 ==== Conversion of a byte string to an integer
 
-*Input*: a byte string stem:[M] of stem:[l] bytes long.
+Input:: a byte string stem:[M] of stem:[l] bytes long.
 
-*Output*: an integer stem:[x].
+Output:: an integer stem:[x].
 
 
 . Let stem:[M_(l - 1),M_(l - 2), ... ,M_0] be the individual bytes of stem:[M] from left to right.
@@ -381,9 +381,9 @@ stem:[x = sum_(i = 0)^(l - 1)2^(8i)M_i .]
 
 ==== Conversion of a bit string to a byte string
 
-*Input*: a bit string stem:[s] of stem:[n] bits long.
+Input:: a bit string stem:[s] of stem:[n] bits long.
 
-*Output*: a byte string stem:[M] of stem:[l] bytes long, where stem:[l = |~ n // 8 ~|].
+Output:: a byte string stem:[M] of stem:[l] bytes long, where stem:[l = |~ n // 8 ~|].
 
 
 . Let stem:[s_(n - 1),s_(n - 2), ... ,s_0] be the individual bits of stem:[s] from left to right.
@@ -394,9 +394,9 @@ stem:[M_i = s_(8i + 7)s_(8i + 6) ... s_(8i + 1)s_(8i),where0 <= i < l,and when8i
 
 ==== Conversion of a byte string to a bit string
 
-*Input*: a byte string stem:[M] of stem:[l] bytes long.
+Input:: a byte string stem:[M] of stem:[l] bytes long.
 
-*Output*: a bit string stem:[s] of stem:[n] bits long, where stem:[n = 8l].
+Output:: a bit string stem:[s] of stem:[n] bits long, where stem:[n = 8l].
 
 
 . Let stem:[M_(l - 1),M_(l - 2), ... ,M_0] be the individual bytes of stem:[M] from left to right.
@@ -408,9 +408,9 @@ from the right, where stem:[j = | __i // 8__ |].
 
 ==== Conversion of a field element to a byte string
 
-*Input*: an element stem:[\alpha = ( \alpha_(m - 1), \alpha_(m - 2), ... , \alpha_1, \alpha_0)] in stem:[F_(q^m)(m >= 1),] and stem:[q = p].
+Input:: an element stem:[\alpha = ( \alpha_(m - 1), \alpha_(m - 2), ... , \alpha_1, \alpha_0)] in stem:[F_(q^m)(m >= 1),] and stem:[q = p].
 
-*Output*: a byte string stem:[s] of length stem:[l], where stem:[l = |~ log_2q // 8 ~| xx m].
+Output:: a byte string stem:[s] of length stem:[l], where stem:[l = |~ log_2q // 8 ~| xx m].
 
 . If stem:[m = 1], then stem:[\alpha = \alpha_0(q = p)], stem:[\alpha] is an integer in stem:[\[0,q - 1\]], convert stem:[\alpha] to a byte string stem:[S] of stem:[l] bytes long as specified in 6.2.2.
 
@@ -421,23 +421,23 @@ from the right, where stem:[j = | __i // 8__ |].
 .. For stem:[i] from stem:[m - 1] to 0: +
 Convert stem:[\alpha_i(q = p)]to a byte string stem:[s_i] of stem:[r] bytes long as specified in 6.2.2.
 
-.. stem:[S = s_(m - 1) vv s_(m - 2) vv ... vv s_0] == .
+.. stem:[S = s_(m - 1) || s_(m - 2) || ... || s_0] == .
 
 ==== Conversion of a byte string to a field element
 
 *Case 1: Convert to element in the base field*
 
-*Input*: a field stem:[F_q], stem:[q = p], and a byte string stem:[S] of stem:[l] bytes long, where stem:[l = |~ lo g_2q // 8 ~|].
+Input:: a field stem:[F_q], stem:[q = p], and a byte string stem:[S] of stem:[l] bytes long, where stem:[l = |~ lo g_2q // 8 ~|].
 
-*Output*: an element stem:[\alpha] in stem:[F_q].
+Output:: an element stem:[\alpha] in stem:[F_q].
 
 If stem:[q = p], convert stem:[S] to an integer stem:[\alpha] as specified in 6.2.3. If stem:[\alpha] is not in the range stem:[\[0,q - 1\]], report an error.
 
 *Case 2: Convert to element in extension field*
 
-*Input*: a field stem:[F_(q^m)] ( stem:[m >= 2]), stem:[q = p], and a byte string stem:[S] of stem:[l] bytes long, where stem:[l = |~ lo g_2q // 8 ~| xx m].
+Input:: a field stem:[F_(q^m)] ( stem:[m >= 2]), stem:[q = p], and a byte string stem:[S] of stem:[l] bytes long, where stem:[l = |~ lo g_2q // 8 ~| xx m].
 
-*Output*: an element stem:[\alpha] in stem:[F_(q^m)].
+Output:: an element stem:[\alpha] in stem:[F_(q^m)].
 
 
 . Equally divide the byte string stem:[S] into stem:[m] parts, where the length of each part is stem:[l // m] bytes long, denote it as stem:[S = (S_(m - 1),S_(m - 2), ... ,S_1,S_0)].
@@ -461,22 +461,22 @@ The details of the two cases of conversion are as follows.
 
 *Case 1*: *Direct conversion*
 
-*Input*: a point stem:[P = (x_P,y_P)] on the elliptic curve stem:[E(F_(q^m))], where stem:[P != O].
+Input:: a point stem:[P = (x_P,y_P)] on the elliptic curve stem:[E(F_(q^m))], where stem:[P != O].
 
-*Output*: a byte string stem:[X_1 vv Y_1] of stem:[2l] bytes long. (If stem:[m = 1], stem:[l = |~ log_2q // 8 ~|]; if stem:[m > 1], stem:[l = |~ log_2q // 8 ~| xx m].)
+Output:: a byte string stem:[X_1 || Y_1] of stem:[2l] bytes long. (If stem:[m = 1], stem:[l = |~ log_2q // 8 ~|]; if stem:[m > 1], stem:[l = |~ log_2q // 8 ~| xx m].)
 
 
 . Convert the field element stem:[x_P] to the byte string stem:[X_1] of stem:[l] bytes long as specified in 6.2.6;
 
 . Convert the field element stem:[y_P] to the byte string stem:[Y_1] of stem:[l] bytes long as specified in 6.2.6;
 
-. Output the byte string stem:[X_1 vv Y_1].
+. Output the byte string stem:[X_1 || Y_1].
 
 *Case 2: Conversion by adding a byte string identifier* stem:[PC]
 
-*Input*: a point stem:[P = (x_P,y_P)] on the elliptic curve stem:[E(F_(q^m))], where stem:[P != O].
+Input:: a point stem:[P = (x_P,y_P)] on the elliptic curve stem:[E(F_(q^m))], where stem:[P != O].
 
-*Output*: a byte string stem:[PO]. If the uncompressed form or the hybrid form is used, output a byte string of length stem:[2l + 1]; if the compressed form is used, output a byte string of stem:[l + 1] bytes long. (If stem:[m = 1], stem:[l = |~ log_2q // 8 ~|]; if stem:[m > 1], stem:[l = |~ log_2q // 8 ~| xx m].)
+Output:: a byte string stem:[PO]. If the uncompressed form or the hybrid form is used, output a byte string of length stem:[2l + 1]; if the compressed form is used, output a byte string of stem:[l + 1] bytes long. (If stem:[m = 1], stem:[l = |~ log_2q // 8 ~|]; if stem:[m > 1], stem:[l = |~ log_2q // 8 ~| xx m].)
 
 
 . Convert the field element stem:[x_P] to the byte string stem:[X_1] of stem:[l] bytes long as specified in 6.2.6;
@@ -488,7 +488,7 @@ The details of the two cases of conversion are as follows.
 
 .. If stem:[overset(tilde)(y)_P = 0], then let stem:[PC = 02]; if stem:[overset(tilde)(y)_P]=1, stem:[PC = 03];
 
-.. Output the byte string stem:[PO = PC vv X_1].
+.. Output the byte string stem:[PO = PC || X_1].
 
 
 . If the uncompressed form is used, then
@@ -497,7 +497,7 @@ The details of the two cases of conversion are as follows.
 
 .. Let stem:[PC = 04];
 
-.. Output the byte string stem:[PO = PC vv X_1 vv Y_1].
+.. Output the byte string stem:[PO = PC || X_1 || Y_1].
 
 
 . If the hybrid form is used, then
@@ -508,7 +508,7 @@ The details of the two cases of conversion are as follows.
 
 .. If stem:[overset(tilde)(y)_P = 0], then let stem:[PC = 06]; if stem:[overset(tilde)(y)_P = 1], stem:[PC = 07];
 
-.. Output the byte string stem:[PO = PC vv X_1 vv Y_1].
+.. Output the byte string stem:[PO = PC || X_1 || Y_1].
 
 ==== Conversion of a byte string to a point
 
@@ -516,9 +516,9 @@ The conversion of a byte string to a point is the inverse process of 6.2.8. The 
 
 *Case 1: Direct conversion*
 
-*Input*: field elements stem:[a] and stem:[b] which define an elliptic curve over stem:[F_(q^m)] ( stem:[m >= 1]), and the byte string stem:[X_1 vv Y_1] of length stem:[2l] bytes long. The lengths of both stem:[X_1] and stem:[Y_1] are stem:[l] bytes. (If stem:[m = 1], stem:[l = |~ log_2q // 8 ~|]; if stem:[m > 1], stem:[l = |~ log_2q // 8 ~| xx m].).
+Input:: field elements stem:[a] and stem:[b] which define an elliptic curve over stem:[F_(q^m)] ( stem:[m >= 1]), and the byte string stem:[X_1 || Y_1] of length stem:[2l] bytes long. The lengths of both stem:[X_1] and stem:[Y_1] are stem:[l] bytes. (If stem:[m = 1], stem:[l = |~ log_2q // 8 ~|]; if stem:[m > 1], stem:[l = |~ log_2q // 8 ~| xx m].).
 
-*Output*: a point stem:[P = (x_P,y_P)] of the elliptic curve, where stem:[P != O].
+Output:: a point stem:[P = (x_P,y_P)] of the elliptic curve, where stem:[P != O].
 
 
 . Convert the byte string stem:[X_1] to a field element stem:[x_P] as specified in 6.2.7;
@@ -527,12 +527,12 @@ The conversion of a byte string to a point is the inverse process of 6.2.8. The 
 
 *Case 2: Conversion of a byte string containing the byte identifier* stem:[PC]
 
-*Input:* field elements stem:[a] and stem:[b] which define an elliptic curve over stem:[F_(q^m)] ( stem:[m >= 1]), and the byte string stem:[PO]. If the uncompressed or hybrid forms are used, the length of stem:[PO] is stem:[2l + 1] bytes long. If the compressed form is used, the length of stem:[PO] is stem:[l + 1] bytes long. (If stem:[m = 1], then stem:[l = |~ log_2q // 8 ~|]; if stem:[m > 1], then stem:[l = |~ log_2q // 8 ~| xx m].)
+Input:: field elements stem:[a] and stem:[b] which define an elliptic curve over stem:[F_(q^m)] ( stem:[m >= 1]), and the byte string stem:[PO]. If the uncompressed or hybrid forms are used, the length of stem:[PO] is stem:[2l + 1] bytes long. If the compressed form is used, the length of stem:[PO] is stem:[l + 1] bytes long. (If stem:[m = 1], then stem:[l = |~ log_2q // 8 ~|]; if stem:[m > 1], then stem:[l = |~ log_2q // 8 ~| xx m].)
 
-*Output*: a point stem:[P = (x_P,y_P)] of the elliptic curve, where stem:[P != O].
+Output:: a point stem:[P = (x_P,y_P)] of the elliptic curve, where stem:[P != O].
 
 
-. If the compressed form is used, then stem:[PO = PC vv X_1]; if the uncompressed or hybrid forms are used, stem:[PO = PC vv X_1 vv Y_1], where stem:[PC] is a single byte, and both stem:[X_1] and stem:[Y_1] are byte strings of stem:[l] bytes long;
+. If the compressed form is used, then stem:[PO = PC || X_1]; if the uncompressed or hybrid forms are used, stem:[PO = PC || X_1 || Y_1], where stem:[PC] is a single byte, and both stem:[X_1] and stem:[Y_1] are byte strings of stem:[l] bytes long;
 
 . Convert the byte string stem:[X_1] to a field element stem:[x_P] as specified in 6.2.7;
 
@@ -558,11 +558,9 @@ The conversion of a byte string to a point is the inverse process of 6.2.8. The 
 
 .. Perform e.2.1) or e.2.2):
 
+Convert the byte string stem:[Y_1] to a field element stem:[y_P] as specified in 6.2.7;
 
-**
-Convert the byte string stem:[Y_1] to a field element stem:[y_P] as specified in 6.2.7;
-**
-If stem:[PC = 06], then let stem:[overset(tilde)(y)_P = 0], otherwise let stem:[overset(tilde)(y)_P = 1]; convert stem:[(x_P,overset(tilde)(y)_P)] to a point stem:[(x_P,y_P)] on the elliptic curve; (See Annex A.4.)
+If stem:[PC = 06], then let stem:[overset(tilde)(y)_P = 0], otherwise let stem:[overset(tilde)(y)_P = 1]; convert stem:[(x_P,overset(tilde)(y)_P)] to a point stem:[(x_P,y_P)] on the elliptic curve; (See Annex A.4.)
 
 
 . Check whether stem:[(x_P,y_P)] satisfies the equation of the curve; if not, report an error;
@@ -604,9 +602,9 @@ of the elliptic curve: the parameter of the base field is a prime number stem:[q
 
 The following conditions shall be verified by the generator of the system parameters. They can also be verified by the users of the system parameters.
 
-*Input*: the set of the system parameters.
+Input:: the set of the system parameters.
 
-*Output*: if all parameters are valid, output "valid"; otherwise output "invalid".
+Output:: if all parameters are valid, output "valid"; otherwise output "invalid".
 
 . Verify that stem:[q] is a prime greater than 3; (See Annex C.1.5.)
 
@@ -616,9 +614,9 @@ The following conditions shall be verified by the generator of the system parame
 
 . Verify that stem:[N] is a prime greater than stem:[2^(191)] and stem:[cf] is not divisible by stem:[N]; if stem:[N < 2^(360)], verify that stem:[N - 1] has prime factors greater than stem:[2^(190)] and stem:[N + 1] has prime factors greater than stem:[2^(120)];
 
-. Verify that stem:[q + 1 - cf xx N vv 2q^(1 // 2)];
+. Verify that stem:[q + 1 - cf xx N || 2q^(1 // 2)];
 
-. Verify that stem:[q^k > 2^(1536)] and stem:[k] is the smallest positive integer stem:[m] such that stem:[N vv (q^m - 1)];
+. Verify that stem:[q^k > 2^(1536)] and stem:[k] is the smallest positive integer stem:[m] such that stem:[N || (q^m - 1)];
 
 . Verify that stem:[(x_(P_1),y_(P_1))] is an element of stem:[G_1];
 
@@ -626,7 +624,7 @@ The following conditions shall be verified by the generator of the system parame
 
 . Verify stem:[\[\[\],\[e(P_1,P_2) in F_(q^k)^() { 1 } \]\]], and stem:[e(P_1,P_2)^N = 1];
 
-. (Optional) Verify stem:[d_1,d_2 vv k];
+. (Optional) Verify stem:[d_1,d_2 || k];
 
 . (Optional) Verify that stem:[P_1 = \Psi (P_2)];
 
@@ -782,7 +780,7 @@ stem:[\lambda_1 = 3x_1^2 + az_1^4], stem:[\lambda_2 = 4x_1y_1^2], stem:[\lambda_
 
 ==== Order of elliptic curves over finite field
 
-The order of an elliptic curve over finite field stem:[F_(q^m)] is the number of elements in the set stem:[E(F_(q^m))], denoted by stem:[E(F_(q^m))]. According to the Hasse theorem, we have stem:[q^m + 1 - 2q^(m // 2) <= E(F_(q^m)) <= q^m + 1 + 2q^(m // 2)], that is to say, stem:[E(F_(q^m)) = q^m + 1 - t], where stem:[t] is called the Frobenius trace, satisfying stem:[t vv <= 2q^(m // 2)].
+The order of an elliptic curve over finite field stem:[F_(q^m)] is the number of elements in the set stem:[E(F_(q^m))], denoted by stem:[E(F_(q^m))]. According to the Hasse theorem, we have stem:[q^m + 1 - 2q^(m // 2) <= E(F_(q^m)) <= q^m + 1 + 2q^(m // 2)], that is to say, stem:[E(F_(q^m)) = q^m + 1 - t], where stem:[t] is called the Frobenius trace, satisfying stem:[t || <= 2q^(m // 2)].
 
 If the Frobenius trace stem:[t] is divisible by the characteristic of stem:[F_(q^m)], this curve is supersingular; otherwise, it is non-supersingular.
 
@@ -798,9 +796,9 @@ There are many ways to implement elliptic curve scalar multiplication, and the m
 
 *Algorithm 1: Binary expansion method*
 
-*Input:* a point stem:[P], an stem:[l]-bit long integer stem:[u = sum_(j = 0)^(l - 1)u_j2^j], stem:[u_j in { 0,1 }].
+Input:: a point stem:[P], an stem:[l]-bit long integer stem:[u = sum_(j = 0)^(l - 1)u_j2^j], stem:[u_j in { 0,1 }].
 
-*Output*: stem:[Q = \[u\]P].
+Output:: stem:[Q = \[u\]P].
 
 . Set stem:[Q = O];
 
@@ -814,9 +812,9 @@ There are many ways to implement elliptic curve scalar multiplication, and the m
 
 *Algorithm 2: Addition and subtraction method*
 
-*Input:* a point stem:[P], an stem:[l]-bit long integer stem:[u = sum_(j = 0)^(l - 1)u_j2^j], stem:[u_j in { 0,1 }].
+Input:: a point stem:[P], an stem:[l]-bit long integer stem:[u = sum_(j = 0)^(l - 1)u_j2^j], stem:[u_j in { 0,1 }].
 
-*Output*: stem:[Q = \[u\]P].
+Output:: stem:[Q = \[u\]P].
 
 
 . Suppose the binary representation of stem:[3u] is stem:[h_rh_(r - 1) ... h_1h_0], and the most significant bit stem:[h_r] is 1. Obviously stem:[r = l] or stem:[r = l + 1];
@@ -842,9 +840,9 @@ NOTE: Subtracting the point stem:[(x,y)] is equivalent to adding the point stem:
 
 *Algorithm 3:**Sliding window method*
 
-*Input:* a point stem:[P], an stem:[l]-bit long integer stem:[u = sum_(j = 0)^(l - 1)u_j2^j], stem:[u_j in { 0,1 }].
+Input:: a point stem:[P], an stem:[l]-bit long integer stem:[u = sum_(j = 0)^(l - 1)u_j2^j], stem:[u_j in { 0,1 }].
 
-*Output*: stem:[Q = \[u\]P].
+Output:: stem:[Q = \[u\]P].
 
 Let the window length stem:[r > 1].
 
@@ -879,7 +877,7 @@ Main loop:
 
 ==== Methods to solve the field discrete logarithm problem
 
-Let stem:[F_q^()] be the multiplicative group composed of all nonzero elements in the finite field stem:[F_q]. We call stem:[g] the generator of stem:[F_q^()], and stem:[F_q^() = {g_i|0 <= i <= q - 2 }]. The order of stem:[a in F_q] is the smallest positive integer stem:[t] satisfying stem:[a^t = 1]. The order of the multiplicative group stem:[F_q^()] is stem:[q - 1], so stem:[t vv q - 1].
+Let stem:[F_q^()] be the multiplicative group composed of all nonzero elements in the finite field stem:[F_q]. We call stem:[g] the generator of stem:[F_q^()], and stem:[F_q^() = {g_i|0 <= i <= q - 2 }]. The order of stem:[a in F_q] is the smallest positive integer stem:[t] satisfying stem:[a^t = 1]. The order of the multiplicative group stem:[F_q^()] is stem:[q - 1], so stem:[t || q - 1].
 
 Suppose the generator of the multiplicative group stem:[F_q^()] is stem:[g] and stem:[y in F_q^()], the finite field discrete logarithm problem is to determine the integer stem:[x in \[0,q - 2\]] such that stem:[y = g^x mod q].
 
@@ -963,7 +961,7 @@ If in the representation stem:[( \beta_(m - 1), \beta_(m - 2), ... , \beta_1, \b
 
 === Overview
 
-Let an elliptic curve over finite field be stem:[E(F_q)]. If stem:[E(F_q) = cf xx r], stem:[r] is prime, stem:[cf]is the cofactor, then the smallest positive integer stem:[k] satisfying stem:[r vv q^k - 1] is known as the elliptic curve's embedding degree relative to stem:[r]. If stem:[G] is an stem:[r] order subgroup of stem:[E(F_q)], the embedding degree of stem:[G] is stem:[k] as well.
+Let an elliptic curve over finite field be stem:[E(F_q)]. If stem:[E(F_q) = cf xx r], stem:[r] is prime, stem:[cf]is the cofactor, then the smallest positive integer stem:[k] satisfying stem:[r || q^k - 1] is known as the elliptic curve's embedding degree relative to stem:[r]. If stem:[G] is an stem:[r] order subgroup of stem:[E(F_q)], the embedding degree of stem:[G] is stem:[k] as well.
 
 Let stem:[overset(´)(F)_q]be an algebraic closure of finite field stem:[F_q], and stem:[E\[r\]] the set of all points of order stem:[r] in _E_( stem:[overset(´)(F)_q]).
 
@@ -981,9 +979,9 @@ Miller's algorithm is an efficient algorithm to compute bilinear pairings.
 
 *Miller's algorithm*
 
-*Input:* a curve stem:[E], two points stem:[P] and stem:[Q] on stem:[E], and an integer stem:[c].
+Input:: a curve stem:[E], two points stem:[P] and stem:[Q] on stem:[E], and an integer stem:[c].
 
-*Output:* stem:[f_(P,c)(Q)].
+Output:: stem:[f_(P,c)(Q)].
 
 
 . The binary representation of stem:[c] is stem:[c_j ... c_1c_0], and the most significant bit stem:[c_j] is 1;
@@ -1003,7 +1001,7 @@ Generally, stem:[f_(P,c)(Q)] is known as the Miller function.
 
 === Computation of the Weil pairing
 
-Let stem:[E] be an elliptic curve over stem:[F_q], and stem:[r] be a positive integer coprime to stem:[q]. Suppose stem:[\mu_r]is the set of stem:[r]th unit roots, and stem:[k] is the embedding degree relative to stem:[r], that is stem:[r vv q^k - 1], then stem:[\mu_r sub F_(q^k)].
+Let stem:[E] be an elliptic curve over stem:[F_q], and stem:[r] be a positive integer coprime to stem:[q]. Suppose stem:[\mu_r]is the set of stem:[r]th unit roots, and stem:[k] is the embedding degree relative to stem:[r], that is stem:[r || q^k - 1], then stem:[\mu_r sub F_(q^k)].
 
 Let stem:[G_1 = E\[r\]], stem:[G_2 = E\[r\]], stem:[G_T = \mu_r], then the Weil pairing is a bilinear mapping from stem:[G_1 xx G_2] ==
 to stem:[G_T], which is denoted as stem:[e_r].
@@ -1036,9 +1034,9 @@ The computation amount would be cut in half if the reduced Tate pairings is appl
 
 *Algorithm 1*
 
-*Input:* an integer stem:[r] coprime to stem:[q], stem:[P in E(F_q)\[r\]], stem:[Q in E(F_(q^k))\[r\]].
+Input:: an integer stem:[r] coprime to stem:[q], stem:[P in E(F_q)\[r\]], stem:[Q in E(F_(q^k))\[r\]].
 
-*Output:* stem:[t_r(P,Q)].
+Output:: stem:[t_r(P,Q)].
 
 
 . The binary representation of stem:[r] is stem:[r_j ... r_1r_0], and the most significant bit stem:[r_j] is 1;
@@ -1054,15 +1052,15 @@ The computation amount would be cut in half if the reduced Tate pairings is appl
 
 . Compute stem:[f = f^(q^d - 1)];
 
-. Compute stem:[\[\[q\],\[(d + 1) // r\],\[f = f^()\]\]].
+. Compute stem:[f = f^((q^d + 1)/r)].
 
 . Output stem:[f].
 
 *Algorithm 2*
 
-*Input:* an integer stem:[r] coprime to stem:[q], stem:[P in E(F_q)\[r\]], stem:[Q in E(F_(q^k))\[r\]].
+Input:: an integer stem:[r] coprime to stem:[q], stem:[P in E(F_q)\[r\]], stem:[Q in E(F_(q^k))\[r\]].
 
-*Output:* stem:[t_r(P,Q)].
+Output:: stem:[t_r(P,Q)].
 
 
 . The binary representation of stem:[r] is stem:[r_j ... r_1r_0], and the most significant bit stem:[r_j] is 1;
@@ -1078,7 +1076,7 @@ The computation amount would be cut in half if the reduced Tate pairings is appl
 
 . Compute stem:[f = f^(q^d - 1)];
 
-. Compute stem:[\[\[q\],\[(d + 1) // r\],\[f = f^()\]\]];
+. Compute stem:[f = f^((q^d + 1)/r)];
 
 . Output stem:[f].
 
@@ -1086,9 +1084,9 @@ The computation amount would be cut in half if the reduced Tate pairings is appl
 
 If stem:[F_(q^k)] ( stem:[k = 2d]) is seen as the quadratic extension of stem:[F_(q^d)], then the elements in stem:[F_(q^k)] can be represented as stem:[w = w_0 + iw_1], where stem:[w_0,w_1 in F_(q^d)], then the conjugate of stem:[w] is stem:[overset(´)(w) = w_0 - iw_1], and in this case, the inverse in algorithm 1 can be replaced with conjugate.
 
-*Input:* an integer stem:[r]coprime to stem:[q], stem:[P in E(F_q)\[r\]], stem:[Q in E(F_(q^k))\[r\]].
+Input:: an integer stem:[r]coprime to stem:[q], stem:[P in E(F_q)\[r\]], stem:[Q in E(F_(q^k))\[r\]].
 
-*Output:* stem:[t_r(P,Q)].
+Output:: stem:[t_r(P,Q)].
 
 
 . The binary representation of stem:[r] is stem:[r_j ... r_1r_0], and the most significant bit stem:[r_j] is 1;
@@ -1103,7 +1101,7 @@ If stem:[F_(q^k)] ( stem:[k = 2d]) is seen as the quadratic extension of stem:[F
 
 . Compute stem:[f = f^(q^d - 1)];
 
-. Compute stem:[\[\[q\],\[(d + 1) // r\],\[f = f^()\]\]];
+. Compute stem:[f = f^((q^d + 1)/r)];
 
 . Output stem:[f].
 
@@ -1111,9 +1109,9 @@ If stem:[F_(q^k)] ( stem:[k = 2d]) is seen as the quadratic extension of stem:[F
 
 When stem:[q] is a prime greater than 3, then the point stem:[Q in E'], where stem:[E'] is the torsion curve of stem:[E]. In this case, the algorithm could be further optimized.
 
-*Input:* stem:[P in E(F_q)\[r\]], stem:[Q in E'(F_(q^d))\[r\]], an integer stem:[r].
+Input:: stem:[P in E(F_q)\[r\]], stem:[Q in E'(F_(q^d))\[r\]], an integer stem:[r].
 
-*Output:* stem:[t_r(P,Q)].
+Output:: stem:[t_r(P,Q)].
 
 . The binary representation of stem:[r] is stem:[r_j ... r_1r_0], and the most significant bit stem:[r_j] is 1;
 
@@ -1128,7 +1126,7 @@ When stem:[q] is a prime greater than 3, then the point stem:[Q in E'], where st
 
 . Compute stem:[f = f^(q^d - 1)];
 
-. Compute stem:[\[\[q\],\[(d + 1) // r\],\[f = f^()\]\]];
+. Compute stem:[f = f^((q^d + 1)/r)];
 
 . Output stem:[f].
 
@@ -1146,9 +1144,9 @@ stem:[Ate : G_2 xx G_1 -> F_(q^k)^() // (F_(q^k)^())^r] stem:[(Q,P) |-> f_(Q,T)(
 
 The computation method for Ate pairings on stem:[G_2 xx G_1] is given below.
 
-*Input:* stem:[G_1 = E\[r\] nn Ker ( \pi_q - \[1\])], stem:[G_2 = E\[r\] nn Ker ( \pi_q - \[q\])], stem:[P in G_1], stem:[Q in G_2], an integer stem:[T = t - 1].
+Input:: stem:[G_1 = E\[r\] nn Ker ( \pi_q - \[1\])], stem:[G_2 = E\[r\] nn Ker ( \pi_q - \[q\])], stem:[P in G_1], stem:[Q in G_2], an integer stem:[T = t - 1].
 
-*Output:* stem:[Ate (Q,P)].
+Output:: stem:[Ate (Q,P)].
 
 . The binary representation of stem:[T] is stem:[t_j ... t_1t_0], and the most significant bit stem:[t_j] is 1;;
 
@@ -1160,7 +1158,7 @@ The computation method for Ate pairings on stem:[G_2 xx G_1] is given below.
 
 .. If stem:[t_i = 1], compute stem:[f = f * g_(V,Q)(Q) // g_(V + Q)(P)], stem:[V = V + Q].
 
-. Compute stem:[\[\[q\],\[(k - 1) // r\],\[f = f^()\]\]];
+. Compute stem:[f = f^((q^k - 1) // r)];
 
 . Output stem:[f].
 
@@ -1178,9 +1176,9 @@ stem:[Ate : G_1 xx G_2 -> F_(q^k)^() // (F_(q^k)^())^r] stem:[(P,Q) |-> f_(P,T)(
 
 The computation method for Ate pairings on stem:[G_1 xx G_2] is given below.
 
-*Input:* stem:[G_1 = E\[r\] nn Ker ( \pi_q^' - \[q\])], stem:[G_2 = E\[r\] nn Ker ( \pi_q^' - \[1\])], stem:[P in G_1], stem:[Q in G_2], an integer stem:[T = t - 1].
+Input:: stem:[G_1 = E\[r\] nn Ker ( \pi_q^' - \[q\])], stem:[G_2 = E\[r\] nn Ker ( \pi_q^' - \[1\])], stem:[P in G_1], stem:[Q in G_2], an integer stem:[T = t - 1].
 
-*Output:* stem:[Ate (P,Q)].
+Output:: stem:[Ate (P,Q)].
 
 . The binary representation of stem:[T] is stem:[t_j ... t_1t_0], and the most significant bit stem:[t_j] is 1;
 
@@ -1192,7 +1190,7 @@ The computation method for Ate pairings on stem:[G_1 xx G_2] is given below.
 
 .. If stem:[t_i = 1], compute stem:[f = f * g_(V,P)(Q) // g_(V + P)(P)], stem:[V = V + P].
 
-. Compute stem:[\[\[q\],\[(k - 1) // r\],\[f = f^()\]\]];
+. Compute stem:[f = f^((q^k - 1) // r)];
 
 . Output stem:[f].
 
@@ -1217,9 +1215,9 @@ stem:[Ate : G_1 xx G_2 -> F_(q^k)^() // (F_(q^k)^())^r] stem:[(P,Q) |-> f_(P,T^e
 
 The computation method is given below.
 
-*Input:* stem:[G_1], stem:[G_2], stem:[P in G_1], stem:[Q in G_2], an integer stem:[T = t - 1].
+Input:: stem:[G_1], stem:[G_2], stem:[P in G_1], stem:[Q in G_2], an integer stem:[T = t - 1].
 
-*Output:* stem:[Ate (P,Q)].
+Output:: stem:[Ate (P,Q)].
 
 . Compute stem:[u = T^e];
 
@@ -1233,12 +1231,12 @@ The computation method is given below.
 
 .. If stem:[t_i = 1], compute stem:[f = f * g_(V,P)(Q) // g_(V + P)(Q)], stem:[V = V + P].
 
-. Compute stem:[\[\[q\],\[(k - 1) // r\],\[f = f^()\]\]];
+. Compute stem:[f = f^((q^k - 1) // r)];
 
 . Output stem:[f].
 
 If the elliptic curve on which the Ate pairings defined on stem:[G_1 xx G_2]
-is based is supersingular, then it is easy to see that Ate pairings are more efficient than Tate pairings. However, for ordinary curves, Ate pairings are more computationally efficient than Tate pairings only when stem:[T^e vv <= r], therefore, Ate pairings are recommended only when the value of stem:[t] is relatively small.
+is based is supersingular, then it is easy to see that Ate pairings are more efficient than Tate pairings. However, for ordinary curves, Ate pairings are more computationally efficient than Tate pairings only when stem:[T^e || <= r], therefore, Ate pairings are recommended only when the value of stem:[t] is relatively small.
 
 === Computation of the R-ate pairing
 
@@ -1336,7 +1334,7 @@ stem:[R_(A,B)(Q,P) = (f_(Q,a)^(q_i)(P)f_(Q,b)(P)(g_((\[aT_i\]Q,\[b\]Q)(P)))/(g_(
 
 The R-ate pairing of case 1 is also known as stem:[Ate_i] pairing. Pairing computation of cases 2, 3 and 4 require two Miller loops of length stem:[log a] and stem:[log b] respectively. Case 2 and 4 can only alter one parameter stem:[i] to obtain efficient pairings, while case 3 can alter two parameters. Therefore the R-ate pairings of case 3 are usually chosen, then stem:[(A,B) = (T_i,T_j)].
 
-In order to reduce the degree of the Miller loop, various stem:[i] and stem:[j] can be tried to minimize the integers stem:[a] and stem:[b], thus, the degree of the Miller loop could be reduced to stem:[\[\[r\],\[(1 // \Phi (k))\],\[log \]\]].
+In order to reduce the degree of the Miller loop, various stem:[i] and stem:[j] can be tried to minimize the integers stem:[a] and stem:[b], thus, the degree of the Miller loop could be reduced to stem:[log(r^(1 // \Phi (k)))].
 
 ==== Computation of the R-ate pairing on BN curves
 
@@ -1346,15 +1344,15 @@ stem:[q(t) = 36t^4 + 24t^3 + 24t^2 + 6t + 1] stem:[r(t) = 36t^4 + 36t^3 + 18t^2 
 
 where stem:[t in Z], such that both stem:[q = q(t)] and stem:[r = r(t)] are primes, and in order to achieve a certain security level, stem:[t] must be large enough, which is at least 63 bits long.
 
-There exists 6th order torsion curves for BN curves over stem:[F_(q^2) : E^' : y^2 = x^3 + \beta b], where stem:[\beta in F_(q^2)], which is neither a square root nor cubic root in stem:[F_(q^2)], such that stem:[r vv E'(F_(q^2))]. The points in stem:[G_2] can be represented by the points on the torsion curve stem:[E'], stem:[\varphi_6 : E^' -> E : (x,y) |-> ( \beta^( - 1 // 3)x, \beta^( - 1 // 2)y) .] Thus, the computation of pairings is restricted on the point stem:[P] on stem:[E(F_q)] and the point stem:[Q'] on stem:[E'(F_(q^2))].
+There exists 6th order torsion curves for BN curves over stem:[F_(q^2) : E^' : y^2 = x^3 + \beta b], where stem:[\beta in F_(q^2)], which is neither a square root nor cubic root in stem:[F_(q^2)], such that stem:[r || E'(F_(q^2))]. The points in stem:[G_2] can be represented by the points on the torsion curve stem:[E'], stem:[\varphi_6 : E^' -> E : (x,y) |-> ( \beta^( - 1 // 3)x, \beta^( - 1 // 2)y) .] Thus, the computation of pairings is restricted on the point stem:[P] on stem:[E(F_q)] and the point stem:[Q'] on stem:[E'(F_(q^2))].
 
 Frobenius automorphism is stem:[\pi_q], and stem:[\pi_q : E -> E], stem:[\pi_q(x,y) = (x^q,y^q)], stem:[\pi_(q^2) : E -> E], stem:[\pi_(q^2)(x,y) = (x^(q^2),y^(q^2))].
 
 The computation of R-ate pairing is as follows.
 
-*Input:* stem:[P in E(F_q)\[r\]], stem:[Q in E'(F_(q^2))\[r\]], stem:[a = 6t + 2].
+Input:: stem:[P in E(F_q)\[r\]], stem:[Q in E'(F_(q^2))\[r\]], stem:[a = 6t + 2].
 
-*Output:* stem:[R_a(Q,P)].
+Output:: stem:[R_a(Q,P)].
 
 . Suppose stem:[a = sum_(j = 0)^(L - 1)a_i2^j], stem:[a_(L - 1) = 1];
 
@@ -1372,7 +1370,7 @@ The computation of R-ate pairing is as follows.
 
 . Compute stem:[f = f * g_(T, - Q_2)(P)], stem:[T = T - Q_2];
 
-. Compute stem:[\[\[q\],\[(12 - 1) // r\],\[f = f^()\]\]];
+. Compute stem:[f = f^((q^(12) - 1) // r)];
 
 . Output stem:[f].
 
@@ -1407,9 +1405,9 @@ For methods to construct elliptic curves suitable for pairings, please refer to 
 
 Let stem:[a] be a positive integer, stem:[g] be an element of field stem:[F_q], then the exponentiation is the process of computing stem:[g^a]. By the binary method described below, exponentiation can be performed efficiently.
 
-*Input:* a positive integer stem:[a], a field stem:[F_q] and a field element stem:[g].
+Input:: a positive integer stem:[a], a field stem:[F_q] and a field element stem:[g].
 
-*Output*: stem:[g^a].
+Output:: stem:[g^a].
 
 
 . Set stem:[e = a mod (q - 1)], if stem:[e = 0], then output 1;
@@ -1434,9 +1432,9 @@ For other accelerated algorithms, please refer to (Brickell et al. 1993), (Knuth
 Let stem:[g] be a nonzero element in the field stem:[F_q], then the inverse element stem:[g^( - 1)] is the field element stem:[c] satisfying stem:[g * c = 1]. Since stem:[c = g^(q - 2)], the inverse operation can be implemented using the exponentiation operation. Note that if stem:[q] is prime and stem:[g] is an integer satisfying stem:[1 <= g <= q - 1], then stem:[g^( - 1)] ==
 is the integer stem:[c], stem:[1 <= c <= q - 1], and stem:[g * c -= 1( mod q)].
 
-*Input*: a field stem:[F_q] and a nonzero field element stem:[g]in stem:[F_q].
+Input:: a field stem:[F_q] and a nonzero field element stem:[g]in stem:[F_q].
 
-*Output*: the inverse element stem:[g^( - 1)].
+Output:: the inverse element stem:[g^( - 1)].
 
 
 . Compute stem:[c = g^(q - 2)] (see C.1.1);
@@ -1455,9 +1453,9 @@ stem:[V_0 = 2] _,_ stem:[V_1 = X]_,_ if stem:[k >= 2]_,_ stem:[V_k = X * V_(k - 
 
 The recurrences above are suitable for calculating the stem:[U_k] and stem:[V_k] for small stem:[k]'s. For large integers stem:[k], the following algorithm is efficient in the calculation of stem:[U_k mod q] and stem:[V_k mod q].
 
-*Input:* an odd prime stem:[p], integers stem:[X] and stem:[Y], a positive integer stem:[k].
+Input:: an odd prime stem:[p], integers stem:[X] and stem:[Y], a positive integer stem:[k].
 
-*Output:* stem:[U_k mod q] and stem:[V_k mod q].
+Output:: stem:[U_k mod q] and stem:[V_k mod q].
 
 
 . Set stem:[\Delta = X^2 – 4Y];
@@ -1485,9 +1483,9 @@ If stem:[g = 0], then there is only one square root, stem:[y = 0]; if stem:[g !=
 
 The following algorithm can determine whether the square roots of stem:[g] exist. If it exists, then the algorithm will compute one root.
 
-*Input*: an odd prime stem:[q], an integer stem:[g], stem:[0 < g < q].
+Input:: an odd prime stem:[q], an integer stem:[g], stem:[0 < g < q].
 
-*Output*: if the square roots exist, output a square root mod stem:[q]; otherwise output "no square root".
+Output:: if the square roots exist, output a square root mod stem:[q]; otherwise output "no square root".
 
 *Algorithm 1*: For stem:[q = 3( mod 4)], there is a positive integer stem:[u] satisfying stem:[q = 4u + 3].
 
@@ -1526,13 +1524,13 @@ The following algorithm can determine whether the square roots of stem:[g] exist
 
 Let stem:[q] be an odd prime, for a quadratic field extension stem:[F_(q^2)], let the reduced polynomial be stem:[f(x) = x^2 - n,n in F_q], then element stem:[\beta] of stem:[F_(q^2)] can be represented as stem:[a + bx]_,_ stem:[a,b in F_q], then the square root of stem:[\beta] is:
 
-stem:[sqrt( \beta ) = sqrt(a + bx ) = +- (sqrt((a + sqrt(a^2 - nb^2))/(2)) + ( xb )/(2sqrt(((a + sqrt(a^2 - nb^2))/(2)))))] , or stem:[+- (sqrt((a - sqrt(a^2 - nb^2))/(2)) + ( xb )/(2sqrt(((a - sqrt(a^2 - nb^2))/(2)))))].
+stem:[sqrt( \beta ) = sqrt(a + bx) = +- (sqrt((a + sqrt(a^2 - nb^2))/(2)) + ( xb )/(2sqrt(((a + sqrt(a^2 - nb^2))/(2)))))], or stem:[+- (sqrt((a - sqrt(a^2 - nb^2))/(2)) + ( xb )/(2sqrt(((a - sqrt(a^2 - nb^2))/(2)))))].
 
 The algorithm below can determine if stem:[\beta] has square roots, if yes, calculate one of the roots.
 
-*Input*: stem:[\beta = a + bx in F_(q^2)], stem:[\beta != 0], an odd prime number stem:[q].
+Input:: stem:[\beta = a + bx in F_(q^2)], stem:[\beta != 0], an odd prime number stem:[q].
 
-*Output:* if square roots of stem:[\beta]exists, output one square root stem:[z], otherwise output "The square root does not exist".
+Output:: if square roots of stem:[\beta]exists, output one square root stem:[z], otherwise output "The square root does not exist".
 
 . Compute stem:[U = a^2 - nb^2];
 
@@ -1554,9 +1552,9 @@ The algorithm below can determine if stem:[\beta] has square roots, if yes, calc
 
 Let stem:[q] be an odd prime number, stem:[m > 2], stem:[g] a nonzero element on stem:[F_(q^m)], the algorithm below can be used to check if stem:[g] is a square element.
 
-*Input:* an element stem:[g] of the field.
+Input:: an element stem:[g] of the field.
 
-*Output:* if stem:[g] is a square element then output "square", else output "no square".
+Output:: if stem:[g] is a square element then output "square", else output "no square".
 
 . Compute stem:[B = g^((q^m - 1) // 2)] (see C.1.1);
 
@@ -1568,9 +1566,9 @@ stem:[c] ) If stem:[B = - 1], output "no square".
 
 Let stem:[q] be an odd prime number, stem:[m >= 2].
 
-*Input:* an element stem:[g] of the field.
+Input:: an element stem:[g] of the field.
 
-*Output:* if stem:[g] is a square element, output its square root stem:[B]; otherwise, output "no square root"
+Output:: if stem:[g] is a square element, output its square root stem:[B]; otherwise, output "no square root"
 
 
 . Randomly choose a non-square element stem:[Y];
@@ -1587,11 +1585,11 @@ Let stem:[q] be an odd prime number, stem:[m >= 2].
 
 . As long as stem:[C != 1]:
 
-.. Let stem:[I] is the smallest positive integer such that stem:[C^(2^i) = 1]; 
+.. Let stem:[I] is the smallest positive integer such that stem:[C^(2^i) = 1];
 
 .. Compute stem:[C = C xx Y^(2^(u - i))];
 
-.. Compute stem:[B = B xx Y^(2^(u - i - 1))]; 
+.. Compute stem:[B = B xx Y^(2^(u - i - 1))];
 
 . Output stem:[B].
 
@@ -1599,9 +1597,9 @@ Let stem:[q] be an odd prime number, stem:[m >= 2].
 
 Let stem:[u] be a large positive integer, the following probabilistic algorithm (Miller-Rabin test) can decide whether stem:[u] is a prime or a composite.
 
-*Input*: a large odd stem:[u] and a large positive integer stem:[T].
+Input:: a large odd stem:[u] and a large positive integer stem:[T].
 
-*Output*: "probably prime" or "composite".
+Output:: "probably prime" or "composite".
 
 
 . Compute stem:[v] and the odd stem:[w] satisfying stem:[u - 1 = 2^v * w];
@@ -1638,9 +1636,9 @@ If the algorithm outputs "composite", then stem:[u] is a composite. If the algor
 
 If stem:[f(x) != 0] and stem:[g(x) != 0] are two polynomials whose coefficients are in the field stem:[F_q], there is only one monic polynomial stem:[d(x)] (its coefficients are also in the field stem:[F_q]) with the largest degree, and it divides stem:[f(x)] and stem:[g(x)] simultaneously. The polynomial stem:[d(x)] is called the greatest common divisor of stem:[f(x)] and stem:[g(x)], which is denoted by stem:[gcd(f(x),g(x))]. The following algorithm (the Euclidean algorithm) is used to compute the greatest common divisor of two polynomials.
 
-*Input*: a finite field stem:[F_q], and two nonzero polynomials stem:[f(x) != 0] and stem:[g(x) != 0] in stem:[F_q].
+Input:: a finite field stem:[F_q], and two nonzero polynomials stem:[f(x) != 0] and stem:[g(x) != 0] in stem:[F_q].
 
-*Output*: stem:[d(x) = gcd(f(x),g(x))].
+Output:: stem:[d(x) = gcd(f(x),g(x))].
 
 
 . Set stem:[a(x) = f(x)]_,_ stem:[b(x) = g(x)];
@@ -1660,9 +1658,9 @@ If stem:[f(x) != 0] and stem:[g(x) != 0] are two polynomials whose coefficients 
 
 Let stem:[f(x)]be the polynomial on stem:[F_q], the following algorithm can be used to check the irreducibility of stem:[f(x)] efficiently.
 
-*Input:* the monic polynomial stem:[f(x)] and a prime stem:[q].
+Input:: the monic polynomial stem:[f(x)] and a prime stem:[q].
 
-*Output:* if stem:[f(x)]is irreducible over stem:[F_q], output "yes"; otherwise output "no".
+Output:: if stem:[f(x)]is irreducible over stem:[F_q], output "yes"; otherwise output "no".
 
 
 . Set stem:[u(x) = x], stem:[m = deg(f(x))];
@@ -1685,9 +1683,9 @@ Given an elliptic curve over finite field, the following algorithm can be used t
 
 ===== Finding points on stem:[E(F_p)] .
 
-*Input*: a prime stem:[p], the parameters stem:[a] and stem:[b] of an elliptic curve stem:[E] over stem:[F_p].
+Input:: a prime stem:[p], the parameters stem:[a] and stem:[b] of an elliptic curve stem:[E] over stem:[F_p].
 
-*Output*: a nonzero point on stem:[E].
+Output:: a nonzero point on stem:[E].
 
 
 . Select a random integer stem:[x], stem:[0 <= x <= p];
@@ -1722,9 +1720,9 @@ Output: a nonzero point on stem:[E].
 
 This algorithm can be used to compute the generator of stem:[l]-torsion subgroup of elliptic curves.
 
-*Input:* the parameters stem:[a] and stem:[b] of an elliptic curve stem:[E] over stem:[F_q], the order of the curve stem:[E(F_q) = lr], where stem:[l] is a prime number.
+Input:: the parameters stem:[a] and stem:[b] of an elliptic curve stem:[E] over stem:[F_q], the order of the curve stem:[E(F_q) = lr], where stem:[l] is a prime number.
 
-*Output:* an stem:[l]-order point on stem:[E(F_q)].
+Output:: an stem:[l]-order point on stem:[E(F_q)].
 
 
 . Use the method of C.3.1 to select a point stem:[Q] on the curve randomly.
@@ -1739,9 +1737,9 @@ This algorithm can be used to compute the generator of stem:[l]-torsion subgroup
 
 Let stem:[y^2 = x^3 + ax + b] be the function of the elliptic curve stem:[E] over stem:[F_(q^m)], the order stem:[E(F_(q^m)) = q^m + 1 - t]. Let the equation of its twisted curve stem:[E'] is stem:[y^2 = x^3 + \beta^2 ax + \beta^3b], stem:[\beta] is a non-square element of stem:[F_(q^m)]_,_ stem:[E'(F_(q^m)) = q^m + 1 + t].
 
-*Input:* the parameters stem:[a,b, \beta] of the twisted curve stem:[E'(F_(q^m))] of an elliptic curve stem:[E(F_(q^m))], the order stem:[E(F_(q^m)) = n^' = l * r], where stem:[l] is prime.
+Input:: the parameters stem:[a,b, \beta] of the twisted curve stem:[E'(F_(q^m))] of an elliptic curve stem:[E(F_(q^m))], the order stem:[E(F_(q^m)) = n^' = l * r], where stem:[l] is prime.
 
-*Output:* an stem:[l]-order point on stem:[E'(F_(q^m))].
+Output:: an stem:[l]-order point on stem:[E'(F_(q^m))].
 
 
 . Use the method of C.3.1 to select a point stem:[Q]on stem:[E'(F_(q^m))] randomly.

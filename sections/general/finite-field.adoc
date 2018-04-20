@@ -10,8 +10,8 @@ A field consists of a non-empty set stem:[F] with two operations:
 
 It satisfies following properties:
 
-. stem:[\[\[F, + \],\[\]\]] is an additive abelian group, in which 0 denotes the identity element.
-. stem:[\[\[\],\[(F { 0 } , * )\]\]] is a multiplicative abelian group, in which 1 denotes the identity element.
+. stem:[(F, +)] is an additive abelian group, in which 0 denotes the identity element.
+. stem:[(F \\ { 0 }, *)] is a multiplicative abelian group, in which 1 denotes the identity element.
 . Distributive law: stem:[(a + b)c = ac + bc] for all stem:[a,b,c in F].
 
 If stem:[F] is a finite set, then the field is called a finite field. The number of elements in the finite field is called the order of the finite field.
@@ -31,7 +31,7 @@ stem:[F_p] has the following properties:
 
 ==== Finite field stem:[F_(q^m)]
 
-Let stem:[q] be a prime or a prime power, stem:[f(x)] be an stem:[m]-degree ( stem:[m > 1]) irreducible polynomial (reduced polynomial or field polynomial) in the polynomial ring stem:[F_q\[x\]], quotient ring stem:[F_q\[x\] // (f(x))] be a finite field with stem:[q^m] elements (denoted by stem:[F_(q^m)] ), then stem:[F_(q^m)] is the extension field of stem:[F_q], stem:[F_q] is the subfield of stem:[F_(q^m)], and stem:[m] is the extension degree. stem:[F_(q^m)] can be seen as the stem:[m]-dimensional vector space of stem:[F_q] and its elements can be uniquely represented by stem:[a_0 \beta_0 + a_1 \beta_1 + ... a_(m - 1) \beta_(m - 1), where a_i in F_q], stem:[\beta_0, ... , \beta_(m - 1)] is a base of stem:[F_(q^m)] over stem:[F_q] == .
+Let stem:[q] be a prime or a prime power, stem:[f(x)] be an stem:[m]-degree ( stem:[m > 1]) irreducible polynomial (reduced polynomial or field polynomial) in the polynomial ring stem:[F_q\[x\]], quotient ring stem:[F_q\[x\] // (f(x))] be a finite field with stem:[q^m] elements (denoted by stem:[F_(q^m)] ), then stem:[F_(q^m)] is the extension field of stem:[F_q], stem:[F_q] is the subfield of stem:[F_(q^m)], and stem:[m] is the extension degree. stem:[F_(q^m)] can be seen as the stem:[m]-dimensional vector space of stem:[F_q] and its elements can be uniquely represented by stem:[a_0 \beta_0 + a_1 \beta_1 + ... a_(m - 1) \beta_(m - 1), where a_i in F_q], stem:[\beta_0, ... , \beta_(m - 1)] is a base of stem:[F_(q^m)] over stem:[F_q].
 
 The elements of stem:[F_(q^m)] can be represented via polynomial basis or normal basis. In this standard, unless otherwise specified, all elements of stem:[F_(q^m)] are represented by polynomial basis.
 
@@ -88,12 +88,12 @@ The points on elliptic curve stem:[E(F_(q^m))], where stem:[(m >= 1)], constitut
 
 . stem:[O + O = O].
 
-. stem:[\[\[\],\[AAP = (x,y) in E(F_(q^m)) { O } \]\]], stem:[P + O = O + P = P].
+. stem:[AAP = (x,y) in E(F_(q^m)) \\ { O } ], stem:[P + O = O + P = P].
 
-. stem:[\[\[\],\[AAP = (x,y) in E(F_(q^m)) { O } \]\]], the inverse element of stem:[P] is stem:[– P = (x, - y)], and stem:[P + ( - P) = O].
+. stem:[AAP = (x,y) in E(F_(q^m)) \\ { O }], the inverse element of stem:[P] is stem:[– P = (x, - y)], and stem:[P + ( - P) = O].
 
 . The addition rules for two different points (wherein these points are not the inverse of each other):
-Let stem:[\[\[\],\[P_1 = (x_1,y_1) in E(F_(q^m)) { O } \]\]]_,_ stem:[\[\[\],\[P_2 = (x_2,y_2) in E(F_(q^m)) { O } \]\]], and stem:[x_1 != x_2].
+Let stem:[P_1 = (x_1,y_1) in E(F_(q^m)) \\ { O }], stem:[P_2 = (x_2,y_2) in E(F_(q^m)) \\ { O }], and stem:[x_1 != x_2].
 
 Let stem:[P_3 = (x_3,y_3) = P_1 + P_2], then
 
@@ -105,7 +105,7 @@ stem:[\lambda = (y_2 - y_1)/(x_2 - x_1) .]
 
 . Point doubling:
 
-Let stem:[\[\[\],\[P_1 = (x_1,y_1) in E(F_(q^m)) { O } \]\]], and stem:[y_1 != 0]_,_ stem:[P_3 = (x_3,y_3) = P_1 + P_1], then
+Let stem:[P_1 = (x_1,y_1) in E(F_(q^m)) \\ { O }], and stem:[y_1 != 0], stem:[P_3 = (x_3,y_3) = P_1 + P_1], then
 
 stem:[{\[\[x_3 = \lambda^2 - 2x_1,\],\[y_3 = \lambda (x_1 - x_3) - y_1,\]\]]
 
@@ -115,17 +115,29 @@ stem:[\lambda = (3x_1^2 + a)/(2y_1)].
 
 ==== Scalar multiplication on elliptic curve
 
-The repeated addition of the same point is called the scalar multiplication of the point. Let stem:[u] be a positive integer, stem:[P] be a point on the elliptic curve, then the stem:[u] multiple of the point stem:[P] is denoted by stem:[Q = \[u\]P = underset(uP's)(ubrace (P + P + ... + P))].
+The repeated addition of the same point is called the scalar
+multiplication of the point. Let stem:[u] be a positive integer,
+stem:[P] be a point on the elliptic curve, then the stem:[u] multiple
+of the point stem:[P] is denoted by
+stem:[Q = \[u\]P = underset(uP's)(ubrace (P + P + ... + P))].
 
-Scalar multiplication can be extended to 0-multiple and negative-multiple operations: stem:[\[0\]P = O], stem:[\[- u\]P = \[u\]( - P)].
+Scalar multiplication can be extended to 0-multiple and
+negative-multiple operations: stem:[\[0\]P = O],
+stem:[\[- u\]P = \[u\]( - P)].
 
-Scalar multiplication can be calculated efficiently using certain techniques; please refer to Annex A.2 for them.
+Scalar multiplication can be calculated efficiently using certain
+techniques; please refer to Annex A.2 for them.
 
+[[ec-verify-points]]
 ==== Verification of points in a subgroup of an elliptic curve
 
-*Input*: The parameters stem:[a] and stem:[b] which define the elliptic curve equation over stem:[F_(q^m)], where stem:[q] is an odd prime and stem:[m >= 1], the order stem:[N] of the subgroup stem:[G] of the elliptic curve stem:[E(F_(q^m))], a pair of elements in stem:[F_(q^m)] stem:[(x,y)].
+Input:: The parameters stem:[a] and stem:[b] which define the elliptic
+curve equation over stem:[F_(q^m)], where stem:[q] is an odd prime and
+stem:[m >= 1], the order stem:[N] of the subgroup stem:[G] of the
+elliptic curve stem:[E(F_(q^m))], a pair of elements in stem:[F_(q^m)]
+stem:[(x,y)].
 
-*Output*: If stem:[(x,y)] is an element of the group stem:[G], then output "valid", otherwise output "invalid".
+Output:: If stem:[(x,y)] is an element of the group stem:[G], then output "valid", otherwise output "invalid".
 
 . Check if stem:[(x,y)] satisfies the equation of the elliptic curve stem:[y^2 = x^3 + ax + b].
 . Let stem:[Q = (x,y)], check if stem:[\[N\]Q = O].

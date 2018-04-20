@@ -126,7 +126,7 @@ stem:[|~ x ~|] : the ceiling function that maps to the smallest integer not less
 
 stem:[| __x__ |] : the floor function that maps to the largest integer not greater than stem:[x], for example, stem:[| __7__ | = 7], stem:[| __8.3__ | = 8]
 
-stem:[x ∥ y] : the concatenation of stem:[x] and stem:[y], where stem:[x] and stem:[y] are bit strings or byte strings
+stem:[x || y] : the concatenation of stem:[x] and stem:[y], where stem:[x] and stem:[y] are bit strings or byte strings
 
 stem:[\[x,y\]] : the set of integers which are not less than stem:[x] and not greater than stem:[y]
 
@@ -171,7 +171,7 @@ The KGC generates a random number stem:[ke in \[1,N - 1\]] as the encryption mas
 
 The KGC chooses a one-byte encryption private key generating function identifier stem:[hid] and makes it public.
 
-Let stem:[ID_A] and stem:[ID_B] denote the identities of the users A and B respectively. To generate the encryption private key stem:[de_A] of A, the KGC first computes stem:[t_1 = H_1(ID_A ∥ hid ,N) + ke] over the finite field stem:[F_N]. If stem:[t_1 = 0], it regenerates the encryption master private key, computes the encryption master public key and makes it public, and updates the existing encryption private keys of users. Otherwise, it computes stem:[t_2 = ke * t_1^( - 1)], and then computes stem:[de_A = \[t_2\]P_2]. To generate the encryption private key stem:[de_B] of B, the KGC first computes stem:[t_3 = H_1(ID_B ∥ hid ,N) + ke] over the finite field stem:[F_N]. If stem:[t_3 = 0], it regenerates the encryption master private key, computes the encryption master public key and makes it public, and updates the existing encryption private keys of users. Otherwise, it computes stem:[t_4 = ke * t_3^( - 1)], and then computes stem:[de_B = \[t_4\]P_2].
+Let stem:[ID_A] and stem:[ID_B] denote the identities of the users A and B respectively. To generate the encryption private key stem:[de_A] of A, the KGC first computes stem:[t_1 = H_1(ID_A || hid, N) + ke] over the finite field stem:[F_N]. If stem:[t_1 = 0], it regenerates the encryption master private key, computes the encryption master public key and makes it public, and updates the existing encryption private keys of users. Otherwise, it computes stem:[t_2 = ke * t_1^( - 1)], and then computes stem:[de_A = \[t_2\]P_2]. To generate the encryption private key stem:[de_B] of B, the KGC first computes stem:[t_3 = H_1(ID_B || hid, N) + ke] over the finite field stem:[F_N]. If stem:[t_3 = 0], it regenerates the encryption master private key, computes the encryption master public key and makes it public, and updates the existing encryption private keys of users. Otherwise, it computes stem:[t_4 = ke * t_3^( - 1)], and then computes stem:[de_B = \[t_4\]P_2].
 
 
 === Auxiliary functions
@@ -198,9 +198,9 @@ The input of the cryptographic function stem:[H_1(Z,n)] is a bit string stem:[Z]
 
 *Cryptographic function* stem:[H_1(Z,n)]*:*
 
-*Input:*a bit string stem:[Z] and an integer stem:[n].
+Input::a bit string stem:[Z] and an integer stem:[n].
 
-*Output:* an integer stem:[h_1 in \[1,n - 1\]].
+Output:: an integer stem:[h_1 in \[1,n - 1\]].
 
 Step 1: Initialize a 32-bit counter stem:[ct = 0x00000001];
 
@@ -208,13 +208,13 @@ Step 2: Compute stem:[hlen = 8 xx |~ (5 xx ( log_2n)) // 32 ~|];
 
 Step 3: For stem:[i = 1]to stem:[|~ hlen // v ~|]:
 
-Step 3.1: Compute stem:[Ha_i = H_v(0x01 vv |Z| vv ct )];
+Step 3.1: Compute stem:[Ha_i = H_v(0x01 || |Z| || ct )];
 
 Step 3.2: stem:[ct]++;
 
 Step 4: If stem:[hlen // v]is an integer, set stem:[(Ha ! )_( |~ hlen // v ~| ) = Ha_( |~ hlen // v ~| )]. Otherwise, set stem:[H(a ! )_( |~ hlen // v ~| )] to be the leftmost stem:[( hlen - (v xx | __hlen // v__ | ))]bits of stem:[Ha_( |~ hlen // v ~| )].
 
-Step 5: Set stem:[Ha = Ha_1 vv |Ha_2| vv cdots vv Ha_( |~ hlen // v ~| - 1) vv H(a ! )_( |~ hlen // v ~| )]. Convert the data type of stem:[Ha] to integer as specified in Clauses 6.2.4 and 6.2.3 of GM/T 0044.1‒2016.
+Step 5: Set stem:[Ha = Ha_1 || |Ha_2| || cdots || Ha_( |~ hlen // v ~| - 1) || H(a ! )_( |~ hlen // v ~| )]. Convert the data type of stem:[Ha] to integer as specified in Clauses 6.2.4 and 6.2.3 of GM/T 0044.1‒2016.
 
 Step 6: Compute stem:[h_1 = (Ha mod (n - 1)) + 1].
 
@@ -227,9 +227,9 @@ The input of the cryptographic function stem:[H_2(Z,n)] is a bit string stem:[Z]
 
 *Cryptographic function* stem:[H_2(Z,n)]*:*
 
-*Input:*a bit string stem:[Z], an integer stem:[n].
+Input::a bit string stem:[Z], an integer stem:[n].
 
-*Output:* an integer stem:[h_2 in \[1,n - 1\]].
+Output:: an integer stem:[h_2 in \[1,n - 1\]].
 
 Step 1: Initialize a 32-bit counter stem:[ct = 0x00000001];
 
@@ -237,13 +237,13 @@ Step 2: Compute stem:[hlen = 8 xx |~ (5 xx ( log_2n)) // 32 ~|];
 
 Step 3: For stem:[i = 1]to stem:[|~ hlen // v ~|]:
 
-Step 3.1: Compute stem:[Ha_i = H_v(0x02 vv |Z| vv ct )];
+Step 3.1: Compute stem:[Ha_i = H_v(0x02 || |Z| || ct )];
 
 Step 3.2: stem:[ct]++;
 
 Step 4: If stem:[hlen // v] is an integer, set stem:[H(a ! )_( |~ hlen // v ~| ) = Ha_( |~ hlen // v ~| )]. Otherwise, set stem:[H(a ! )_( |~ hlen // v ~| )] to be the leftmost stem:[( hlen - (v xx | __hlen // v__ | ))]bits of stem:[Ha_( |~ hlen // v ~| )].
 
-Step 5: Set stem:[Ha = Ha_1 vv |Ha_2| vv cdots vv] stem:[Ha_( |~ hlen // v ~| - 1)] stem:[vv H(a ! )_( |~ hlen // v ~| )] . Convert the data type of stem:[Ha] to integer as specified in Clauses 6.2.4 and 6.2.3of GM/T 0044.1‒2016.
+Step 5: Set stem:[Ha = Ha_1 || |Ha_2| || cdots vv] stem:[Ha_( |~ hlen // v ~| - 1)] stem:[vv H(a ! )_( |~ hlen // v ~| )] . Convert the data type of stem:[Ha] to integer as specified in Clauses 6.2.4 and 6.2.3of GM/T 0044.1‒2016.
 
 Step 6: Compute stem:[h_2 = (Ha mod (n - 1)) + 1].
 
@@ -259,21 +259,22 @@ Let stem:[H_v()] be a cryptographic hash function and its output is a hash value
 
 *Key derivation function* stem:[KDF(Z, klen )]*:*
 
-*Input:* a bit string stem:[Z] (shared by both entities) and an integer stem:[klen] (denotes the required bit length of secret keys, and stem:[klen < (2^(32) - 1)v]).
+Input:: a bit string stem:[Z] (shared by both entities) and an integer stem:[klen] (denotes the required bit length of secret keys, and stem:[klen < (2^(32) - 1)v]).
 
-*Output:* a bit string stem:[K] of length stem:[klen].
+Output:: a bit string stem:[K] of length stem:[klen].
 
 Step 1: Initialize a stem:[32]-bit counter stem:[ct = 0x00000001].
 
 Step 2: For stem:[i = 1] to stem:[|~ klen // v ~|]:
 
-Step 2.1: Compute stem:[Ha_i = H_v(Z ∥ ct )];
+Step 2.1: Compute stem:[Ha_i = H_v(Z || ct )];
 
 Step 2.2: stem:[ct + +];
 
-Step 3: If stem:[klen // v] is an integer, then set stem:[(Ha ! )_( |~ klen // v ~| ) = Ha_( |~ klen // v ~| )]. Otherwise, set stem:[(Ha ! )_( |~ klen // v ~| )] be the leftmost stem:[( klen - (v xx | __klen // v__ | ))] bits of stem:[Ha_( |~ klen // v ~| )];
+Step 3: If stem:[klen // v] is an integer, then set stem:[(Ha ! )_( |~ klen // v ~| ) = Ha_( |~ klen // v ~| )].
+Otherwise, set stem:[(Ha ! )_( |~ klen // v ~| )] be the leftmost stem:[( klen - (v xx | __klen // v__ | ))] bits of stem:[Ha_( |~ klen // v ~| )];
 
-Step 4: Set stem:[K = Ha_1 ∥ Ha_2 ∥ cdots ∥ Ha_( |~ klen // v ~| - 1) ∥ (Ha ! )_( |~ klen // v ~| )].
+Step 4: Set stem:[K = Ha_1 || Ha_2 || cdots || Ha_( |~ klen // v ~| - 1) || (Ha ! )_( |~ klen // v ~| )].
 
 
 
@@ -290,7 +291,7 @@ In order to obtain the same keys, both A and B shall perform the following steps
 
 *User A*:
 
-A1: Compute the element stem:[Q_B = \[H_1(ID_B ∥ hid ,N)\]P_1 + P_( pub - e)] over stem:[G_1];
+A1: Compute the element stem:[Q_B = \[H_1(ID_B || hid, N)\]P_1 + P_( pub - e)] over stem:[G_1];
 
 A2: Generate a random number stem:[r_A in \[1,N - 1\]];
 
@@ -300,7 +301,7 @@ A4: Send stem:[R_A] to B;
 
 *User B*:
 
-B1: Compute the element stem:[Q_A = \[H_1(ID_A ∥ hid ,N)\]P_1 + P_( pub - e)] over stem:[G_1];
+B1: Compute the element stem:[Q_A = \[H_1(ID_A || hid, N)\]P_1 + P_( pub - e)] over stem:[G_1];
 
 B2: Generate a random number stem:[r_B in \[1,N - 1\]];
 
@@ -308,9 +309,9 @@ B3: Compute the element stem:[R_B = \[r_B\]Q_A] over stem:[G_1];
 
 B4: Verify stem:[R_A in G_1] as specified in Clause 4.5 of GM/T 0044.1‒2016. If not, the protocol fails. Otherwise, compute over stem:[G_T]: stem:[g_1 = e(R_A, de_B)], stem:[g_2 = e(P_( pub - e),P_2)^(r_B)], stem:[g_3 = g_1^(r_B)]. Convert the data type of stem:[g_1], stem:[g_2], stem:[g_3] to bit string as specified in Clauses6.2.8 and 6.2.5 of GM/T 0044.1‒2016.
 
-B5: Convert the data type of stem:[R_A] and stem:[R_B] to bit string as specified in Clauses 6.2.6 and 6.2.5 of GM/T 0044.1‒2016, and compute stem:[SK_B = KDF(ID_A ∥ ID_B ∥ R_A ∥ R_B ∥ g_1 ∥ g_2 ∥ g_3, klen )].
+B5: Convert the data type of stem:[R_A] and stem:[R_B] to bit string as specified in Clauses 6.2.6 and 6.2.5 of GM/T 0044.1‒2016, and compute stem:[SK_B = KDF(ID_A || ID_B || R_A || R_B || g_1 || g_2 || g_3, klen )].
 
-B6: (Optional) Compute stem:[S_B = H_v(0x82 ∥ g_1 ∥ H_v(g_2 ∥ g_3 ∥ ID_A ∥ ID_B ∥ R_A ∥ R_B))].
+B6: (Optional) Compute stem:[S_B = H_v(0x82 || g_1 || H_v(g_2 || g_3 || ID_A || ID_B || R_A || R_B))].
 
 B7: Send stem:[R_B] and (optionally) stem:[S_B] to A.
 
@@ -318,15 +319,15 @@ B7: Send stem:[R_B] and (optionally) stem:[S_B] to A.
 
 A5: Verify stem:[R_B in G_1] as specified in Clause 4.5 of GM/T 0044.1‒2016. If not, the protocol fails. Otherwise, compute over stem:[G_T]: stem:[g_1^' = e(P_( pub - e),P_2)^(r_A)], stem:[g_2^' = e(R_B, de_A)], stem:[g_3^' = (g_2^')^(r_A)]. Convert the data type of stem:[g_1^'], stem:[g_2^'], stem:[g_3^'] to bit string as specified in Clauses6.2.6 and 6.2.5 of GM/T 0044.1‒2016.
 
-A6: Convert the data type of stem:[R_A] and stem:[R_B] to bit string as specified in Clauses 6.2.8 and 6.2.5 of GM/T 0044.1‒2016, and (optionally) compute stem:[S_1 = H_v(0x82 ∥ g_1^' ∥ H_v(g_2^' ∥ g_3^' ∥ ID_A ∥ ID_B ∥ R_A ∥ R_B))], and verify if stem:[S_1 = S_B], if not, the key confirmation from B to A fails.
+A6: Convert the data type of stem:[R_A] and stem:[R_B] to bit string as specified in Clauses 6.2.8 and 6.2.5 of GM/T 0044.1‒2016, and (optionally) compute stem:[S_1 = H_v(0x82 || g_1^' || H_v(g_2^' || g_3^' || ID_A || ID_B || R_A || R_B))], and verify if stem:[S_1 = S_B], if not, the key confirmation from B to A fails.
 
-A7: Compute stem:[SK_A = KDF(ID_A ∥ ID_B ∥ R_A ∥ R_B ∥ g_1^' ∥ g_2^' ∥ g_3^', klen )].
+A7: Compute stem:[SK_A = KDF(ID_A || ID_B || R_A || R_B || g_1^' || g_2^' || g_3^', klen )].
 
-A8: (Optional) Compute stem:[S_A = H_v(0x83 ∥ g_1^' ∥ H_v(g_2^' ∥ g_3^' ∥ ID_A ∥ ID_B ∥ R_A ∥ R_B))] and send stem:[S_A] to B.
+A8: (Optional) Compute stem:[S_A = H_v(0x83 || g_1^' || H_v(g_2^' || g_3^' || ID_A || ID_B || R_A || R_B))] and send stem:[S_A] to B.
 
 *User B*:
 
-B8: (Optional) Compute stem:[S_2 = H_v(0x83 ∥ g_1 ∥ H_v(g_2 ∥ g_3 ∥ ID_A ∥ ID_B ∥ R_A ∥ R_B))], and verify if stem:[S_2 = S_A], if not, the key confirmation from A to B fails.
+B8: (Optional) Compute stem:[S_2 = H_v(0x83 || g_1 || H_v(g_2 || g_3 || ID_A || ID_B || R_A || R_B))], and verify if stem:[S_2 = S_A], if not, the key confirmation from A to B fails.
 
 
 === Key exchange process

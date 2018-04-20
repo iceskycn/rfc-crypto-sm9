@@ -57,7 +57,7 @@ See <<aux-functions>> for details.
 
 ==== Generation Of The Encryption Master Key
 
-The EKGC generates a random number stem:[ke in \[1,N - 1\]] as the encryption master private key, computes the element stem:[P_( pub - e) = \[ke \]P_1] in stem:[G_1] as the encryption master public key, and then the encryption master key pair is stem:[( ke ,P_( pub - e))]. The EKGC keeps stem:[ke] secret and makes stem:[P_( pub - e)] public.
+The EKGC generates a random number stem:[ke in \[1,N - 1\]] as the encryption master private key, computes the element stem:[P_(pub - e) = \[ke \]P_1] in stem:[G_1] as the encryption master public key, and then the encryption master key pair is stem:[(ke, P_(pub - e))]. The EKGC keeps stem:[ke] secret and makes stem:[P_(pub - e)] public.
 
 The EKGC selects a one-byte encryption private key generating function identified by the identifier stem:[hid], and makes it public.
 
@@ -65,7 +65,7 @@ The EKGC selects a one-byte encryption private key generating function identifie
 
 Let stem:[ID_B] denote the identity of user B.
 
-To generate the encryption private key stem:[de_B] of B, the EKGC first computes stem:[\[\[ID_B vv | hid ,N) + ke \],\[t_1 = H_1\]\]] over the finite field stem:[F_N].
+To generate the encryption private key stem:[de_B] of B, the EKGC first computes stem:[t_1 = H_1(ID_B || hid, N)] over the finite field stem:[F_N].
 
 If stem:[t_1 = 0], it regenerates the encryption master private key, computes the encryption master public key and makes it public, and updates the existing encryption private keys of users. Otherwise, it computes stem:[t_2 = ke * t_1^( - 1)], and then computes stem:[d_(eB) = \[t_2\]P_2].
 
@@ -74,17 +74,17 @@ If stem:[t_1 = 0], it regenerates the encryption master private key, computes th
 
 In order to encapsulate a key of length stem:[klen] to user B, the encapsulating entity user A shall perform the following steps.
 
-A1: Compute stem:[Q_B = \[H_1(ID_B vv hid ,N)\]P_1 + P_( pub - e) in G_1].
+A1: Compute stem:[Q_B = \[H_1(ID_B || hid, N)\]P_1 + P_( pub - e) in G_1].
 
 A2: Generate a random integer stem:[r in \[1,N - 1\]].
 
-A3: Compute stem:[C = \[r\]Q_B]of stem:[G_1], and convert the data type of stem:[C] to bit string as specified in Clauses 6.2.8 and 6.2.5 of <<GMT-0044.1-2016>>.
+A3: Compute stem:[C = \[r\]Q_B]of stem:[G_1], and convert the data type of stem:[C] to bit string as specified in <<convert-point-byte>> and <<convert-byte-bit>>.
 
 A4: Compute stem:[g = e(P_( pub - e),P_2)] of stem:[G_T].
 
-A5: Compute stem:[w = g^r] of stem:[G_T], and convert the data type of stem:[w] to bit string as specified in Clauses 6.2.6 and 6.2.5 of <<GMT-0044.1-2016>>.
+A5: Compute stem:[w = g^r] of stem:[G_T], and convert the data type of stem:[w] to bit string as specified in <<convert-field-byte>> and <<convert-byte-bit>>.
 
-A6: Compute stem:[K = KDF(C vv w vv ID_B, klen )], if stem:[K = 0], go to A2.
+A6: Compute stem:[K = KDF(C || w || ID_B, klen )], if stem:[K = 0], go to A2.
 
 A7: Output stem:[(K,C)], where stem:[K] is the encapsulated key, stem:[C] is the encapsulated ciphertext.
 
@@ -98,11 +98,11 @@ Figure 1: Key encapsulation process
 
 After user B receives the ciphertext stem:[C], in order to decapsulate stem:[K], B shall perform the following steps.
 
-B1: Verify that stem:[C in G_1] as specified in Clause 4.5 of <<GMT-0044.1-2016>>. If not,report an error and exit.
+B1: Verify that stem:[C in G_1] as specified in <<ec-verify-points>>. If not, report an error and exit.
 
-B2: Compute stem:[w' = e(C,de_B)] of stem:[G_T], and convert the data type of stem:[w'] to bit string as specified in Clauses 6.2.6 and 6.2.5 of <<GMT-0044.1-2016>>.
+B2: Compute stem:[w' = e(C, de_B)] of stem:[G_T], and convert the data type of stem:[w'] to bit string as specified in <<convert-field-byte>> and <<convert-byte-bit>>.
 
-B3: Convert the data type of stem:[C] to bit string as specified in Clauses 6.2.6 and 6.2.5 of <<GMT-0044.1-2016>>, and compute stem:[K' = KDF(C vv w' vv ID_B, klen )]. If stem:[K' = 0], report an error and exit.
+B3: Convert the data type of stem:[C] to bit string as specified in <<convert-field-byte>> and <<convert-byte-bit>>, and compute stem:[K' = KDF(C || w' || ID_B, klen )]. If stem:[K' = 0], report an error and exit.
 
 B4: Output stem:[K'].
 
@@ -115,38 +115,38 @@ Figure 2: Key decapsulation process
 
 === Public Key Encryption Algorithm
 
-Let stem:[M] be the message to be sent, stem:[mlen] the bit length of stem:[M]. stem:[\[\[len \],\[K_(())\]\]] is the bit length of the key stem:[K_1] used with the block cipher. stem:[\[\[len \],\[K_(())\]\]] the bit length of the key stem:[K_2] for stem:[MAC(K_2,Z)].
+Let stem:[M] be the message to be sent, stem:[mlen] the bit length of stem:[M]. stem:[K_1(_len)] is the bit length of the key stem:[K_1] used with the block cipher. stem:[K_2(_len)] the bit length of the key stem:[K_2] for stem:[MAC(K_2,Z)].
 
 In order to encrypt a message stem:[M] to user B, user A shall perform the following steps.
 
-A1: Compute stem:[Q_B = \[H_1(ID_B vv hid ,N)\]P_1 + P_( pub - e) in G_1].
+A1: Compute stem:[Q_B = \[H_1(ID_B || hid, N)\]P_1 + P_(pub - e) in G_1].
 
 A2: Generate a random integer stem:[r in \[1,N - 1\]].
 
-A3: Compute stem:[C_1 = \[r\]Q_B]of stem:[G_1], and convert the data type of stem:[C_1] to bit string as specified in Clauses 6.2.8 and 6.2.5 of <<GMT-0044.1-2016>>.
+A3: Compute stem:[C_1 = \[r\]Q_B]of stem:[G_1], and convert the data type of stem:[C_1] to bit string as specified in <<convert-point-byte>> and <<convert-byte-bit>>.
 
 A4: Compute stem:[g = e(P_( pub - e),P_2)] of stem:[G_T].
 
-A5: Compute stem:[w = g^r] of stem:[G_T], and convert the data type of stem:[w] to bit string as specified in Clauses 6.2.6 and 6.2.5 of <<GMT-0044.1-2016>>.
+A5: Compute stem:[w = g^r] of stem:[G_T], and convert the data type of stem:[w] to bit string as specified in <<convert-field-byte>> and <<convert-byte-bit>>.
 
 A6: Compute according to the type of encryption algorithm:
 
 . Stream cipher based on the key derivation function
 
-.. Compute stem:[\[\[len \],\[klen = mlen + K_(())\]\]], stem:[K = KDF(C_1 vv w vv ID_B, klen )]. Let stem:[K_1] be the leftmost stem:[mlen]bits of stem:[K], and stem:[K_2] be the remaining stem:[\[\[len \],\[K_(())\]\]] bits. If stem:[K_1 = 0], go to A2.
+.. Compute stem:[klen = mlen + K_2(_len)], stem:[K = KDF(C_1 || w || ID_B, klen )]. Let stem:[K_1] be the leftmost stem:[mlen] bits of stem:[K], and stem:[K_2] be the remaining stem:[K_2(_len)] bits. If stem:[K_1 = 0], go to A2.
 
 .. Compute stem:[C_2 = M o+ K_1].
 
 . Block cipher combined with the key derivation function
 
 
-.. Compute stem:[\[\[len \],\[len \],\[klen = K_(())K_(())\]\]], stem:[K = KDF(C_1 vv w vv ID_B, klen )]. Let stem:[K_1] be the leftmost stem:[\[\[len \],\[K_(())\]\]]bits of stem:[K], and stem:[K_2] be the remaining stem:[\[\[len \],\[K_(())\]\]] bits. If stem:[K_1 = 0], go to A2.
+.. Compute stem:[klen = K_1(_len) + K_2(_len)], stem:[K = KDF(C_1 || w || ID_B, klen)]. Let stem:[K_1] be the leftmost stem:[K_1(_len)] bits of stem:[K], and stem:[K_2] be the remaining stem:[K_2(_len)] bits. If stem:[K_1 = 0], go to A2.
 
-.. Compute stem:[C_2 = Enc (K_1,M)].
+.. Compute stem:[C_2 = Enc(K_1,M)].
 
 A7: Compute stem:[C_3 = MAC(K_2,C_2)].
 
-A8: Output ciphertext stem:[C = C_1 vv |C_3| vv C_2].
+A8: Output ciphertext stem:[C = C_1 || |C_3| || C_2].
 
 
 ==== Process Diagram
@@ -158,27 +158,27 @@ Figure 3: Encryption process
 
 === Public Key Decryption Algorithm
 
-Let stem:[mlen] be the bit length of stem:[C_2] of ciphertext stem:[C = C_1 vv |C_3| vv C_2]. stem:[\[\[len \],\[K_(())\]\]] is the bit length of the key stem:[K_1] used with the block cipher. stem:[\[\[len \],\[K_(())\]\]] is the bit length of the key stem:[K_2] for stem:[MAC(K_2,Z)].
+Let stem:[mlen] be the bit length of stem:[C_2] of ciphertext stem:[C = C_1 || |C_3| || C_2]. stem:[K_(_len)] is the bit length of the key stem:[K_1] used with the block cipher. stem:[K_2(_len)] is the bit length of the key stem:[K_2] for stem:[MAC(K_2,Z)].
 
 In order to decrypt stem:[C], user B needs to perform the following steps.
 
-B1: Extract bit string stem:[C_1] from stem:[C]. Convert the data type of stem:[C_1] to a point on elliptic curve as specified in Clauses 6.2.4 and 6.2.9 of <<GMT-0044.1-2016>>. Verify stem:[C_1 in G_1] as specified in Clause 4.5 of GM/T 0044.;1‒2016; if not,report an error and exit.
+B1: Extract bit string stem:[C_1] from stem:[C]. Convert the data type of stem:[C_1] to a point on elliptic curve as specified in <<convert-bit-byte>> and <<convert-byte-point>>. Verify stem:[C_1 in G_1] as specified in <<ec-verify-points>>; if not, report an error and exit.
 
-B2: Compute stem:[w' = e(C_1,de_B)] of stem:[G_T], and convert the data type of stem:[w'] to bit string as specified in Clauses 6.2.6 and 6.2.5 of <<GMT-0044.1-2016>>.
+B2: Compute stem:[w' = e(C_1,de_B)] of stem:[G_T], and convert the data type of stem:[w'] to bit string as specified in <<convert-field-byte>> and <<convert-byte-bit>>.
 
 B3: Compute according to the type of encryption algorithm:
 
 . Stream cipher based on the key derivation function
 
-.. Compute stem:[\[\[len \],\[klen = mlen + K_(())\]\]], stem:[K' = KDF(C_1 vv w' vv ID_B, klen )]. Let stem:[K_1'] be the leftmost stem:[mlen]bits of stem:[K'], and stem:[K_2'] be the remaining stem:[\[\[len \],\[K_(())\]\]] bits. If stem:[K_1' = 0], report an error and exit;
+.. Compute stem:[klen = mlen + K_2(_len)], stem:[K' = KDF(C_1 || w' || ID_B, klen )]. Let stem:[K_1'] be the leftmost stem:[mlen] bits of stem:[K'], and stem:[K_2'] be the remaining stem:[K_2(_len)] bits. If stem:[K_1' = 0], report an error and exit;
 
 .. Compute stem:[M' = C_2 o+ K_1'].
 
 . Block cipher combined with the key derivation function
 
-.. Compute stem:[\[\[len \],\[len \],\[klen = K_(())K_(())\]\]], stem:[K' = KDF(C_1 vv w' vv ID_B, klen )]. Let stem:[K_1'] be the leftmost stem:[\[\[len \],\[K_(())\]\]]bits of stem:[K'], and stem:[K_2'] be the remaining stem:[\[\[len \],\[K_(())\]\]] bits. If stem:[K_1' = 0], report an error and exit;
+.. Compute stem:[klen = K_1(_len) + K_2(_len)], stem:[K' = KDF(C_1 || w' || ID_B, klen)]. Let stem:[K_1'] be the leftmost stem:[K_1(_len)] bits of stem:[K'], and stem:[K_2'] be the remaining stem:[K_2(_len)] bits. If stem:[K_1' = 0], report an error and exit;
 
-.. Compute stem:[M' = Dec (K_1',C_2)].
+.. Compute stem:[M' = Dec(K_1',C_2)].
 
 B4: Compute stem:[u = MAC(K_2',C_2)]. Extract bit string stem:[C_3] from stem:[C]; if stem:[u != C_3], report an error and exit;
 

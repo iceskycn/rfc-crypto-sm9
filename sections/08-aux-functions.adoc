@@ -12,26 +12,31 @@ These auxiliary functions are used in this document.
 
 === Cryptographic hash functions
 
-[[dsa-hv]]
+[[hash-hv]]
 ==== Cryptographic Hash Function stem:[H_v]
 
 The output of the cryptographic hash function stem:[H_v()] is a
 stem:[v]-bit hash value.
 
-This section adopts the cryptographic hash functions approved by the State Cryptography Administration such as the
+This section adopts the cryptographic hash functions approved by the
+State Cryptography Administration such as the
 SM3 cryptographic hash algorithm.
 
+[[hash-h1]]
 ==== Cryptographic Hash Function stem:[H_1]
 
-The input of the cryptographic function stem:[H_1(Z,n)] is a bit string stem:[Z] and an integer stem:[n], and its output is an integer stem:[h_1 in \[1,n - 1\]].
+The input of the cryptographic function stem:[H_1(Z,n)] is a bit string
+stem:[Z] and an integer stem:[n], and its output is an integer
+stem:[h_1 in \[1,n - 1\]].
+
 stem:[H_1(Z,n)] invokes the cryptographic hash function stem:[H_v()] internally.
-stem:[H_v()] is specified in <<dsa-hv>>.
+stem:[H_v()] is specified in <<hash-hv>>.
 
 Cryptographic function stem:[H_1(Z,n)]:
 
-*Input:*a bit string stem:[Z] and an integer stem:[n].
+Input::a bit string stem:[Z] and an integer stem:[n].
 
-*Output:* an integer stem:[h_1 in \[1,n - 1\]].
+Output:: an integer stem:[h_1 in \[1,n - 1\]].
 
 Step 1: Initialize a 32-bit counter stem:[ct = 0x00000001];
 
@@ -39,26 +44,34 @@ Step 2: Compute stem:[hlen = 8 xx |~ (5 xx ( log_2n)) // 32 ~|];
 
 Step 3: For stem:[i = 1]to stem:[|~ hlen // v ~|]:
 
-Step 3.1: Compute stem:[Ha_i = H_v(0x01 vv |Z| vv ct )];
+Step 3.1: Compute stem:[Ha_i = H_v(0x01 || |Z| || ct )];
 
 Step 3.2: stem:[ct]++;
 
-Step 4: If stem:[hlen // v]is an integer, set stem:[(Ha ! )_( |~ hlen // v ~| ) = Ha_( |~ hlen // v ~| )]. Otherwise, set stem:[H(a ! )_( |~ hlen // v ~| )] to be the leftmost stem:[( hlen - (v xx | __hlen // v__ | ))] bits of stem:[Ha_( |~ hlen // v ~| )].
+Step 4: If stem:[hlen // v]is an integer, set stem:[(Ha ! )_( |~ hlen // v ~| ) = Ha_( |~ hlen // v ~| )].
+Otherwise, set stem:[H(a ! )_( |~ hlen // v ~| )] to be the leftmost
+stem:[( hlen - (v xx | __hlen // v__ | ))] bits of stem:[Ha_( |~ hlen // v ~| )].
 
-Step 5: Set stem:[Ha = Ha_1 vv |Ha_2| vv cdots vv Ha_( |~ hlen // v ~| - 1) vv H(a ! )_( |~ hlen // v ~| )]. Convert the data type of stem:[Ha] to integer as specified in Clauses 6.2.4 and 6.2.3 of <<GMT-0044.1-2016>>.
+Step 5: Set stem:[Ha = Ha_1 || |Ha_2| || cdots || Ha_( |~ hlen // v ~| - 1) || H(a ! )_( |~ hlen // v ~| )].
+Convert the data type of stem:[Ha] to integer as specified in <<convert-bit-byte>> and <<convert-byte-int>>.
 
 Step 6: Compute stem:[h_1 = (Ha mod (n - 1)) + 1].
 
 
 ==== Cryptographic_hash_function stem:[H_2]
 
-The input of the cryptographic function stem:[H_2(Z,n)] is a bit string stem:[Z] and an integer stem:[n], and its output is an integer stem:[h_2 in \[1,n - 1\]]. stem:[H_2(Z,n)] invokes the cryptographic hash function stem:[H_v()] internally. stem:[H_v()] is specified in 5.4.2.1.
+The input of the cryptographic function stem:[H_2(Z,n)] is a bit string
+stem:[Z] and an integer stem:[n], and its output is an integer
+stem:[h_2 in \[1,n - 1\]].
 
-*Cryptographic function* stem:[H_2(Z,n)]*:*
+stem:[H_2(Z,n)] invokes the cryptographic hash function stem:[H_v()] internally.
+stem:[H_v()] is specified in <<hash-hv>>.
 
-*Input:*a bit string stem:[Z], an integer stem:[n].
+Cryptographic function stem:[H_2(Z,n)]:
 
-*Output:* an integer stem:[h_2 in \[1,n - 1\]].
+Input::a bit string stem:[Z], an integer stem:[n].
+
+Output:: an integer stem:[h_2 in \[1,n - 1\]].
 
 Step 1: Initialize a 32-bit counter stem:[ct = 0x00000001];
 
@@ -66,13 +79,13 @@ Step 2: Compute stem:[hlen = 8 xx |~ (5 xx ( log_2n)) // 32 ~|];
 
 Step 3: For stem:[i = 1]to stem:[|~ hlen // v ~|]:
 
-Step 3.1: Compute stem:[Ha_i = H_v(0x02 vv |Z| vv ct)];
+Step 3.1: Compute stem:[Ha_i = H_v(0x02 || |Z| || ct)];
 
 Step 3.2: stem:[ct]++;
 
 Step 4: If stem:[hlen // v] is an integer, set stem:[H(a ! )_( |~ hlen // v ~| ) = Ha_( |~ hlen // v ~| )]. Otherwise, set stem:[H(a ! )_( |~ hlen // v ~| )] to be the leftmost stem:[( hlen - (v xx | __hlen // v__ | ))] bits of stem:[Ha_( |~ hlen // v ~| )].
 
-Step 5: Set stem:[Ha = Ha_1 vv |Ha_2| vv cdots vv] stem:[Ha_( |~ hlen // v ~| - 1)] stem:[vv H(a ! )_( |~ hlen // v ~| )] . Convert the data type of stem:[Ha] to integer as specified in Clauses 6.2.4 and 6.2.3 of <<GMT-0044.1-2016>>.
+Step 5: Set stem:[Ha = Ha_1 || |Ha_2| || cdots vv] stem:[Ha_( |~ hlen // v ~| - 1)] stem:[vv H(a ! )_( |~ hlen // v ~| )] . Convert the data type of stem:[Ha] to integer as specified in <<convert-bit-byte>> and <<convert-byte-int>>.
 
 Step 6: Compute stem:[h_2 = (Ha mod (n - 1)) + 1].
 
@@ -87,35 +100,35 @@ Let stem:[H_v()] be a cryptographic hash function and its output is a hash value
 
 Key derivation function stem:[KDF(Z, klen )]:
 
-*Input:* a bit string stem:[Z] (shared by both entities) and an integer stem:[klen] (denotes the required bit length of secret keys, and stem:[klen < (2^(32) - 1)v]).
+Input:: a bit string stem:[Z] (shared by both entities) and an integer stem:[klen] (denotes the required bit length of secret keys, and stem:[klen < (2^(32) - 1)v]).
 
-*Output:* a bit string stem:[K] of length stem:[klen].
+Output:: a bit string stem:[K] of length stem:[klen].
 
 Step 1: Initialize a stem:[32]-bit counter stem:[ct = 0x00000001].
 
 Step 2: For stem:[i = 1] to stem:[|~ klen // v ~|]:
 
-Step 2.1: Compute stem:[Ha_i = H_v(Z ∥ ct )];
+Step 2.1: Compute stem:[Ha_i = H_v(Z || ct )];
 
 Step 2.2: stem:[ct + +];
 
 Step 3: If stem:[klen // v] is an integer, then set stem:[(Ha ! )_( |~ klen // v ~| ) = Ha_( |~ klen // v ~| )]. Otherwise, set stem:[(Ha ! )_( |~ klen // v ~| )] be the leftmost stem:[( klen - (v xx | __klen // v__ | ))] bits of stem:[Ha_( |~ klen // v ~| )];
 
-Step 4: Set stem:[K = Ha_1 ∥ Ha_2 ∥ cdots ∥ Ha_( |~ klen // v ~| - 1) ∥ (Ha ! )_( |~ klen // v ~| )].
+Step 4: Set stem:[K = Ha_1 || Ha_2 || cdots || Ha_( |~ klen // v ~| - 1) || (Ha ! )_( |~ klen // v ~| )].
 
 
 === Blockcipher Algorithms
 
-A blockcipher algorithm is comprised of an encryption algorithm stem:[Enc (K_1,m)] and a decryption algorithm stem:[Dec (K_1,c)]. stem:[Enc (K_1,m)] uses the secret key stem:[K_1] to encrypt the plaintext stem:[m] and outputs the ciphertext stem:[c]. stem:[Dec (K_1,c)]uses the secret key stem:[K_1] to decrypt the ciphertext stem:[c] and outputs the plaintext stem:[m] or reports an error.
+A blockcipher algorithm is comprised of an encryption algorithm stem:[Enc(K_1,m)] and a decryption algorithm stem:[Dec(K_1,c)]. stem:[Enc(K_1,m)] uses the secret key stem:[K_1] to encrypt the plaintext stem:[m] and outputs the ciphertext stem:[c]. stem:[Dec(K_1,c)]uses the secret key stem:[K_1] to decrypt the ciphertext stem:[c] and outputs the plaintext stem:[m] or reports an error.
 
-The bit length of stem:[K_1] is denoted by stem:[\[\[len \],\[K_(())\]\]].
+The bit length of stem:[K_1] is denoted by stem:[K_1(_len)].
 
 This document adopts the block cipher algorithms approved by the State Cryptography Administration, e.g., the SM4 blockcipher algorithm.
 
 
 === Message Authentication Code Algorithms
 
-The aim of the message authentication code function stem:[MAC(K_2,Z)] is to protect the message stem:[Z] from unauthorized modifications. The message authentication code of message stem:[Z] is generated under the control of stem:[K_2]. The bit length of stem:[K_2] is denoted by stem:[\[\[len \],\[K_(())\]\]]. For the identity-based encryption algorithm in this part, the message authentication code function uses the key generated by the key derivation function to obtain the message authentication code of the ciphertext, allowing the decrypting entity to identify the message source and verify integrity of the message.
+The aim of the message authentication code function stem:[MAC(K_2,Z)] is to protect the message stem:[Z] from unauthorized modifications. The message authentication code of message stem:[Z] is generated under the control of stem:[K_2]. The bit length of stem:[K_2] is denoted by stem:[K_2(_len)]. For the identity-based encryption algorithm in this part, the message authentication code function uses the key generated by the key derivation function to obtain the message authentication code of the ciphertext, allowing the decrypting entity to identify the message source and verify integrity of the message.
 
 The message authentication code functions invoke the cryptographic hash functions.
 
@@ -123,11 +136,11 @@ Let stem:[H_v()] be a cryptographic hash function and its output is a hash value
 
 Message authentication code function stem:[MAC(K_2,Z)]:
 
-*Input*: a bit string stem:[K_2] (a key of length stem:[\[\[len \],\[K_(())\]\]] bits) and a bit string stem:[Z] (the message to be processed to obtain MAC).
+Input:: a bit string stem:[K_2] (a key of length stem:[K_2(_len)] bits) and a bit string stem:[Z] (the message to be processed to obtain MAC).
 
-*Output*: a bit string stem:[K] of length stem:[v] (the MAC of the message stem:[Z]).
+Output:: a bit string stem:[K] of length stem:[v] (the MAC of the message stem:[Z]).
 
-Step 1: stem:[K = H_v(Z vv K_2)].
+Step 1: stem:[K = H_v(Z || K_2)].
 
 
 === Random number generators

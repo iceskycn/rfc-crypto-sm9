@@ -5,7 +5,7 @@ This appendix corresponds to <<GMT-0044.1-2016,Appendix B>>.
 
 === Overview
 
-Let an elliptic curve over finite field be stem:[E(F_q)]. If stem:[E(F_q) = cf xx r], stem:[r] is prime, stem:[cf]is the cofactor, then the smallest positive integer stem:[k] satisfying stem:[r vv q^k - 1] is known as the elliptic curve's embedding degree relative to stem:[r]. If stem:[G] is an stem:[r] order subgroup of stem:[E(F_q)], the embedding degree of stem:[G] is stem:[k] as well.
+Let an elliptic curve over finite field be stem:[E(F_q)]. If stem:[E(F_q) = cf xx r], stem:[r] is prime, stem:[cf]is the cofactor, then the smallest positive integer stem:[k] satisfying stem:[r || q^k - 1] is known as the elliptic curve's embedding degree relative to stem:[r]. If stem:[G] is an stem:[r] order subgroup of stem:[E(F_q)], the embedding degree of stem:[G] is stem:[k] as well.
 
 Let stem:[overset(´)(F)_q]be an algebraic closure of finite field stem:[F_q], and stem:[E\[r\]] the set of all points of order stem:[r] in _E_( stem:[overset(´)(F)_q]).
 
@@ -24,9 +24,9 @@ Miller's algorithm is an efficient algorithm to compute bilinear pairings.
 
 *Miller's algorithm*
 
-*Input:* a curve stem:[E], two points stem:[P] and stem:[Q] on stem:[E], and an integer stem:[c].
+Input:: a curve stem:[E], two points stem:[P] and stem:[Q] on stem:[E], and an integer stem:[c].
 
-*Output:* stem:[f_(P,c)(Q)].
+Output:: stem:[f_(P,c)(Q)].
 
 
 . The binary representation of stem:[c] is stem:[c_j ... c_1c_0], and the most significant bit stem:[c_j] is 1;
@@ -45,7 +45,7 @@ Generally, stem:[f_(P,c)(Q)] is known as the Miller function.
 
 === Computation of the Weil pairing
 
-Let stem:[E] be an elliptic curve over stem:[F_q], and stem:[r] be a positive integer coprime to stem:[q]. Suppose stem:[\mu_r]is the set of stem:[r]th unit roots, and stem:[k] is the embedding degree relative to stem:[r], that is stem:[r vv q^k - 1], then stem:[\mu_r sub F_(q^k)].
+Let stem:[E] be an elliptic curve over stem:[F_q], and stem:[r] be a positive integer coprime to stem:[q]. Suppose stem:[\mu_r]is the set of stem:[r]th unit roots, and stem:[k] is the embedding degree relative to stem:[r], that is stem:[r || q^k - 1], then stem:[\mu_r sub F_(q^k)].
 
 Let stem:[G_1 = E\[r\]], stem:[G_2 = E\[r\]], stem:[G_T = \mu_r], then the Weil pairing is a bilinear mapping from stem:[G_1 xx G_2] ==
 to stem:[G_T], which is denoted as stem:[e_r].
@@ -78,9 +78,9 @@ The computation amount would be cut in half if the reduced Tate pairings is appl
 
 ==== Algorithm 1
 
-*Input:* an integer stem:[r] coprime to stem:[q], stem:[P in E(F_q)\[r\]], stem:[Q in E(F_(q^k))\[r\]].
+Input:: an integer stem:[r] coprime to stem:[q], stem:[P in E(F_q)\[r\]], stem:[Q in E(F_(q^k))\[r\]].
 
-*Output:* stem:[t_r(P,Q)].
+Output:: stem:[t_r(P,Q)].
 
 
 . The binary representation of stem:[r] is stem:[r_j ... r_1r_0], and the most significant bit stem:[r_j] is 1;
@@ -96,15 +96,15 @@ The computation amount would be cut in half if the reduced Tate pairings is appl
 
 . Compute stem:[f = f^(q^d - 1)];
 
-. Compute stem:[\[\[q\],\[(d + 1) // r\],\[f = f^()\]\]].
+. Compute stem:[f = f^((q^d + 1)/r)].
 
 . Output stem:[f].
 
 ==== Algorithm 2
 
-*Input:* an integer stem:[r] coprime to stem:[q], stem:[P in E(F_q)\[r\]], stem:[Q in E(F_(q^k))\[r\]].
+Input:: an integer stem:[r] coprime to stem:[q], stem:[P in E(F_q)\[r\]], stem:[Q in E(F_(q^k))\[r\]].
 
-*Output:* stem:[t_r(P,Q)].
+Output:: stem:[t_r(P,Q)].
 
 
 . The binary representation of stem:[r] is stem:[r_j ... r_1r_0], and the most significant bit stem:[r_j] is 1;
@@ -120,7 +120,7 @@ The computation amount would be cut in half if the reduced Tate pairings is appl
 
 . Compute stem:[f = f^(q^d - 1)];
 
-. Compute stem:[\[\[q\],\[(d + 1) // r\],\[f = f^()\]\]];
+. Compute stem:[f = f^((q^d + 1)/r)];
 
 . Output stem:[f].
 
@@ -128,9 +128,9 @@ The computation amount would be cut in half if the reduced Tate pairings is appl
 
 If stem:[F_(q^k)] ( stem:[k = 2d]) is seen as the quadratic extension of stem:[F_(q^d)], then the elements in stem:[F_(q^k)] can be represented as stem:[w = w_0 + iw_1], where stem:[w_0,w_1 in F_(q^d)], then the conjugate of stem:[w] is stem:[overset(´)(w) = w_0 - iw_1], and in this case, the inverse in algorithm 1 can be replaced with conjugate.
 
-*Input:* an integer stem:[r]coprime to stem:[q], stem:[P in E(F_q)\[r\]], stem:[Q in E(F_(q^k))\[r\]].
+Input:: an integer stem:[r]coprime to stem:[q], stem:[P in E(F_q)\[r\]], stem:[Q in E(F_(q^k))\[r\]].
 
-*Output:* stem:[t_r(P,Q)].
+Output:: stem:[t_r(P,Q)].
 
 
 . The binary representation of stem:[r] is stem:[r_j ... r_1r_0], and the most significant bit stem:[r_j] is 1;
@@ -145,7 +145,7 @@ If stem:[F_(q^k)] ( stem:[k = 2d]) is seen as the quadratic extension of stem:[F
 
 . Compute stem:[f = f^(q^d - 1)];
 
-. Compute stem:[\[\[q\],\[(d + 1) // r\],\[f = f^()\]\]];
+. Compute stem:[f = f^((q^d + 1)/r)];
 
 . Output stem:[f].
 
@@ -153,9 +153,9 @@ If stem:[F_(q^k)] ( stem:[k = 2d]) is seen as the quadratic extension of stem:[F
 
 When stem:[q] is a prime greater than 3, then the point stem:[Q in E'], where stem:[E'] is the torsion curve of stem:[E]. In this case, the algorithm could be further optimized.
 
-*Input:* stem:[P in E(F_q)\[r\]], stem:[Q in E'(F_(q^d))\[r\]], an integer stem:[r].
+Input:: stem:[P in E(F_q)\[r\]], stem:[Q in E'(F_(q^d))\[r\]], an integer stem:[r].
 
-*Output:* stem:[t_r(P,Q)].
+Output:: stem:[t_r(P,Q)].
 
 . The binary representation of stem:[r] is stem:[r_j ... r_1r_0], and the most significant bit stem:[r_j] is 1;
 
@@ -170,7 +170,7 @@ When stem:[q] is a prime greater than 3, then the point stem:[Q in E'], where st
 
 . Compute stem:[f = f^(q^d - 1)];
 
-. Compute stem:[\[\[q\],\[(d + 1) // r\],\[f = f^()\]\]];
+. Compute stem:[f = f^((q^d + 1)/r)];
 
 . Output stem:[f].
 
@@ -184,13 +184,17 @@ The computation methods for Ate pairings under various structures are given belo
 
 Let stem:[G_1 = E\[r\] nn Ker ( \pi_q - \[1\])], stem:[G_2 = E\[r\] nn Ker ( \pi_q - \[q\])], stem:[P in G_1], stem:[Q in G_2]. Define the Ate pairings over stem:[G_2 xx G_1] as:
 
-stem:[Ate : G_2 xx G_1 -> F_(q^k)^() // (F_(q^k)^())^r] stem:[(Q,P) |-> f_(Q,T)(P)^((q^k - 1) // r) .]
+[stem]
+++++
+Ate: G_2 xx G_1 -> F_(q^k)^() // (F_(q^k)^())^r
+(Q,P) |-> f_(Q,T)(P)^((q^k - 1) // r)
+++++
 
 The computation method for Ate pairings on stem:[G_2 xx G_1] is given below.
 
-*Input:* stem:[G_1 = E\[r\] nn Ker ( \pi_q - \[1\])], stem:[G_2 = E\[r\] nn Ker ( \pi_q - \[q\])], stem:[P in G_1], stem:[Q in G_2], an integer stem:[T = t - 1].
+Input:: stem:[G_1 = E\[r\] nn Ker ( \pi_q - \[1\])], stem:[G_2 = E\[r\] nn Ker ( \pi_q - \[q\])], stem:[P in G_1], stem:[Q in G_2], an integer stem:[T = t - 1].
 
-*Output:* stem:[Ate (Q,P)].
+Output:: stem:[Ate (Q,P)].
 
 . The binary representation of stem:[T] is stem:[t_j ... t_1t_0], and the most significant bit stem:[t_j] is 1;;
 
@@ -202,7 +206,7 @@ The computation method for Ate pairings on stem:[G_2 xx G_1] is given below.
 
 .. If stem:[t_i = 1], compute stem:[f = f * g_(V,Q)(Q) // g_(V + Q)(P)], stem:[V = V + Q].
 
-. Compute stem:[\[\[q\],\[(k - 1) // r\],\[f = f^()\]\]];
+. Compute stem:[f = f^((q^k - 1) // r)];
 
 . Output stem:[f].
 
@@ -220,9 +224,9 @@ stem:[Ate : G_1 xx G_2 -> F_(q^k)^() // (F_(q^k)^())^r] stem:[(P,Q) |-> f_(P,T)(
 
 The computation method for Ate pairings on stem:[G_1 xx G_2] is given below.
 
-*Input:* stem:[G_1 = E\[r\] nn Ker ( \pi_q^' - \[q\])], stem:[G_2 = E\[r\] nn Ker ( \pi_q^' - \[1\])], stem:[P in G_1], stem:[Q in G_2], an integer stem:[T = t - 1].
+Input:: stem:[G_1 = E\[r\] nn Ker ( \pi_q^' - \[q\])], stem:[G_2 = E\[r\] nn Ker ( \pi_q^' - \[1\])], stem:[P in G_1], stem:[Q in G_2], an integer stem:[T = t - 1].
 
-*Output:* stem:[Ate (P,Q)].
+Output:: stem:[Ate (P,Q)].
 
 . The binary representation of stem:[T] is stem:[t_j ... t_1t_0], and the most significant bit stem:[t_j] is 1;
 
@@ -234,7 +238,7 @@ The computation method for Ate pairings on stem:[G_1 xx G_2] is given below.
 
 .. If stem:[t_i = 1], compute stem:[f = f * g_(V,P)(Q) // g_(V + P)(P)], stem:[V = V + P].
 
-. Compute stem:[\[\[q\],\[(k - 1) // r\],\[f = f^()\]\]];
+. Compute stem:[f = f^((q^k - 1) // r)];
 
 . Output stem:[f].
 
@@ -259,9 +263,9 @@ stem:[Ate : G_1 xx G_2 -> F_(q^k)^() // (F_(q^k)^())^r] stem:[(P,Q) |-> f_(P,T^e
 
 The computation method is given below.
 
-*Input:* stem:[G_1], stem:[G_2], stem:[P in G_1], stem:[Q in G_2], an integer stem:[T = t - 1].
+Input:: stem:[G_1], stem:[G_2], stem:[P in G_1], stem:[Q in G_2], an integer stem:[T = t - 1].
 
-*Output:* stem:[Ate (P,Q)].
+Output:: stem:[Ate (P,Q)].
 
 . Compute stem:[u = T^e];
 
@@ -275,12 +279,12 @@ The computation method is given below.
 
 .. If stem:[t_i = 1], compute stem:[f = f * g_(V,P)(Q) // g_(V + P)(Q)], stem:[V = V + P].
 
-. Compute stem:[\[\[q\],\[(k - 1) // r\],\[f = f^()\]\]];
+. Compute stem:[f = f^((q^k - 1) // r)];
 
 . Output stem:[f].
 
 If the elliptic curve on which the Ate pairings defined on stem:[G_1 xx G_2]
-is based is supersingular, then it is easy to see that Ate pairings are more efficient than Tate pairings. However, for ordinary curves, Ate pairings are more computationally efficient than Tate pairings only when stem:[T^e vv <= r], therefore, Ate pairings are recommended only when the value of stem:[t] is relatively small.
+is based is supersingular, then it is easy to see that Ate pairings are more efficient than Tate pairings. However, for ordinary curves, Ate pairings are more computationally efficient than Tate pairings only when stem:[T^e || <= r], therefore, Ate pairings are recommended only when the value of stem:[t] is relatively small.
 
 === Computation of the R-ate pairing
 
@@ -320,7 +324,7 @@ Generally, a non-degenerate pairing cannot be provided by any integer pairing st
 
 where stem:[T_i -= q^i( mod n)], stem:[i in Z], and stem:[0 < i < k].
 
-*Case 1:* stem:[(A,B) = (q^i,n)], because stem:[A = aB + b], that is stem:[q^i = an + b], therefore, stem:[b -= q^i( mod n)], and
+Case 1: stem:[(A,B) = (q^i,n)], because stem:[A = aB + b], that is stem:[q^i = an + b], therefore, stem:[b -= q^i( mod n)], and
 
 stem:[((f_((Q,q^i)(P)))/((f_(Q,n)^a(P))))^((q^k - 1) // n) = R_(A,B)(Q,P) = (f_(\[n\]Q,a)(P)f_(Q,b)(P)(g_((\[an \]Q,\[b\]Q)(P)))/(g_((\[q^i\]Q)(P))))^((q^k - 1) // n)]
 
@@ -331,7 +335,7 @@ Because stem:[b -= q^i( mod n)], stem:[g_(\[an \]Q,\[b\]Q)(P) = g_(\[q^i\]Q)(P)]
 R_(A,B)(Q,P) = f_(Q,q^i)(P)^((q^k - 1) // n)
 ++++
 
-*Case 2:* stem:[(A,B) = (q,T_1)], that is stem:[q = aT_1 + b]. Then
+Case 2: stem:[(A,B) = (q,T_1)], that is stem:[q = aT_1 + b]. Then
 
 stem:[((f_((Q,q)(P)))/((f_(Q,T_1)^a(P))))^((q^k - 1) // n) = R_(A,B)(Q,P) = (f_(\[T_1\]Q,a)(P)f_(Q,b)(P)(g_((\[aT_1\]Q,\[b\]Q)(P)))/(g_((\[q\]Q)(P))))^((q^k - 1) // n) .]
 
@@ -343,7 +347,7 @@ R_(A,B)(Q,P) = (f_(Q,a)^q(P)f_(Q,b)(P)(g_((\[aT_1\]Q,\[b\]Q)(P)))/(g_((\[q\]Q)(P
 ++++
 
 
-*Case 3:* stem:[(A,B) = (T_i,T_j)], that is stem:[T_i = aT_j + b], then
+Case 3: stem:[(A,B) = (T_i,T_j)], that is stem:[T_i = aT_j + b], then
 
 stem:[((f_((Q,T_i)(P)))/((f_(Q,T_j)^a(P))))^((q^k - 1) // n) = R_(A,B)(Q,P) = (f_(\[T_j\]Q,a)(P)f_(Q,b)(P)(g_((\[aT_j\]Q,\[b\]Q)(P)))/(g_((\[q^i\]Q)(P))))^((q^k - 1) // n) .]
 
@@ -354,7 +358,7 @@ Similarly, since stem:[f_(\[T_j\]Q,a)(P) = f_(Q,a)^(q_j)(P)], therefore
 R_(A,B)(Q,P) = (f_(Q,a)^(q_j)(P)f_(Q,b)(P)(g_((\[aT_1\]Q,\[b\]Q)(P)))/(g_((\[q^i\]Q)(P))))^((q^k - 1) // n)
 ++++
 
-*Case 4:* stem:[(A,B) = (n,T_i)], that is stem:[n = aT_i + b], therefore
+Case 4: stem:[(A,B) = (n,T_i)], that is stem:[n = aT_i + b], therefore
 
 stem:[((f_((Q,n)(P)))/((f_(Q,T_i)^a(P))))^((q^k - 1) // n) = R_(A,B)(Q,P) = (f_(\[T_i\]Q,a)(P)f_(Q,b)(P)(g_((\[aT_i\]Q,\[b\]Q)(P)))/(g_((\[n\]Q)(P))))^((q^k - 1) // n) .]
 
@@ -367,7 +371,7 @@ R_(A,B)(Q,P) = (f_(Q,a)^(q_i)(P)f_(Q,b)(P)(g_((\[aT_i\]Q,\[b\]Q)(P)))/(g_((\[n\]
 
 The R-ate pairing of case 1 is also known as stem:[Ate_i] pairing. Pairing computation of cases 2, 3 and 4 require two Miller loops of length stem:[log a] and stem:[log b] respectively. Case 2 and 4 can only alter one parameter stem:[i] to obtain efficient pairings, while case 3 can alter two parameters. Therefore the R-ate pairings of case 3 are usually chosen, then stem:[(A,B) = (T_i,T_j)].
 
-In order to reduce the degree of the Miller loop, various stem:[i] and stem:[j] can be tried to minimize the integers stem:[a] and stem:[b], thus, the degree of the Miller loop could be reduced to stem:[\[\[r\],\[(1 // \Phi (k))\],\[log \]\]].
+In order to reduce the degree of the Miller loop, various stem:[i] and stem:[j] can be tried to minimize the integers stem:[a] and stem:[b], thus, the degree of the Miller loop could be reduced to stem:[log(r^(1 // \Phi (k)))].
 
 ==== Computation of the R-ate pairing on BN curves
 
@@ -377,15 +381,15 @@ stem:[q(t) = 36t^4 + 24t^3 + 24t^2 + 6t + 1] stem:[r(t) = 36t^4 + 36t^3 + 18t^2 
 
 where stem:[t in Z], such that both stem:[q = q(t)] and stem:[r = r(t)] are primes, and in order to achieve a certain security level, stem:[t] must be large enough, which is at least 63 bits long.
 
-There exists 6th order torsion curves for BN curves over stem:[F_(q^2) : E^' : y^2 = x^3 + \beta b], where stem:[\beta in F_(q^2)], which is neither a square root nor cubic root in stem:[F_(q^2)], such that stem:[r vv E'(F_(q^2))]. The points in stem:[G_2] can be represented by the points on the torsion curve stem:[E'], stem:[\varphi_6 : E^' -> E : (x,y) |-> ( \beta^( - 1 // 3)x, \beta^( - 1 // 2)y) .] Thus, the computation of pairings is restricted on the point stem:[P] on stem:[E(F_q)] and the point stem:[Q'] on stem:[E'(F_(q^2))].
+There exists 6th order torsion curves for BN curves over stem:[F_(q^2) : E^' : y^2 = x^3 + \beta b], where stem:[\beta in F_(q^2)], which is neither a square root nor cubic root in stem:[F_(q^2)], such that stem:[r || E'(F_(q^2))]. The points in stem:[G_2] can be represented by the points on the torsion curve stem:[E'], stem:[\varphi_6 : E^' -> E : (x,y) |-> ( \beta^( - 1 // 3)x, \beta^( - 1 // 2)y) .] Thus, the computation of pairings is restricted on the point stem:[P] on stem:[E(F_q)] and the point stem:[Q'] on stem:[E'(F_(q^2))].
 
 Frobenius automorphism is stem:[\pi_q], and stem:[\pi_q : E -> E], stem:[\pi_q(x,y) = (x^q,y^q)], stem:[\pi_(q^2) : E -> E], stem:[\pi_(q^2)(x,y) = (x^(q^2),y^(q^2))].
 
 The computation of R-ate pairing is as follows.
 
-*Input:* stem:[P in E(F_q)\[r\]], stem:[Q in E'(F_(q^2))\[r\]], stem:[a = 6t + 2].
+Input:: stem:[P in E(F_q)\[r\]], stem:[Q in E'(F_(q^2))\[r\]], stem:[a = 6t + 2].
 
-*Output:* stem:[R_a(Q,P)].
+Output:: stem:[R_a(Q,P)].
 
 . Suppose stem:[a = sum_(j = 0)^(L - 1)a_i2^j], stem:[a_(L - 1) = 1];
 
@@ -403,7 +407,7 @@ The computation of R-ate pairing is as follows.
 
 . Compute stem:[f = f * g_(T, - Q_2)(P)], stem:[T = T - Q_2];
 
-. Compute stem:[\[\[q\],\[(12 - 1) // r\],\[f = f^()\]\]];
+. Compute stem:[f = f^((q^(12) - 1) // r)];
 
 . Output stem:[f].
 

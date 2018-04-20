@@ -20,10 +20,9 @@ The mandatory system parameters are:
 
 * the embedding degree stem:[k] of the curve stem:[E(F_q)] relative to stem:[N] (the cyclic group with order stem:[(G_T, * ) sub F_(q^k)^()]);
 
-* a generator stem:[P_1 = (x_(P_1),y_(P_1))] of the cyclic group stem:[\[\[G_1, + \],\[\]\]], where stem:[P_1 != O];
-// the last complex line is actually just "(G_1, +)"
+* a generator stem:[P_1 = (x_(P_1),y_(P_1))] of the cyclic group stem:[(G_1, +)], where stem:[P_1 != O];
 
-* a generator stem:[P_2 = (x_(P_2),y_(P_2))] of the cyclic group stem:[\[\[G_2, + \],\[\]\]], where stem:[P_2 != O];
+* a generator stem:[P_2 = (x_(P_2),y_(P_2))] of the cyclic group stem:[(G_2, +)], where stem:[P_2 != O];
 
 * the bilinear pairing identifier stem:[eid] where stem:[e : G_1 xx G_2 -> G_T]
 
@@ -76,29 +75,29 @@ stem:[eid] is denoted by one byte identifier:
 
 The following conditions shall be verified by the generator of the system parameters. They can also be verified by the users of the system parameters.
 
-*Input*: the set of the system parameters.
+Input:: the set of the system parameters.
 
-*Output*: if all parameters are valid, output "valid"; otherwise output "invalid".
+Output:: if all parameters are valid, output "valid"; otherwise output "invalid".
 
-. Verify that stem:[q] is a prime greater than 3; (See Annex C.1.5.)
+. Verify that stem:[q] is a prime greater than 3; (See <<prob-primality-testing>>)
 
 . Verify that stem:[a,b] are integers in stem:[\[0,q - 1\]];
 
-. Verify that stem:[4a^3 + 27b^2 != 0] over stem:[F_q]; if the least 4 significant bits of stem:[cid] are 2, verify that stem:[\beta] is a non-square element; (See Annex C.1.4.3.1.)
+. Verify that stem:[4a^3 + 27b^2 != 0] over stem:[F_q]; if the least 4 significant bits of stem:[cid] are 2, verify that stem:[\beta] is a non-square element; (See <<sqrt-fqmm>>)
 
 . Verify that stem:[N] is a prime greater than stem:[2^(191)] and stem:[cf] is not divisible by stem:[N]; if stem:[N < 2^(360)], verify that stem:[N - 1] has prime factors greater than stem:[2^(190)] and stem:[N + 1] has prime factors greater than stem:[2^(120)];
 
-. Verify that stem:[q + 1 - cf xx N vv 2q^(1 // 2)];
+. Verify that stem:[q + 1 - cf xx N || 2q^(1 // 2)];
 
-. Verify that stem:[q^k > 2^(1536)] and stem:[k] is the smallest positive integer stem:[m] such that stem:[N vv (q^m - 1)];
+. Verify that stem:[q^k > 2^(1536)] and stem:[k] is the smallest positive integer stem:[m] such that stem:[N || (q^m - 1)];
 
 . Verify that stem:[(x_(P_1),y_(P_1))] is an element of stem:[G_1];
 
 . Verify that stem:[(x_(P_2),y_(P_2))] is an element of stem:[G_2];
 
-. Verify stem:[\[\[\],\[e(P_1,P_2) in F_(q^k)^() { 1 } \]\]], and stem:[e(P_1,P_2)^N = 1];
+. Verify stem:[e(P_1,P_2) in F_(q^k)^(*) \\{ 1 }], and stem:[e(P_1,P_2)^N = 1];
 
-. (Optional) Verify stem:[d_1,d_2 vv k];
+. (Optional) Verify stem:[d_1,d_2 || k];
 
 . (Optional) Verify that stem:[P_1 = \Psi (P_2)];
 

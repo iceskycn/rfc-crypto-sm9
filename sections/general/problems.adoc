@@ -3,7 +3,7 @@
 
 ==== Discrete logarithm problem over finite field
 
-The set of all nonzero elements in stem:[F_(q^m)] ( stem:[q] is an odd prime, stem:[m >= 1]) forms a multiplicative cyclic group, denoted by stem:[F_(q^m)^()]. An element stem:[g in F_(q^m)^()] is called a generator if it satisfies stem:[F_(q^m)^() = {g^i vv 0 <= i <= q^m - 2}]. The minimal integer stem:[t] such that stem:[a^t = 1] is called the order of stem:[a] in stem:[F_(q^m)^()]. The order of stem:[F_(q^m)^()] is stem:[q^m - 1], so stem:[t vv q^m - 1].
+The set of all nonzero elements in stem:[F_(q^m)] ( stem:[q] is an odd prime, stem:[m >= 1]) forms a multiplicative cyclic group, denoted by stem:[F_(q^m)^()]. An element stem:[g in F_(q^m)^()] is called a generator if it satisfies stem:[F_(q^m)^() = {g^i || 0 <= i <= q^m - 2}]. The minimal integer stem:[t] such that stem:[a^t = 1] is called the order of stem:[a] in stem:[F_(q^m)^()]. The order of stem:[F_(q^m)^()] is stem:[q^m - 1], so stem:[t || q^m - 1].
 
 Suppose the generator of stem:[F_(q^m)^()] is stem:[g], stem:[y in F_(q^m)^()], the discrete logarithm problem over a finite field is to find the integer stem:[x in \[0,q^m - 1\]] such that stem:[y = g^x] in stem:[F_(q^m)^()].
 
