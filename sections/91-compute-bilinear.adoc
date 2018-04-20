@@ -326,9 +326,14 @@ where stem:[T_i -= q^i( mod n)], stem:[i in Z], and stem:[0 < i < k].
 
 Case 1: stem:[(A,B) = (q^i,n)], because stem:[A = aB + b], that is stem:[q^i = an + b], therefore, stem:[b -= q^i( mod n)], and
 
-stem:[((f_((Q,q^i)(P)))/((f_(Q,n)^a(P))))^((q^k - 1) // n) = R_(A,B)(Q,P) = (f_(\[n\]Q,a)(P)f_(Q,b)(P)(g_((\[an \]Q,\[b\]Q)(P)))/(g_((\[q^i\]Q)(P))))^((q^k - 1) // n)]
+[stem]
+++++
+((f_((Q,q^i)(P)))/((f_(Q,n)^a(P))))^((q^k - 1) // n) = R_(A,B)(Q,P)
+= (f_(\[n\]Q,a)(P)f_(Q,b)(P)(g_((\[an \]Q,\[b\]Q)(P)))/(g_((\[q^i\]Q)(P))))^((q^k - 1) // n)
+++++
 
-Because stem:[b -= q^i( mod n)], stem:[g_(\[an \]Q,\[b\]Q)(P) = g_(\[q^i\]Q)(P)]. Furthermore, stem:[f_(\[n\]Q,a)(P) = 1]. Hence
+Because stem:[b -= q^i( mod n)], stem:[g_(\[an \]Q,\[b\]Q)(P) = g_(\[q^i\]Q)(P)].
+Furthermore, stem:[f_(\[n\]Q,a)(P) = 1]. Hence
 
 [stem]
 ++++
@@ -337,7 +342,11 @@ R_(A,B)(Q,P) = f_(Q,q^i)(P)^((q^k - 1) // n)
 
 Case 2: stem:[(A,B) = (q,T_1)], that is stem:[q = aT_1 + b]. Then
 
-stem:[((f_((Q,q)(P)))/((f_(Q,T_1)^a(P))))^((q^k - 1) // n) = R_(A,B)(Q,P) = (f_(\[T_1\]Q,a)(P)f_(Q,b)(P)(g_((\[aT_1\]Q,\[b\]Q)(P)))/(g_((\[q\]Q)(P))))^((q^k - 1) // n) .]
+[stem]
+++++
+((f_((Q,q)(P)))/((f_(Q,T_1)^a(P))))^((q^k - 1) // n) = R_(A,B)(Q,P) =
+(f_(\[T_1\]Q,a)(P)f_(Q,b)(P)(g_((\[aT_1\]Q,\[b\]Q)(P)))/(g_((\[q\]Q)(P))))^((q^k - 1) // n)
+++++
 
 Since stem:[f_(\[T_1\]Q,a)(P) = f_(Q,a)^q(P)], therefore
 

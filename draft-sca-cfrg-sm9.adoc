@@ -1,7 +1,7 @@
 = The SM9 Identity-Based Cryptographic Algorithms
 :doctype: internet-draft
 :name: draft-sca-cfrg-sm9-00
-:abbrev: SM9 Cryptographic Algorithms
+:abbrev: SM9 Identity-Based Cryptography
 :status: info
 :ipr: trust200902
 :submission-type: IRTF
