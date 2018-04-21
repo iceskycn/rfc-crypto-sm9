@@ -23,14 +23,13 @@
 :fullname_2: Zhaohui Michael Cheng
 :lastname_2: Cheng
 :forename_initials_2: Z.
-:organization_2: Data Assurance and Communication Security Research Center, Chinese Academy of Sciences
-:organization_abbrev_2: DAS Center, Chinese Academy of Sciences
-:street_2: Building 4, 89 Minzhuang Street, Haidian District
-:city_2: Beijing
-:code_2: 100190
+:organization_2: Olym
+:street_2: 4/F, 2108 Chuangye 1st Rd, Baoan District
+:city_2: Shenzhen
+:code_2: 518052
 :country_2: People's Republic of China
-:uri_2: http://dacas.cn/
-:email_2: zhaohui_cheng@hotmail.com
+:uri_2: https://www.myibc.net
+:email_2: chengzh@myibc.net
 :fullname_3: Paul Y. Yang
 :lastname_3: Yang
 :forename_initials_3: Y.
@@ -62,16 +61,6 @@
 :uri_5: https://www.ribose.com
 :email_5: erick.borsboom@ribose.com
 
-////
-backup info for Michael:
-
-:organization_2: OLYM
-:street_2: 4/F, 2108 Chuangye 1st Rd, Baoan District
-:city_2: Shenzhen
-:code_2: 518052
-:country_2: People's Republic of China
-:uri_2: https://www.myibc.net
-////
 
 include::sections/00-abstract.adoc[]
 include::sections/01-intro.adoc[]
